@@ -10,22 +10,20 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class OI {
 	//instantiate buttons, sensors and joysticks here
-	public Joystick left0;
-    public Joystick right1;
-    public static Joystick gameMech;
+	private final Joystick leftDriveJoy;
+    private final Joystick rightDriveJoy;
     
     public OI(){
-    	left0 = new Joystick(0);
-    	right1 = new Joystick(1);
+    	leftDriveJoy = new Joystick(0);
+    	rightDriveJoy = new Joystick(1);
     }
-
-
-public Joystick getLeft() {
-    return left0;
-}
-
-public Joystick getRight() {
-    return right1;
-}
+	
+	public Joystick getLeftDriveJoy() {
+	    return leftDriveJoy;
+	}
+	
+	public Joystick getRightDriveJoy() {
+	    return rightDriveJoy;
+	}
 
 }

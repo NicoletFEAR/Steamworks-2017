@@ -23,8 +23,8 @@ public class OpenLoopDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//gets input from controller and drives bot
-    	double rightInput = Robot.oi.getRight().getY();
-    	double leftInput = Robot.oi.getLeft().getY();
+    	double rightInput = Robot.oi.getRightDriveJoy().getY();
+    	double leftInput = Robot.oi.getLeftDriveJoy().getY();
     	Robot.driveTrain.openLoopDrive(leftInput, rightInput);
     }
 

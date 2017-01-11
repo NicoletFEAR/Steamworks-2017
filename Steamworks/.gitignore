@@ -1,6 +1,8 @@
 
 .metadata
 bin/
+build/
+dist/
 tmp/
 *.tmp
 *.bak
