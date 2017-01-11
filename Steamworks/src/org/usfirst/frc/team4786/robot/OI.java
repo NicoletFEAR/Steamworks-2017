@@ -13,6 +13,11 @@ public class OI {
 	public Joystick left0;
     public Joystick right1;
     public static Joystick gameMech;
+    
+    public OI(){
+    	left0 = new Joystick(0);
+    	right1 = new Joystick(1);
+    }
 
 
 public Joystick getLeft() {
