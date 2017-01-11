@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class Drive extends Command {
+public class OpenLoopDrive extends Command {
 
-    public Drive() {
+    public OpenLoopDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	
@@ -25,7 +25,7 @@ public class Drive extends Command {
     	//gets input from controller and drives bot
     	double rightInput = Robot.oi.getRight().getY();
     	double leftInput = Robot.oi.getLeft().getY();
-    	Robot.driveTrain.drive(leftInput, rightInput);
+    	Robot.driveTrain.openLoopDrive(leftInput, rightInput);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -1,6 +1,6 @@
 package org.usfirst.frc.team4786.robot.subsystems;
 import org.usfirst.frc.team4786.robot.RobotMap;
-import org.usfirst.frc.team4786.robot.commands.Drive;
+import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
 
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -31,7 +31,7 @@ public class DriveTrain extends Subsystem {
 
     public void initDefaultCommand() {
     	// Set the default command for a subsystem here.
-        setDefaultCommand(new Drive());
+        setDefaultCommand(new OpenLoopDrive());
     }
     
 	public void brake(){
@@ -40,12 +40,11 @@ public class DriveTrain extends Subsystem {
     	frontLeft.set(0);
     }
 
-
-	public void drive(double leftInput, double rightInput) {
-		//scales between 1 and 1
-		//did this because we don't know what the maximum speed of the motors is
-		double leftOutput = leftInput * RobotMap.scaling;
-		double rightOutput = rightInput * RobotMap.scaling;
+	//Drive Command for Open Loop System;
+	//Should be obsolete once PID is Implemented
+	public void openLoopDrive(double leftInput, double rightInput) {
+		double leftOutput = leftInput * RobotMap.openLoopSpeedScaling;
+		double rightOutput = rightInput * RobotMap.openLoopSpeedScaling;
 		frontLeft.set(leftOutput);
 		frontRight.set(rightOutput);
 	}
