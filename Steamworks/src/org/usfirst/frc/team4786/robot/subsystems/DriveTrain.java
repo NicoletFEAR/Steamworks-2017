@@ -16,14 +16,45 @@ public class DriveTrain extends Subsystem {
 	CANTalon frontLeft = new CANTalon(RobotMap.frontLeftPort);
 	CANTalon frontRight = new CANTalon(RobotMap.frontRightPort);
 	
+	//Set Important PID Variables
+	public int rawCodesPerRev = RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV;
+	public double gearBoxRatio = RobotMap.DRIVETRAIN_GEARBOX_RATIO;
+	public int error = (int) (rawCodesPerRev * gearBoxRatio / RobotMap.ERROR_CONSTANT);
+	
 	public DriveTrain(){
+		//Enable the Talons!
+		frontLeft.enable();
+		frontRight.enable();
+		backLeft.enable();
+		backRight.enable();
+		
 		//follower code
 		backLeft.changeControlMode(CANTalon.TalonControlMode.Follower);
 		backRight.changeControlMode(CANTalon.TalonControlMode.Follower);
 		backLeft.set(RobotMap.frontLeftPort);
 		backRight.set(RobotMap.frontRightPort);
-		frontLeft.setInverted(true);
 		//this inverts the cantalons on the right side
+		frontLeft.setInverted(true);
+		
+		//Beginning of the world of PID!
+		frontLeft.setProfile(0);
+		frontRight.setProfile(0);
+		frontLeft.setPID(RobotMap.LeftP, RobotMap.LeftI, RobotMap.LeftD, RobotMap.LeftF, 0, 0, 0);		
+		frontRight.setPID(RobotMap.RightP, RobotMap.RightI, RobotMap.RightD, RobotMap.RightF, 0, 0, 0);
+		frontLeft.setCloseLoopRampRate(0);
+		frontRight.setCloseLoopRampRate(0);
+		frontLeft.setIZone(0);
+		frontRight.setIZone(0);
+		
+		//Set Up the Encoder Revolutions!
+		frontLeft.configEncoderCodesPerRev((int) (rawCodesPerRev * gearBoxRatio));
+		frontRight.configEncoderCodesPerRev((int) (rawCodesPerRev * gearBoxRatio));
+		frontLeft.setEncPosition(0);
+		frontRight.setEncPosition(0);
+		
+		//Set how far the robot can be from where we want it to be without going past that amount
+		frontLeft.setAllowableClosedLoopErr(error);
+		frontRight.setAllowableClosedLoopErr(error);
 	}
 
     // Put methods for controlling this subsystem
