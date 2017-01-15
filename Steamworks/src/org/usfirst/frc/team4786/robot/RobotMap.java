@@ -38,6 +38,19 @@ public class RobotMap {
      following variables to use with your drivetrain subsystem.
      If you are using multiple modules, make sure to define both the port
      number and the module. 
-     
      */
+	
+	/* How to determine starting P value:
+	 * Select a number of revolutions before the setpoint at which the robot should begin to slow down.
+	 * Choose a percentage of maximum throttle to slow down to.
+	 * Find the encoder codes per rev
+	 * If the encoder is a quad encoder, the formula for determining the starting P value is the following:
+	 * 
+	 * P = percentThrottleAsDecimal * 1023 / (4 * revolutionsBeforeSetpoint * encoderCodesPerRev)
+	 * 
+	 * For example, the P value for 25% throttle, 5 revolutions before the setpoint, with 400 codes per rev,
+	 * the equation looks like this:
+	 * 
+	 * P = .25 * 1023 / (4 * 5 * 400) = 0.03196875
+	 */
 }
