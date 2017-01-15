@@ -1,11 +1,13 @@
 package org.usfirst.frc.team4786.robot.subsystems;
 import org.usfirst.frc.team4786.robot.RobotMap;
+import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -37,27 +39,22 @@ public class DriveTrain extends Subsystem {
 		frontLeft.setInverted(true);
 		
 		//Beginning of the world of PID!
-		//frontLeft.setProfile(0);
-		//frontRight.setProfile(0);
-		//frontLeft.setPID(RobotMap.LeftP, RobotMap.LeftI, RobotMap.LeftD, RobotMap.LeftF, 0, 0, 0);		
-		//frontRight.setPID(RobotMap.RightP, RobotMap.RightI, RobotMap.RightD, RobotMap.RightF, 0, 0, 0);
-		//frontLeft.setCloseLoopRampRate(0);
-		//frontRight.setCloseLoopRampRate(0);
-		//frontLeft.setIZone(0);
-		//frontRight.setIZone(0);
-		
+		frontLeft.setProfile(0);
+		frontRight.setProfile(0);
+		frontLeft.setPID(RobotMap.LeftP, RobotMap.LeftI, RobotMap.LeftD, RobotMap.LeftF, 0, 0, 0);		
+		frontRight.setPID(RobotMap.RightP, RobotMap.RightI, RobotMap.RightD, RobotMap.RightF, 0, 0, 0);
+		frontLeft.setCloseLoopRampRate(0.125 / 8);
+		frontRight.setCloseLoopRampRate(0.125 / 8);
+		frontLeft.setIZone(0);
+		frontRight.setIZone(0);
 		//Set Up the Encoder Revolutions!
-		//frontLeft.configEncoderCodesPerRev((int) (RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV * gearBoxRatio));
-		//frontRight.configEncoderCodesPerRev((int) (rawCodesPerRev * gearBoxRatio));
-		//frontLeft.setEncPosition(0);
-		//frontRight.setEncPosition(0);
-		
-		//Set how far the robot can be from where we want it to be without going past that amount
-		//frontLeft.setAllowableClosedLoopErr(error);
-		//frontRight.setAllowableClosedLoopErr(error);
+		frontLeft.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV);
+		frontRight.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV);
+		frontLeft.setEncPosition(0);
+		frontRight.setEncPosition(0);
 	}
-
-    // Put methods for controlling this subsystem
+	
+	// Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
@@ -74,6 +71,10 @@ public class DriveTrain extends Subsystem {
 	//Drive Command for Open Loop System;
 	//Should be obsolete once PID is Implemented
 	public void openLoopDrive(double leftInput, double rightInput) {
+		//Change Talon modes to PercentVbus
+		frontLeft.changeControlMode(TalonControlMode.PercentVbus);
+		frontRight.changeControlMode(TalonControlMode.PercentVbus);
+		
 		double leftOutput = leftInput * RobotMap.openLoopSpeedScaling;
 		double rightOutput = rightInput * RobotMap.openLoopSpeedScaling;
 		frontLeft.set(leftOutput);
@@ -90,15 +91,15 @@ public class DriveTrain extends Subsystem {
     	//they were in another mode before
     	frontLeft.changeControlMode(TalonControlMode.Position);
     	frontRight.changeControlMode(TalonControlMode.Position);
-    	
-    	//Reset Encoder Positions to 0
-    	frontLeft.setEncPosition(0);
-    	frontRight.setEncPosition(0);
 		
 		//Make motors drive number of rotations
 		//calculated before by convertToRotations()
 		frontLeft.set(rot);
-		frontRight.set(rot);
+		//Make sure we inverse this right side,
+		//otherwise, you have a spinning robot on your hands
+		frontRight.set(-rot);
+		
+		SmartDashboard.putNumber("Position", frontLeft.getPosition());
 	}
 	
 	//Have these functions to get CANTalon objects
