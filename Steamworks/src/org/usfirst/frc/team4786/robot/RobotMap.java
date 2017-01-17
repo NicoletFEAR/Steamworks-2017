@@ -21,6 +21,9 @@ public class RobotMap {
 	//General PID Constants
 	//public static final double ERROR_CONSTANT = 45;
 	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV = 360;
+	public static final double CLOSED_LOOP_RAMP_RATE = 0.015625;
+	public static final int IZONE = 0;
+	public static final int DRIVEBASE_PROFILE = 0;
 	//Wheel Radius measured in feet
 	public static final double WHEEL_RADIUS = 0.25;
 	//Left GearBox PID Constants

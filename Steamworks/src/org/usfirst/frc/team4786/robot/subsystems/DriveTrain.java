@@ -39,17 +39,26 @@ public class DriveTrain extends Subsystem {
 		frontLeft.setInverted(true);
 		
 		//Beginning of the world of PID!
-		frontLeft.setProfile(0);
-		frontRight.setProfile(0);
+		
+		//Make sure the CANTalons are looking at the right stored PID values
+		frontLeft.setProfile(RobotMap.DRIVEBASE_PROFILE);
+		frontRight.setProfile(RobotMap.DRIVEBASE_PROFILE);
+		//Set our PID Values
 		frontLeft.setPID(RobotMap.LeftP, RobotMap.LeftI, RobotMap.LeftD, RobotMap.LeftF, 0, 0, 0);		
 		frontRight.setPID(RobotMap.RightP, RobotMap.RightI, RobotMap.RightD, RobotMap.RightF, 0, 0, 0);
-		frontLeft.setCloseLoopRampRate(0.125 / 8);
-		frontRight.setCloseLoopRampRate(0.125 / 8);
-		frontLeft.setIZone(0);
-		frontRight.setIZone(0);
+		/*
+		  Set how fast of a rate the robot will accelerate
+		  Do not remove or you get a fabulous prize of a
+		  Flipping robot
+		*/
+		frontLeft.setCloseLoopRampRate(RobotMap.CLOSED_LOOP_RAMP_RATE);
+		frontRight.setCloseLoopRampRate(RobotMap.CLOSED_LOOP_RAMP_RATE);
+		frontLeft.setIZone(RobotMap.IZONE);
+		frontRight.setIZone(RobotMap.IZONE);
 		//Set Up the Encoder Revolutions!
 		frontLeft.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV);
 		frontRight.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV);
+		//Set Encoder Position to 0
 		frontLeft.setEncPosition(0);
 		frontRight.setEncPosition(0);
 	}
@@ -88,9 +97,9 @@ public class DriveTrain extends Subsystem {
 		double rot = convertToRotations(distanceToDrive);
 		
 		//Change Talon modes to "position" just in case
-    	//they were in another mode before
-    	frontLeft.changeControlMode(TalonControlMode.Position);
-    	frontRight.changeControlMode(TalonControlMode.Position);
+		//they were in another mode before
+		frontLeft.changeControlMode(TalonControlMode.Position);
+		frontRight.changeControlMode(TalonControlMode.Position);
 		
 		//Make motors drive number of rotations
 		//calculated before by convertToRotations()
@@ -100,24 +109,6 @@ public class DriveTrain extends Subsystem {
 		frontRight.set(-rot);
 		
 		SmartDashboard.putNumber("Position", frontLeft.getPosition());
-	}
-	
-	//Have these functions to get CANTalon objects
-	//since they are private
-	public CANTalon getFrontLeft(){
-		return frontLeft;
-	}
-	
-	public CANTalon getFrontRight(){
-		return frontRight;
-	}
-	
-	public CANTalon getBackLeft(){
-		return backLeft;
-	}
-	
-	public CANTalon getBackRight(){
-		return backRight;
 	}
 	
 	//Take a distance in feet and convert to
