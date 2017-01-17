@@ -19,6 +19,8 @@ public class Arduino extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    
+    //method to send data over i2c to arduino
     public void writeStringData(String writeable){
     	String WriteString = writeable;
     	char[] CharArray = WriteString.toCharArray();
