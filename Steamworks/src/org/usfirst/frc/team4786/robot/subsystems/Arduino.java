@@ -1,5 +1,8 @@
 package org.usfirst.frc.team4786.robot.subsystems;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -34,23 +37,13 @@ public class Arduino extends Subsystem {
     	wire.transaction(WriteData, WriteData.length, null, 0);
     }
     
-    public String readStringData(){
-    	byte[] byteLength = new byte[2];
-    	wire.transaction(null, 0, byteLength, 2);
-    	char[] lengthCharArray = new char[2];
-    	for(int i = 0; i < lengthCharArray.length; i++){
-    		lengthCharArray[i] = (char) byteLength[i];
-    	}
-    	String lenString = String.valueOf(lengthCharArray);
-    	int length = Integer.parseInt(lenString);
-    	byte[] data = new byte[length];
-    	char[] charArray = new char[length];
-    	wire.transaction(null, 0, data, length);
-    	for(int i = 0; i < length; i++){
-    		charArray[i] = (char) data[i];
-    	}
-    	String dataString = String.valueOf(charArray);
-    	return dataString;
+    public int readIntData(){
+    	byte[] data = new byte[4];
+    	wire.transaction(null, 0, data, 4);
+    	ByteBuffer buffer = ByteBuffer.wrap(data);
+    	buffer.order(ByteOrder.LITTLE_ENDIAN);  // if you want little-endian
+    	int result = buffer.getInt();
+    	return result;
     }
 }
 
