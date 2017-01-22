@@ -24,18 +24,29 @@ public class RobotMap {
 	public static final double CLOSED_LOOP_RAMP_RATE = 0.015625;
 	public static final int IZONE = 0;
 	public static final int DRIVEBASE_PROFILE = 0;
+	public static final int MAXIMUM_SPEED_VELOCITY_PID = 191;
 	//Wheel Radius measured in feet
 	public static final double WHEEL_RADIUS = 0.25;
 	//Left GearBox PID Constants
-	public static final double LeftP = 0.355 / 7; //35% throttle within 5 rotations of target
-	public static final double LeftI = RobotMap.LeftP / 100000;
+	public static final double LeftP = 0.05071428571; //35% throttle within 5 rotations of target
+	public static final double LeftI = LeftP / 100000;
 	public static final double LeftD = 0.0;
 	public static final double LeftF = 0.0;
 	//Right GearBox PID Constants
-	public static final double RightP = 0.355 / 7;
-	public static final double RightI = RobotMap.RightP / 100000;
+	public static final double RightP = 0.05071428571;
+	public static final double RightI = RightP / 100000;
 	public static final double RightD = 0.0;
 	public static final double RightF = 0.0;
+	//Left GearBox Velocity PID Constants
+	public static final double LeftVelocityP = 0.22;
+	public static final double LeftVelocityI = 0.0;
+	public static final double LeftVelocityD = 0.0;
+	public static final double LeftVelocityF = 0.1097;
+	//Right GearBox Velocity PID Constants
+	public static final double RightVelocityP = 0.22;
+	public static final double RightVelocityI = 0.0;
+	public static final double RightVelocityD = 0.0;
+	public static final double RightVelocityF = 0.1097;
 	
     /* For example to map the left and right motors, you could define the
      following variables to use with your drivetrain subsystem.
