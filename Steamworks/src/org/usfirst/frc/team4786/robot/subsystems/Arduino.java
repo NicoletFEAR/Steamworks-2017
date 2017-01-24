@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Arduino extends Subsystem {
 	private static I2C wire;
 	public Arduino(){
-		wire = new I2C(Port.kOnboard, 4);
+		wire = new I2C(Port.kOnboard, 8);
 	}
 
 
@@ -34,15 +34,17 @@ public class Arduino extends Subsystem {
     	for (int i = 0; i < CharArray.length; i++) {
     		WriteData[i] = (byte) CharArray[i];
     	}
-    	wire.transaction(WriteData, WriteData.length, null, 0);
+    	wire.writeBulk(WriteData);
     }
     
-    public int readIntData(){
-    	byte[] data = new byte[4];
-    	wire.transaction(null, 0, data, 4);
-    	ByteBuffer buffer = ByteBuffer.wrap(data);
-    	buffer.order(ByteOrder.LITTLE_ENDIAN);  // if you want little-endian
-    	int result = buffer.getInt();
+    public String readStringData(){
+    	byte[] data = new byte[8];
+    	char[] charArray = new char[8];
+    	wire.read(8, 8, data);
+    	for(int i = 0; i < 8; i++){
+    		charArray[i] = (char) data[i];
+    	}
+    	String result = String.copyValueOf(charArray);
     	return result;
     }
 }

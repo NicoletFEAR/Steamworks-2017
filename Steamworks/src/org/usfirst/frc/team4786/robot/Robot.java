@@ -86,6 +86,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		//SmartDashboard.putString("Arduino Read",Robot.arduino.readStringData());
 	}
 
 	@Override
