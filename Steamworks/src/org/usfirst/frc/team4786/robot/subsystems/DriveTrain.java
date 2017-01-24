@@ -22,13 +22,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveTrain extends Subsystem {
 	
 	//CANTalon objects, there is a reason why they are private
-	private CANTalon backLeft = new CANTalon(RobotMap.backLeftPort);
-	private CANTalon backRight = new CANTalon(RobotMap.backRightPort);
-	private CANTalon frontLeft = new CANTalon(RobotMap.frontLeftPort);
-	private CANTalon frontRight = new CANTalon(RobotMap.frontRightPort);
+	public CANTalon backLeft = new CANTalon(RobotMap.backLeftPort);
+	public CANTalon backRight = new CANTalon(RobotMap.backRightPort);
+	public CANTalon frontLeft = new CANTalon(RobotMap.frontLeftPort);
+	public CANTalon frontRight = new CANTalon(RobotMap.frontRightPort);
 
 	//Set Important PID Variables
 	//public int error = (int) (rawCodesPerRev * gearBoxRatio / RobotMap.ERROR_CONSTANT);
+
+	//Get both motor outputs
+	public double motorOutputLeft = frontLeft.getOutputVoltage() / frontLeft.getBusVoltage();
+	public double motorOutputRight = frontRight.getOutputVoltage() / frontRight.getBusVoltage();
 	
 	public DriveTrain(){
 		//Enable the Talons!
@@ -42,8 +46,9 @@ public class DriveTrain extends Subsystem {
 		backRight.changeControlMode(CANTalon.TalonControlMode.Follower);
 		backLeft.set(RobotMap.frontLeftPort);
 		backRight.set(RobotMap.frontRightPort);
-		//this inverts the cantalons on the right side
+		//this inverts the cantalons on the left side
 		frontLeft.setInverted(true);
+		backLeft.setInverted(true);
 
 		//Beginning of the world of PID!!!!!!!!
 		
@@ -152,12 +157,10 @@ public class DriveTrain extends Subsystem {
 		frontLeft.set(targetSpeedLeft);
 		frontRight.set(targetSpeedRight);
 		
-		//Get both motor outputs and display them on SmartDashboard
-		double motorOutputLeft = frontLeft.getOutputVoltage() / frontLeft.getBusVoltage();
-		double motorOutputRight = frontRight.getOutputVoltage() / frontRight.getBusVoltage();
-		
-		SmartDashboard.putNumber("Left Motor Output", motorOutputLeft);
-		SmartDashboard.putNumber("Right Motor Output", motorOutputRight);
+		//Get both motor outputs
+		motorOutputLeft = frontLeft.getOutputVoltage() / frontLeft.getBusVoltage();
+		motorOutputRight = frontRight.getOutputVoltage() / frontRight.getBusVoltage();
+
 	}
 	
 	//Take a distance in feet and convert to

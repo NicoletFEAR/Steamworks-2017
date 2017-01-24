@@ -2,19 +2,13 @@
 package org.usfirst.frc.team4786.robot;
 
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
-import org.usfirst.frc.team4786.robot.commands.DriveWithVelocity;
+import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 
-import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -100,7 +94,7 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		
-		teleopCommand = new DriveWithVelocity();
+		teleopCommand = new OpenLoopDrive();
 		
 		if(teleopCommand != null)
 			teleopCommand.start();
@@ -112,6 +106,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Left Motor Output", driveTrain.motorOutputLeft);
+		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
+		SmartDashboard.putNumber("Left Encoder Position", driveTrain.frontLeft.getEncPosition());
+		SmartDashboard.putNumber("Right Encoder Position", driveTrain.frontRight.getEncPosition());
+		SmartDashboard.putNumber("Left Encoder Velocity", driveTrain.frontLeft.getEncVelocity());
+		SmartDashboard.putNumber("Right Encoder Velocity", driveTrain.frontLeft.getEncVelocity());
 	}
 
 	/**

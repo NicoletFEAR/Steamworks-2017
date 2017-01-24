@@ -17,6 +17,7 @@ public class DriveWithVelocity extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	//We require the driveTrain to drive, obviously!!!
     	Robot.driveTrain.driveWithVelocityInit();
     }
 
