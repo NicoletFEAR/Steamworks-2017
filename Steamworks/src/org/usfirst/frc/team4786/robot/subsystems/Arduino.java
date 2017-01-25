@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Arduino extends Subsystem {
 	private static I2C wire;
-	public Arduino(int port){
-		wire = new I2C(Port.kOnboard, port);
+	public Arduino(){
+		wire = new I2C(Port.kOnboard, RobotMap.ledArduinoPort);
 	}
 
 
