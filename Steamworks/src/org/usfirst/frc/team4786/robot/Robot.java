@@ -24,7 +24,7 @@ public class Robot extends IterativeRobot {
 
 	public static DriveTrain driveTrain = new DriveTrain();
 	public static OI oi;
-	public static final Arduino arduino = new Arduino();
+	public static final Arduino arduino = new Arduino(RobotMap.ledArduinoPort);
 
 	Command autonomousCommand;
 
