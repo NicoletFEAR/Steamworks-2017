@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class GreenLight extends Command {
+public class RedLight extends Command {
 
-    public GreenLight() {
+    public RedLight() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.arduino);
@@ -19,7 +19,7 @@ public class GreenLight extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.arduino.writeStringData("greenlight");
+    	Robot.arduino.writeStringData("redlight");
     }
 
     // Called repeatedly when this Command is scheduled to run

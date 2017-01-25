@@ -3,6 +3,8 @@ package org.usfirst.frc.team4786.robot.subsystems;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import org.usfirst.frc.team4786.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -12,8 +14,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Arduino extends Subsystem {
 	private static I2C wire;
-	public Arduino(){
-		wire = new I2C(Port.kOnboard, 8);
+	public Arduino(int port){
+		wire = new I2C(Port.kOnboard, port);
 	}
 
 

@@ -22,9 +22,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final DriveTrain driveTrain = new DriveTrain();
+	public static DriveTrain driveTrain = new DriveTrain();
 	public static OI oi;
-	public static final Arduino arduino = new Arduino();
+	public static final Arduino arduino = new Arduino(RobotMap.ledArduinoPort);
 
 	Command autonomousCommand;
 
@@ -65,9 +65,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = new GreenLight();
-		autonomousCommand.start();
-
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -95,7 +92,6 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		Robot.arduino.writeStringData("redlight");
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
