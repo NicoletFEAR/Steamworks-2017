@@ -4,6 +4,7 @@ package org.usfirst.frc.team4786.robot;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4786.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -20,7 +21,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
+	//We setup our subsystem objects here
 	public static final DriveTrain driveTrain = new DriveTrain();
+	public static final Intake intake = new Intake();
 	public static OI oi;
 
 	Command autonomousCommand;

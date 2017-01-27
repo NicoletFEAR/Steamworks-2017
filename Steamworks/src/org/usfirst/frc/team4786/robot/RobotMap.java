@@ -9,11 +9,14 @@ package org.usfirst.frc.team4786.robot;
 public class RobotMap {
 	
 	//CANTalon ports, use instead of random numbers
-	//Not Final at ALL!!!
 	public static final int backLeftPort = 14;
 	public static final int backRightPort = 13;
 	public static final int frontLeftPort = 15;
 	public static final int frontRightPort = 12;
+	
+	//Our CANTalon game mech ports
+	//Change this intake Talon ID, do not know final CANTalon id yet
+	public static final int intakePort = 0;	
 	
 	//Scaling used only for open loop drive system
 	public static final double openLoopSpeedScaling = .6;
@@ -27,6 +30,9 @@ public class RobotMap {
 	public static final double MAXIMUM_SPEED_VELOCITY_PID = 0.6;
 	//Wheel Radius measured in feet
 	public static final double WHEEL_RADIUS = 0.25;
+	//Game Mech Costants
+	public static final double INTAKE_TALON_COLLECT_SPEED = 0.25;
+	public static final double INTAKE_TALON_SPIT_SPEED = -0.25;
 	//Left GearBox PID Constants
 	public static final double LeftP = 0.05071428571; //35% throttle within 5 rotations of target
 	public static final double LeftI = LeftP / 100000;
