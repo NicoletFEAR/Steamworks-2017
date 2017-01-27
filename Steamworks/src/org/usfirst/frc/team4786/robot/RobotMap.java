@@ -17,6 +17,7 @@ public class RobotMap {
 	//Our CANTalon game mech ports
 	//Change this intake Talon ID, do not know final CANTalon id yet
 	public static final int intakePort = 0;	
+	public static final int bridgeServoChannel = 1;
 	
 	//Scaling used only for open loop drive system
 	public static final double openLoopSpeedScaling = .6;
