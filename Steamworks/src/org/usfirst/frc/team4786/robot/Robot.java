@@ -3,6 +3,7 @@ package org.usfirst.frc.team4786.robot;
 
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.GreenLight;
+import org.usfirst.frc.team4786.robot.commands.RedLight;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 
@@ -24,7 +25,7 @@ public class Robot extends IterativeRobot {
 
 	public static DriveTrain driveTrain = new DriveTrain();
 	public static OI oi;
-	public static final Arduino arduino = new Arduino(RobotMap.ledArduinoPort);
+	public static Arduino arduino;
 
 	Command autonomousCommand;
 
@@ -35,6 +36,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		arduino = new Arduino(RobotMap.ledArduinoPort);
 	}
 
 	/**
@@ -83,7 +85,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		//SmartDashboard.putString("Arduino Read",Robot.arduino.readStringData());
 	}
 
 	@Override
@@ -92,6 +93,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
