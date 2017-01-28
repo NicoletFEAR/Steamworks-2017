@@ -16,8 +16,8 @@ public class RobotMap {
 	
 	//Our CANTalon game mech ports
 	//Change this intake Talon ID, do not know final CANTalon id yet
-	public static final int intakePort = 0;	
-	public static final int bridgeServoChannel = 1;
+	public static final int intakePort = 18;	
+	public static final int bridgeServoChannel = 4;
 	
 	//Scaling used only for open loop drive system
 	public static final double openLoopSpeedScaling = .6;
@@ -31,7 +31,7 @@ public class RobotMap {
 	public static final double MAXIMUM_SPEED_VELOCITY_PID = 0.6;
 	//Wheel Radius measured in feet
 	public static final double WHEEL_RADIUS = 0.25;
-	//Game Mech Costants
+	//Game Mech Costants, Not final
 	public static final double INTAKE_TALON_COLLECT_SPEED = 0.25;
 	public static final double INTAKE_TALON_SPIT_SPEED = -0.25;
 	//Left GearBox PID Constants

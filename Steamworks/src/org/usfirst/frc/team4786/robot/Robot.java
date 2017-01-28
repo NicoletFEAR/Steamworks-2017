@@ -1,8 +1,10 @@
 
 package org.usfirst.frc.team4786.robot;
 
+import org.usfirst.frc.team4786.robot.commands.CollectBalls;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
+import org.usfirst.frc.team4786.robot.commands.TestServo;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4786.robot.subsystems.Intake;
@@ -68,7 +70,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = new DriveToPosition(-20);
+		autonomousCommand = new DriveToPosition(20);
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -119,6 +121,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Encoder Velocity", driveTrain.frontLeft.getEncVelocity());
 	}
 
+	@Override
+	public void testInit(){
+	}
+	
 	/**
 	 * This function is called periodically during test mode
 	 */
