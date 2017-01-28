@@ -15,8 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveTrain extends Subsystem {
 	
 	//CANTalon objects, there is a reason why they are private
-	private CANTalon backLeft = new CANTalon(RobotMap.backLeftPort);
-	private CANTalon backRight = new CANTalon(RobotMap.backRightPort);
 	private CANTalon frontLeft = new CANTalon(RobotMap.frontLeftPort);
 	private CANTalon frontRight = new CANTalon(RobotMap.frontRightPort);
 	
@@ -27,14 +25,7 @@ public class DriveTrain extends Subsystem {
 		//Enable the Talons!
 		frontLeft.enable();
 		frontRight.enable();
-		backLeft.enable();
-		backRight.enable();
 		
-		//follower code
-		backLeft.changeControlMode(CANTalon.TalonControlMode.Follower);
-		backRight.changeControlMode(CANTalon.TalonControlMode.Follower);
-		backLeft.set(RobotMap.frontLeftPort);
-		backRight.set(RobotMap.frontRightPort);
 		//this inverts the cantalons on the right side
 		frontLeft.setInverted(true);
 		
