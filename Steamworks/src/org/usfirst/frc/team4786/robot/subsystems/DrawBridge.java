@@ -17,17 +17,17 @@ public class DrawBridge extends Subsystem {
 	
 	/*  Our Servo Connector is plugged in with the black cable lined up with the ground symbol on RoboRio
 	    and the yellow cable lined up with the "S" on the RoboRio  */
-	public Servo gateServo = new Servo(RobotMap.bridgeServoChannel);
+	private Servo gateServo = new Servo(RobotMap.bridgeServoChannel);
 
     public void initDefaultCommand() {
     	//Not needed, called from elsewhere
     }
     
-    public void openThyBridge(){
+    public void openThyBridge() {
     	gateServo.setAngle(180);
     }
     
-    public void closeThyBridge(){
+    public void closeThyBridge() {
     	gateServo.setAngle(-180);
     }
     
