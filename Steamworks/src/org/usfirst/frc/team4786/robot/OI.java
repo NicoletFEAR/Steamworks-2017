@@ -20,7 +20,6 @@ public class OI {
     	
     	//Tie our many buttons, sensors, joysticks, and Xbox controllers to robot commands
     	
-    	
     }
 	
 	public Joystick getLeftDriveJoy() {

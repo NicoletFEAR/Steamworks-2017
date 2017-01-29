@@ -4,9 +4,10 @@ package org.usfirst.frc.team4786.robot;
 import org.usfirst.frc.team4786.robot.commands.CollectBalls;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
-import org.usfirst.frc.team4786.robot.commands.TestServo;
+import org.usfirst.frc.team4786.robot.commands.OpenClimb;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4786.robot.subsystems.Climber;
 import org.usfirst.frc.team4786.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -28,6 +29,7 @@ public class Robot extends IterativeRobot {
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Intake intake = new Intake();
 	public static final DrawBridge drawBridge = new DrawBridge();
+	public static final Climber climber = new Climber();
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -70,7 +72,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = new DriveToPosition(20);
+		autonomousCommand = new OpenClimb();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
