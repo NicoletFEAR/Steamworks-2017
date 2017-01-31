@@ -34,6 +34,8 @@ public class RobotMap {
 	//Game Mech Costants, Not final
 	public static final double INTAKE_TALON_COLLECT_SPEED = 0.25;
 	public static final double INTAKE_TALON_SPIT_SPEED = -0.25;
+	public static final double BRIDGE_OPEN_ANGLE = 180;
+	public static final double BRIDGE_CLOSE_ANGLE = -180;
 	//Left GearBox PID Constants
 	public static final double LeftP = 0.05071428571; //35% throttle within 5 rotations of target
 	public static final double LeftI = LeftP / 100000;

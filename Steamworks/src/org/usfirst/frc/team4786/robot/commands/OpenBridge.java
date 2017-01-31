@@ -16,11 +16,11 @@ public class OpenBridge extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.drawBridge.openThyBridge();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drawBridge.openThyBridge();
     }
 
     // Make this return true when this Command no longer needs to run execute()
