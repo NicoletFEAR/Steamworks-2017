@@ -6,12 +6,12 @@ import org.usfirst.frc.team4786.robot.commands.GreenLight;
 import org.usfirst.frc.team4786.robot.commands.RedLight;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4786.robot.subsystems.Gear;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -104,6 +104,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
+		SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
 	}
 
 	/**

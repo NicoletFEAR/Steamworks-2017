@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4786.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 
 
@@ -12,10 +13,14 @@ public class OI {
 	//instantiate buttons, sensors and joysticks here
 	private final Joystick leftDriveJoy;
     private final Joystick rightDriveJoy;
-    
+	private final DigitalInput limitSwitchGear;
+	private final DigitalInput limitSwitchPeg;
+	
     public OI(){
     	leftDriveJoy = new Joystick(0);
     	rightDriveJoy = new Joystick(1);
+    	limitSwitchGear = new DigitalInput(RobotMap.limitSwitchGearPort);
+    	limitSwitchPeg = new DigitalInput(RobotMap.limitSwitchPegPort);
     }
 	
 	public Joystick getLeftDriveJoy() {
@@ -24,6 +29,14 @@ public class OI {
 	
 	public Joystick getRightDriveJoy() {
 	    return rightDriveJoy;
+	}
+	// return DigitalInput value of limit switches
+	public DigitalInput getGearLimitSwitch(){
+		return limitSwitchGear;
+	}
+
+	public DigitalInput getPegLimitSwitch(){
+		return limitSwitchPeg;
 	}
 
 }
