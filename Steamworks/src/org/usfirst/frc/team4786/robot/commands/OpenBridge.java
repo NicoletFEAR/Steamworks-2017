@@ -1,7 +1,6 @@
 package org.usfirst.frc.team4786.robot.commands;
 
 import org.usfirst.frc.team4786.robot.Robot;
-import org.usfirst.frc.team4786.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -28,7 +27,7 @@ public class OpenBridge extends Command {
     // Make this return true when this Command no longer needs to run execute()
     //Make sure the servo has moved all the way to where it needs to go before finishing
     protected boolean isFinished() {
-        return (Robot.drawBridge.getServoAngle() == RobotMap.OPEN_BRIDGE_ANGLE);
+    	return false;
     }
 
     // Called once after isFinished returns true
@@ -38,6 +37,5 @@ public class OpenBridge extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }

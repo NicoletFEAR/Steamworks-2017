@@ -36,8 +36,6 @@ public class RobotMap {
 	public static final double INTAKE_TALON_COLLECT_SPEED = 0.25;
 	public static final double INTAKE_TALON_SPIT_SPEED = -0.25;
 	public static final double OPEN_LOOP_CLIMBING_SPEED = 0.5;
-	public static final double OPEN_BRIDGE_ANGLE = 180;
-	public static final double CLOSED_BRIDGE_ANGLE = -180;
 	//Left GearBox PID Constants
 	public static final double LeftP = 0.05071428571; //35% throttle within 5 rotations of target
 	public static final double LeftI = LeftP / 100000;
