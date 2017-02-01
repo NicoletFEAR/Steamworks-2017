@@ -1,11 +1,15 @@
 
 package org.usfirst.frc.team4786.robot;
 
+import org.usfirst.frc.team4786.robot.commands.OpenBridge;
+import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
+import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
+import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4786.robot.subsystems.Intake;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.GreenLight;
 import org.usfirst.frc.team4786.robot.commands.RedLight;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
-import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4786.robot.subsystems.Gear;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -23,11 +27,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static DriveTrain driveTrain = new DriveTrain();
+	//We setup our subsystem objects here
+	public static final DriveTrain driveTrain = new DriveTrain();
+	public static final Intake intake = new Intake();
+	public static final DrawBridge drawBridge = new DrawBridge();
+
 	public static OI oi;
 	public static Arduino arduino;
 
 	Command autonomousCommand;
+	Command teleopCommand;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -67,6 +76,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -96,6 +106,11 @@ public class Robot extends IterativeRobot {
 		
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		
+		teleopCommand = new OpenLoopDrive();
+		
+		if(teleopCommand != null)
+			teleopCommand.start();
 	}
 
 	/**
@@ -104,10 +119,20 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Left Motor Output", driveTrain.motorOutputLeft);
+		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
+		SmartDashboard.putNumber("Left Encoder Position", driveTrain.frontLeft.getEncPosition());
+		SmartDashboard.putNumber("Right Encoder Position", driveTrain.frontRight.getEncPosition());
+		SmartDashboard.putNumber("Left Encoder Velocity", driveTrain.frontLeft.getEncVelocity());
+		SmartDashboard.putNumber("Right Encoder Velocity", driveTrain.frontLeft.getEncVelocity());
 		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
 		SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
 	}
 
+	@Override
+	public void testInit(){
+	}
+	
 	/**
 	 * This function is called periodically during test mode
 	 */

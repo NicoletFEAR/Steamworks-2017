@@ -9,11 +9,15 @@ package org.usfirst.frc.team4786.robot;
 public class RobotMap {
 	
 	//CANTalon ports, use instead of random numbers
-	//Not Final at ALL!!!
 	public static final int backLeftPort = 14;
 	public static final int backRightPort = 13;
 	public static final int frontLeftPort = 15;
 	public static final int frontRightPort = 12;
+	
+	//Our CANTalon game mech ports
+	//Change this intake Talon ID, do not know final CANTalon id yet
+	public static final int intakePort = 18;	
+	public static final int bridgeServoChannel = 4;
 	
 	//Scaling used only for open loop drive system
 	public static final double openLoopSpeedScaling = .6;
@@ -24,18 +28,34 @@ public class RobotMap {
 	public static final double CLOSED_LOOP_RAMP_RATE = 0.015625;
 	public static final int IZONE = 0;
 	public static final int DRIVEBASE_PROFILE = 0;
+	public static final double MAXIMUM_SPEED_VELOCITY_PID = 0.6;
 	//Wheel Radius measured in feet
 	public static final double WHEEL_RADIUS = 0.25;
+	//Game Mech Costants, Not final
+	public static final double INTAKE_TALON_COLLECT_SPEED = 0.25;
+	public static final double INTAKE_TALON_SPIT_SPEED = -0.25;
+	public static final double OPEN_BRIDGE_ANGLE = 180;
+	public static final double CLOSED_BRIDGE_ANGLE = -180;
 	//Left GearBox PID Constants
-	public static final double LeftP = 0.355 / 7; //35% throttle within 5 rotations of target
-	public static final double LeftI = RobotMap.LeftP / 100000;
+	public static final double LeftP = 0.05071428571; //35% throttle within 5 rotations of target
+	public static final double LeftI = LeftP / 100000;
 	public static final double LeftD = 0.0;
 	public static final double LeftF = 0.0;
 	//Right GearBox PID Constants
-	public static final double RightP = 0.355 / 7;
-	public static final double RightI = RobotMap.RightP / 100000;
+	public static final double RightP = 0.05071428571;
+	public static final double RightI = RightP / 100000;
 	public static final double RightD = 0.0;
 	public static final double RightF = 0.0;
+	//Left GearBox Velocity PID Constants
+	public static final double LeftVelocityP = 0.22;
+	public static final double LeftVelocityI = 0.0;
+	public static final double LeftVelocityD = 0.0;
+	public static final double LeftVelocityF = 0.1097;
+	//Right GearBox Velocity PID Constants
+	public static final double RightVelocityP = 0.22;
+	public static final double RightVelocityI = 0.0;
+	public static final double RightVelocityD = 0.0;
+	public static final double RightVelocityF = 0.1097;
 	
 	// limit switch ports on RoboRIO DIO
 	public static final int limitSwitchGearPort = 1;
