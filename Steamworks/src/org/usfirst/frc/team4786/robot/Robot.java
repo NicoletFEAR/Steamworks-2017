@@ -6,6 +6,11 @@ import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4786.robot.subsystems.Intake;
+import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
+import org.usfirst.frc.team4786.robot.commands.GreenLight;
+import org.usfirst.frc.team4786.robot.commands.RedLight;
+import org.usfirst.frc.team4786.robot.subsystems.Arduino;
+import org.usfirst.frc.team4786.robot.subsystems.Gear;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -26,7 +31,9 @@ public class Robot extends IterativeRobot {
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Intake intake = new Intake();
 	public static final DrawBridge drawBridge = new DrawBridge();
+
 	public static OI oi;
+	public static Arduino arduino;
 
 	Command autonomousCommand;
 	Command teleopCommand;
@@ -38,6 +45,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		arduino = new Arduino(RobotMap.ledArduinoPort);
 	}
 
 	/**
@@ -95,6 +103,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		
@@ -116,6 +125,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Encoder Position", driveTrain.frontRight.getEncPosition());
 		SmartDashboard.putNumber("Left Encoder Velocity", driveTrain.frontLeft.getEncVelocity());
 		SmartDashboard.putNumber("Right Encoder Velocity", driveTrain.frontLeft.getEncVelocity());
+		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
+		SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
 	}
 
 	@Override

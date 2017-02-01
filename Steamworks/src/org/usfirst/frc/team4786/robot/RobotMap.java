@@ -57,6 +57,14 @@ public class RobotMap {
 	public static final double RightVelocityD = 0.0;
 	public static final double RightVelocityF = 0.1097;
 	
+	// limit switch ports on RoboRIO DIO
+	public static final int limitSwitchGearPort = 1;
+	public static final int limitSwitchPegPort = 2;
+=======
+	//LED arduino constants and values
+	public static final int ledArduinoPort = 8;
+
+	
     /* For example to map the left and right motors, you could define the
      following variables to use with your drivetrain subsystem.
      If you are using multiple modules, make sure to define both the port
