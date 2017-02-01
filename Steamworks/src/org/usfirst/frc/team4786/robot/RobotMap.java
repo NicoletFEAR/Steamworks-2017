@@ -60,7 +60,7 @@ public class RobotMap {
 	// limit switch ports on RoboRIO DIO
 	public static final int limitSwitchGearPort = 1;
 	public static final int limitSwitchPegPort = 2;
-=======
+
 	//LED arduino constants and values
 	public static final int ledArduinoPort = 8;
 
