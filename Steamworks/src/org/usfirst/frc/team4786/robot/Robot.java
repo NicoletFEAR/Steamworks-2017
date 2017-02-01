@@ -1,7 +1,6 @@
 
 package org.usfirst.frc.team4786.robot;
 
-import org.usfirst.frc.team4786.robot.commands.OpenClimb;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
 import org.usfirst.frc.team4786.robot.subsystems.Climber;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
@@ -70,8 +69,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = new OpenClimb();
-
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
