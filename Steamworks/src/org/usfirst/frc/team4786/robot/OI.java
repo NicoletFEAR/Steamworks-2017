@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class OI {
 	//instantiate buttons, sensors, joysticks, and Xbox controllers here
-	private final Joystick leftDriveJoy;
-    private final Joystick rightDriveJoy;
+	private Joystick leftDriveJoy;
+    private Joystick rightDriveJoy;
 	private final DigitalInput limitSwitchGear;
 	private final DigitalInput limitSwitchPeg;
 	
@@ -43,5 +43,10 @@ public class OI {
 	public DigitalInput getPegLimitSwitch(){
 		return limitSwitchPeg;
 	}
-
+	
+	public void switchJoystickIDs(){
+		int temp = leftDriveJoy.getPort();
+		leftDriveJoy = new Joystick(rightDriveJoy.getPort());
+		rightDriveJoy = new Joystick(temp);
+	}
 }

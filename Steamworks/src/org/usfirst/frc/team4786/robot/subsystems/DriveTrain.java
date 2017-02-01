@@ -26,6 +26,9 @@ public class DriveTrain extends Subsystem {
 	private CANTalon frontLeft = new CANTalon(RobotMap.frontLeftPort);
 	private CANTalon frontRight = new CANTalon(RobotMap.frontRightPort);
 	
+	//Robot will drive as if the front side is the back when reversed is true
+	private boolean reversed;
+	
 	//Set Important PID Variables
 	//public int error = (int) (rawCodesPerRev * gearBoxRatio / RobotMap.ERROR_CONSTANT);
 
@@ -40,6 +43,7 @@ public class DriveTrain extends Subsystem {
 		
 
 		frontLeft.setInverted(true);
+		frontRight.setInverted(false);
 
 		//Beginning of the world of PID!!!!!!!!
 		
@@ -167,5 +171,15 @@ public class DriveTrain extends Subsystem {
 		double rotationsPerSecond = convertToRotations(feetPerSecond);
 		double temp = rotationsPerSecond / (RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV * 4);
 		return temp / 10;
+	}
+	
+	public boolean isReversed(){
+		return reversed;
+	}
+	
+	public void switchFront(){
+		frontLeft.setInverted(!frontLeft.getInverted());
+		frontRight.setInverted(!frontRight.getInverted());
+		reversed = !reversed;
 	}
 }
