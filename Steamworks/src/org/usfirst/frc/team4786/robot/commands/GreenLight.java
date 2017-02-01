@@ -1,24 +1,25 @@
 package org.usfirst.frc.team4786.robot.commands;
 
 import org.usfirst.frc.team4786.robot.Robot;
-import org.usfirst.frc.team4786.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.WaitCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class OpenBridge extends Command {
+public class GreenLight extends Command {
 
-    public OpenBridge() {
-    	//We need a "thy bridge" to open "thy bridge"
-    	requires(Robot.drawBridge);
+    public GreenLight() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	requires(Robot.arduino);
     }
 
     // Called just before this Command runs the first time
-    //Open Bridge!!!!
     protected void initialize() {
-    	Robot.drawBridge.openThyBridge();
+    	Robot.arduino.writeStringData("greenlight");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -26,9 +27,8 @@ public class OpenBridge extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
-    //Make sure the servo has moved all the way to where it needs to go before finishing
     protected boolean isFinished() {
-        return (Robot.drawBridge.getServoAngle() == RobotMap.OPEN_BRIDGE_ANGLE) || this.timeSinceInitialized() >= 5;
+        return true;
     }
 
     // Called once after isFinished returns true

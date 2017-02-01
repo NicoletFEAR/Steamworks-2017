@@ -36,6 +36,8 @@ public class RobotMap {
 	public static final double INTAKE_TALON_COLLECT_SPEED = 0.25;
 	public static final double INTAKE_TALON_SPIT_SPEED = -0.25;
 	public static final double OPEN_LOOP_CLIMBING_SPEED = 0.5;
+	public static final double OPEN_BRIDGE_ANGLE = 180;
+	public static final double CLOSED_BRIDGE_ANGLE = -180;
 	//Left GearBox PID Constants
 	public static final double LeftP = 0.05071428571; //35% throttle within 5 rotations of target
 	public static final double LeftI = LeftP / 100000;
@@ -56,6 +58,14 @@ public class RobotMap {
 	public static final double RightVelocityI = 0.0;
 	public static final double RightVelocityD = 0.0;
 	public static final double RightVelocityF = 0.1097;
+	
+	// limit switch ports on RoboRIO DIO
+	public static final int limitSwitchGearPort = 1;
+	public static final int limitSwitchPegPort = 2;
+
+  //LED arduino constants and values
+	public static final int ledArduinoPort = 8;
+
 	
     /* For example to map the left and right motors, you could define the
      following variables to use with your drivetrain subsystem.
