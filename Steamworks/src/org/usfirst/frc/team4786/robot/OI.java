@@ -22,6 +22,7 @@ public class OI {
     	rightDriveJoy = new Joystick(1);
     	
     	//Tie our many buttons, sensors, joysticks, and Xbox controllers to robot commands
+    	
     	    	
     	limitSwitchGear = new DigitalInput(RobotMap.limitSwitchGearPort);
     	limitSwitchPeg = new DigitalInput(RobotMap.limitSwitchPegPort);

@@ -15,8 +15,9 @@ public class RobotMap {
 	public static final int frontRightPort = 12;
 	
 	//Our CANTalon game mech ports
-	//Change this intake Talon ID, do not know final CANTalon id yet
-	public static final int intakePort = 18;	
+	//Change these mech Talon IDs, do not know final CANTalon ids yet
+	public static final int intakePort = 18;
+	public static final int climbMotorPort = 16;
 	public static final int bridgeServoChannel = 4;
 	
 	//Scaling used only for open loop drive system
@@ -34,6 +35,7 @@ public class RobotMap {
 	//Game Mech Costants, Not final
 	public static final double INTAKE_TALON_COLLECT_SPEED = 0.25;
 	public static final double INTAKE_TALON_SPIT_SPEED = -0.25;
+	public static final double OPEN_LOOP_CLIMBING_SPEED = 0.5;
 	public static final double OPEN_BRIDGE_ANGLE = 180;
 	public static final double CLOSED_BRIDGE_ANGLE = -180;
 	//Left GearBox PID Constants
@@ -60,8 +62,8 @@ public class RobotMap {
 	// limit switch ports on RoboRIO DIO
 	public static final int limitSwitchGearPort = 1;
 	public static final int limitSwitchPegPort = 2;
-=======
-	//LED arduino constants and values
+
+  //LED arduino constants and values
 	public static final int ledArduinoPort = 8;
 
 	

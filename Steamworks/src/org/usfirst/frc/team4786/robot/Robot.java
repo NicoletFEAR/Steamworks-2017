@@ -1,8 +1,9 @@
 
 package org.usfirst.frc.team4786.robot;
 
-import org.usfirst.frc.team4786.robot.commands.OpenBridge;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
+import org.usfirst.frc.team4786.robot.subsystems.Climber;
+import org.usfirst.frc.team4786.robot.commands.OpenBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4786.robot.subsystems.Intake;
@@ -31,6 +32,7 @@ public class Robot extends IterativeRobot {
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Intake intake = new Intake();
 	public static final DrawBridge drawBridge = new DrawBridge();
+	public static final Climber climber = new Climber();
 
 	public static OI oi;
 	public static Arduino arduino;
