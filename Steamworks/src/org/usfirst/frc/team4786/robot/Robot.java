@@ -1,8 +1,7 @@
 
 package org.usfirst.frc.team4786.robot;
 
-import org.usfirst.frc.team4786.robot.commands.CollectBalls;
-import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
+import org.usfirst.frc.team4786.robot.commands.OpenBridge;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
@@ -69,7 +68,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = new DriveToPosition(20);
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
