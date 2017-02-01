@@ -31,6 +31,7 @@ public class Robot extends IterativeRobot {
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Intake intake = new Intake();
 	public static final DrawBridge drawBridge = new DrawBridge();
+	public static final Gear gear = new Gear();
 
 	public static OI oi;
 	public static Arduino arduino;
