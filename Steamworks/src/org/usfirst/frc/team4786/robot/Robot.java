@@ -7,6 +7,8 @@ import org.usfirst.frc.team4786.robot.commands.OpenBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4786.robot.subsystems.Intake;
+import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
+import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
@@ -39,6 +41,7 @@ public class Robot extends IterativeRobot {
 	public static final Intake intake = new Intake();
 	public static final DrawBridge drawBridge = new DrawBridge();
 	public static final Climber climber = new Climber();
+	public static final VisionImage visionImage = new VisionImage();
 
 	public static OI oi;
 	public static Arduino arduino;
@@ -57,17 +60,24 @@ public class Robot extends IterativeRobot {
 		
 		new Thread(() -> {
             UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-            camera.setResolution(640, 480);
-            
+            //camera.setResolution(640, 480);
+            int width = 320;
+            int height = 240;
+            camera.setResolution(width, height);
+            //camera.setFPS(1);
             CvSink cvSink = CameraServer.getInstance().getVideo();
-            CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
+            CvSource outputStream = CameraServer.getInstance().putVideo("Blur", width, height);
             
-            Mat source = new Mat();
+            MatRapper source = new MatRapper(new Mat());
             Mat output = new Mat();
+            Mat output2= new Mat();
             
             while(!Thread.interrupted()) {
-                cvSink.grabFrame(source);
-                Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+                cvSink.grabFrame(source.getMat());
+                //output = source.getMat();
+                Imgproc.cvtColor(source.getMat(), output, Imgproc.COLOR_BGR2RGB);
+                visionImage.process(output);
+                Imgproc.cvtColor(output, output2, Imgproc.COLOR_RGB2BGR);
                 outputStream.putFrame(output);
             }
         }).start();
