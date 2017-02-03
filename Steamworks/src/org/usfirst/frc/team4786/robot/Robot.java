@@ -123,10 +123,12 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Left Motor Output", driveTrain.motorOutputLeft);
 		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
+		/*
 		SmartDashboard.putNumber("Left Encoder Position", driveTrain.frontLeft.getEncPosition());
 		SmartDashboard.putNumber("Right Encoder Position", driveTrain.frontRight.getEncPosition());
 		SmartDashboard.putNumber("Left Encoder Velocity", driveTrain.frontLeft.getEncVelocity());
 		SmartDashboard.putNumber("Right Encoder Velocity", driveTrain.frontLeft.getEncVelocity());
+		*/
 		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
 		SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
 	}
