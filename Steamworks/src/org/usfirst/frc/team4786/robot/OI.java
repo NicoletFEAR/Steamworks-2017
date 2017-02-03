@@ -1,7 +1,11 @@
 package org.usfirst.frc.team4786.robot;
 
+import org.usfirst.frc.team4786.robot.commands.SwitchFrontSide;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 
 
@@ -22,7 +26,6 @@ public class OI {
     	rightDriveJoy = new Joystick(1);
     	
     	//Tie our many buttons, sensors, joysticks, and Xbox controllers to robot commands
-    	
     	    	
     	limitSwitchGear = new DigitalInput(RobotMap.limitSwitchGearPort);
     	limitSwitchPeg = new DigitalInput(RobotMap.limitSwitchPegPort);
