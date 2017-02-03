@@ -30,12 +30,16 @@ public class ArduinoLimitSwitchMonitor extends Command {
     			blue.cancel();
     		}
     		red.start();
+    		if(Gear.gearLimitSwitchPressed()){
+        		Robot.oi.getXbox().setRumble(RumbleType.kLeftRumble, 1);
+        		Robot.oi.getXbox().setRumble(RumbleType.kRightRumble, 1);
     	}
     	if(!Gear.pegLimitSwitchPressed()){
     		if(red.isRunning()){
     			red.cancel();
     		}
     		blue.start();
+    		}
     	}
     	
     	/*if(Gear.gearLimitSwitchPressed()){
