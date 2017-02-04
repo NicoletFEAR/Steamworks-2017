@@ -9,6 +9,7 @@ import static org.opencv.imgproc.Imgproc.*;
 import static org.opencv.core.Core.*;
 import org.opencv.videoio.VideoCapture;
 import org.usfirst.frc.team4786.robot.Robot;
+import org.usfirst.frc.team4786.robot.RobotMap;
 
 public class VisionImage implements VisionPipeline {	
 	
@@ -68,7 +69,14 @@ public class VisionImage implements VisionPipeline {
         		//for getDistance() in FrameData
         		fieldOfViewWidth = filtered.getWidth();
         		
-        		double lowB = 240, lowR = 240, lowG = 240, highB = 260, highR = 260, highG = 260;//values from image, R:251 G:252 B:250
+        		double lowB = RobotMap.lowBlueValue;
+        		double lowR = RobotMap.lowRedValue;
+        		double lowG = RobotMap.lowGreenValue;
+        		double highB = RobotMap.highBlueValue;
+        		double highR = RobotMap.highRedValue;
+        		double highG = RobotMap.highGreenValue;
+        		//values from image, R:251 G:252 B:250
+        		
         		//filters out contours not within color range
         		inRange(blurred.getMat(), new Scalar(lowR, lowG, lowB), new Scalar(highR, highG, highB), filtered.getMat());	
         		
@@ -109,10 +117,10 @@ public class VisionImage implements VisionPipeline {
         		SmartDashboard.putNumber("Distance", Robot.frameData.getDistance());
         		SmartDashboard.putString("Location of Target", Robot.frameData.getLocationOfTarget().name());
 
-        } catch (Exception e) {
+        }catch (Exception e) {
         	e.printStackTrace();
         }
-        } catch (Exception e1) {
+        }catch (Exception e1) {
         	e1.printStackTrace();
         }
 	}

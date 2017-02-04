@@ -65,7 +65,16 @@ public class RobotMap {
 
   //LED arduino constants and values
 	public static final int ledArduinoPort = 8;
-
+	
+	//Vision constants
+	//for filtering
+	public static final int highRedValue = 255;
+	public static final int highGreenValue = 255;
+	public static final int highBlueValue = 255;
+	
+	public static final int lowRedValue = 0;
+	public static final int lowGreenValue = 0;
+	public static final int lowBlueValue = 0;
 	
     /* For example to map the left and right motors, you could define the
      following variables to use with your drivetrain subsystem.
