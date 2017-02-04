@@ -6,6 +6,7 @@ import org.usfirst.frc.team4786.robot.subsystems.Climber;
 import org.usfirst.frc.team4786.robot.commands.OpenBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4786.robot.subsystems.FrameData;
 import org.usfirst.frc.team4786.robot.subsystems.Intake;
 import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
 import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
@@ -37,11 +38,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	//We setup our subsystem objects here
-	public static final DriveTrain driveTrain = new DriveTrain();
-	public static final Intake intake = new Intake();
-	public static final DrawBridge drawBridge = new DrawBridge();
-	public static final Climber climber = new Climber();
-	public static final VisionImage visionImage = new VisionImage();
+	public static DriveTrain driveTrain = new DriveTrain();
+	public static Intake intake = new Intake();
+	public static DrawBridge drawBridge = new DrawBridge();
+	public static Climber climber = new Climber();
+	public static VisionImage visionImage = new VisionImage();
+	public static FrameData frameData;
 
 	public static OI oi;
 	public static Arduino arduino;
@@ -56,6 +58,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		frameData = new FrameData();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
 		
 		new Thread(() -> {
@@ -70,17 +73,18 @@ public class Robot extends IterativeRobot {
             
             MatRapper source = new MatRapper(new Mat());
             Mat output = new Mat();
-            Mat output2= new Mat();
+            //Mat output2= new Mat();
             
             while(!Thread.interrupted()) {
                 cvSink.grabFrame(source.getMat());
                 //output = source.getMat();
                 Imgproc.cvtColor(source.getMat(), output, Imgproc.COLOR_BGR2RGB);
                 visionImage.process(output);
-                Imgproc.cvtColor(output, output2, Imgproc.COLOR_RGB2BGR);
-                outputStream.putFrame(output);
+                //Imgproc.cvtColor(output, output2, Imgproc.COLOR_RGB2BGR);
+                outputStream.putFrame(source.getMat());
             }
         }).start();
+
 	}
 
 	/**
@@ -158,6 +162,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
 		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
 		SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
+		
+		SmartDashboard.putBoolean("Found strips?", visionImage.getContoursFound());
+		SmartDashboard.putNumber("Left area", visionImage.getLeftContourArea());
+		SmartDashboard.putNumber("Right area", visionImage.getRightContourArea());
+		SmartDashboard.putNumber("Number of targets found", visionImage.getNumberOfTargets());
 	}
 
 	@Override

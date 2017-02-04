@@ -7,25 +7,25 @@ import org.opencv.core.Mat;
 public class MatRapper implements AutoCloseable {
 	private Mat mat;
 	
-	public MatRapper(Mat matrix)
-	{   
+	public MatRapper(Mat matrix) {   
 		mat = matrix;  
 	}
+	
 	@Override
-	public void close() throws Exception 
-	{   
+	public void close() throws Exception {   
 		mat.release();
 	}
-	public Mat getMat()
-	{
+	
+	public Mat getMat() {
 		return mat;
 	}
-	public int getWidth()
-	{   
+	
+	public int getWidth() {   
 		return mat.cols();   
 	}
-	public int getHeight()
-	{
+	
+	public int getHeight() {
 		return mat.rows();
 	}
+	
 }
