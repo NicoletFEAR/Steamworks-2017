@@ -1,6 +1,5 @@
 package org.usfirst.frc.team4786.robot.subsystems;
 
-import org.usfirst.frc.team4786.robot.OI;
 import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.commands.ArduinoLimitSwitchMonitor;
 

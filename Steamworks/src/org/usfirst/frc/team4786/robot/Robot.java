@@ -1,17 +1,13 @@
 
 package org.usfirst.frc.team4786.robot;
 
-import org.usfirst.frc.team4786.robot.commands.OpenBridge;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
-import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
-import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team4786.robot.subsystems.Intake;
-import org.usfirst.frc.team4786.robot.commands.BlueLight;
-import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
-import org.usfirst.frc.team4786.robot.commands.GreenLight;
 import org.usfirst.frc.team4786.robot.commands.RedLight;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
+import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
+import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4786.robot.subsystems.Gear;
+import org.usfirst.frc.team4786.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -122,6 +118,9 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
 		SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
+    	/*Robot.oi.getXbox().setRumble(RumbleType.kLeftRumble, 1);
+    	Robot.oi.getXbox().setRumble(RumbleType.kRightRumble, 1);
+    	*/
 	}
 
 	@Override
