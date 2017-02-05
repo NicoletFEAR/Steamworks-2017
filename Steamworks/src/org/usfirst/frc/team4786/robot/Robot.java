@@ -99,6 +99,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
+		SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
+
 	}
 
 	@Override

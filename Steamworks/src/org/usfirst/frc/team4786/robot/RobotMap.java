@@ -22,7 +22,7 @@ public class RobotMap {
 	public static final double openLoopSpeedScaling = .6;
 	
 	//General PID Constants
-	//public static final double ERROR_CONSTANT = 45;
+	public static final int ERROR_CONSTANT = 20;
 	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV = 360;
 	public static final double CLOSED_LOOP_RAMP_RATE = 0.015625;
 	public static final int IZONE = 0;
@@ -37,12 +37,12 @@ public class RobotMap {
 	public static final double OPEN_BRIDGE_ANGLE = 180;
 	public static final double CLOSED_BRIDGE_ANGLE = -180;
 	//Left GearBox PID Constants
-	public static final double LeftP = 0.0133203125; //35% throttle within 5 rotations of target
+	public static final double LeftP = 0.0888; //25% throttle within 2 rotations of target
 	public static final double LeftI = 0.0 /*LeftP / 100000*/ ;
 	public static final double LeftD = 0.0;
 	public static final double LeftF = 0.0;
 	//Right GearBox PID Constants
-	public static final double RightP = 0.0133203125;
+	public static final double RightP = 0.0888;
 	public static final double RightI = 0.0 /*RightP / 100000*/ ;
 	public static final double RightD = 0.0;
 	public static final double RightF = 0.0;
