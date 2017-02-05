@@ -21,7 +21,7 @@ public class VisionImage implements VisionPipeline {
 	private double rightContourArea;
 	private double leftContourArea;
 	
-	MatRapper filtered;
+	public MatRapper filtered;
 	
 	/*	put in robot class - robotInnit()
 	Mat image = new Mat();
@@ -59,8 +59,7 @@ public class VisionImage implements VisionPipeline {
 		return a;
 	}
 	
-	public void process(Mat image) 
-	{
+	public void process(Mat image) {
 		//try statements ensure the MatRapper class releases the memory upon each iteration
         try(MatRapper blurred = new MatRapper(new Mat())) {
         	//blurs image to smooth out false positives

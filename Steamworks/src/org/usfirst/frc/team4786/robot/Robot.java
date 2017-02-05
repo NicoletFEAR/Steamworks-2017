@@ -81,7 +81,8 @@ public class Robot extends IterativeRobot {
                 Imgproc.cvtColor(source.getMat(), output, Imgproc.COLOR_BGR2RGB);
                 visionImage.process(output);
                 //Imgproc.cvtColor(output, output2, Imgproc.COLOR_RGB2BGR);
-                outputStream.putFrame(source.getMat());
+                //outputStream.putFrame(source.getMat());
+                outputStream.putFrame(visionImage.returnFilteredImage());
             }
         }).start();
 
