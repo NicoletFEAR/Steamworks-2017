@@ -2,6 +2,12 @@
 package org.usfirst.frc.team4786.robot;
 
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
+
+import org.usfirst.frc.team4786.robot.subsystems.Climber;
+import org.usfirst.frc.team4786.robot.commands.OpenBridge;
+import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
+import org.usfirst.frc.team4786.robot.commands.GreenLight;
+
 import org.usfirst.frc.team4786.robot.commands.RedLight;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
@@ -29,6 +35,8 @@ public class Robot extends IterativeRobot {
 	public static final Intake intake = new Intake();
 	public static final DrawBridge drawBridge = new DrawBridge();
 	public static final Gear gear = new Gear();
+	public static final Climber climber = new Climber();
+
 
 	public static OI oi;
 	public static Arduino arduino;
@@ -116,6 +124,16 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
+		SmartDashboard.putNumber("Left Motor Output", driveTrain.motorOutputLeft);
+		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
+		/*
+		SmartDashboard.putNumber("Left Encoder Position", driveTrain.frontLeft.getEncPosition());
+		SmartDashboard.putNumber("Right Encoder Position", driveTrain.frontRight.getEncPosition());
+		SmartDashboard.putNumber("Left Encoder Velocity", driveTrain.frontLeft.getEncVelocity());
+		SmartDashboard.putNumber("Right Encoder Velocity", driveTrain.frontLeft.getEncVelocity());
+		*/
+
 		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
 		SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
     	/*Robot.oi.getXbox().setRumble(RumbleType.kLeftRumble, 1);
