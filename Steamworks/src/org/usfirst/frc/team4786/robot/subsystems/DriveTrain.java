@@ -54,6 +54,9 @@ public class DriveTrain extends Subsystem {
 		frontLeft.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV);
 		frontRight.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV);
 		
+		frontLeft.setPosition(0);
+		frontRight.setPosition(0);
+		
 		frontLeft.setAllowableClosedLoopErr(RobotMap.ERROR_CONSTANT);
 		frontRight.setAllowableClosedLoopErr(RobotMap.ERROR_CONSTANT);
 		

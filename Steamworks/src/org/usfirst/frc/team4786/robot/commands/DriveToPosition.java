@@ -16,7 +16,7 @@ public class DriveToPosition extends Command {
     	requires(Robot.driveTrain);
     	
     	//So we can use this variable in the execute() function
-    	targetPosition = distance;
+    	targetPosition = distance   * 60 / 76;
     }
 
     // Called just before this Command runs the first time

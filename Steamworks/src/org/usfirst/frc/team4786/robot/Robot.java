@@ -79,7 +79,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 
-		autonomousCommand = new DriveToPosition(10);
+		autonomousCommand = new DriveToPosition(6);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -118,6 +118,8 @@ public class Robot extends IterativeRobot {
 		
 		if(teleopCommand != null)
 			teleopCommand.start();
+		
+		
 	}
 
 	/**
@@ -126,6 +128,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
+		SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
 		SmartDashboard.putNumber("Left Motor Output", driveTrain.motorOutputLeft);
 		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
 		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
