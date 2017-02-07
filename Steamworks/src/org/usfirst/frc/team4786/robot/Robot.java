@@ -2,16 +2,18 @@
 package org.usfirst.frc.team4786.robot;
 
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
+
 import org.usfirst.frc.team4786.robot.subsystems.Climber;
 import org.usfirst.frc.team4786.robot.commands.OpenBridge;
-import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
-import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team4786.robot.subsystems.Intake;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.GreenLight;
+
 import org.usfirst.frc.team4786.robot.commands.RedLight;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
+import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
+import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4786.robot.subsystems.Gear;
+import org.usfirst.frc.team4786.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -32,7 +34,9 @@ public class Robot extends IterativeRobot {
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Intake intake = new Intake();
 	public static final DrawBridge drawBridge = new DrawBridge();
+	public static final Gear gear = new Gear();
 	public static final Climber climber = new Climber();
+
 
 	public static OI oi;
 	public static Arduino arduino;
@@ -78,7 +82,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -121,6 +124,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
 		SmartDashboard.putNumber("Left Motor Output", driveTrain.motorOutputLeft);
 		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
 		/*
@@ -129,8 +133,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Left Encoder Velocity", driveTrain.frontLeft.getEncVelocity());
 		SmartDashboard.putNumber("Right Encoder Velocity", driveTrain.frontLeft.getEncVelocity());
 		*/
+
 		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
 		SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
+    	/*Robot.oi.getXbox().setRumble(RumbleType.kLeftRumble, 1);
+    	Robot.oi.getXbox().setRumble(RumbleType.kRightRumble, 1);
+    	*/
 	}
 
 	@Override
