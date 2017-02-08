@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4786.robot.commands;
 
 import org.usfirst.frc.team4786.robot.Robot;
+import org.usfirst.frc.team4786.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -16,7 +17,7 @@ public class DriveToPosition extends Command {
     	requires(Robot.driveTrain);
     	
     	//So we can use this variable in the execute() function
-    	targetPosition = distance   * 60 / 76;
+    	targetPosition = distance * RobotMap.fudgeFactor;
     }
 
     // Called just before this Command runs the first time

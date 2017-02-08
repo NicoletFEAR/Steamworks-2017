@@ -28,6 +28,7 @@ public class RobotMap {
 	public static final int IZONE = 0;
 	public static final int DRIVEBASE_PROFILE = 0;
 	public static final double MAXIMUM_SPEED_VELOCITY_PID = 0.6;
+	public static final double fudgeFactor = .65;
 	//Wheel Radius measured in feet
 	public static final double WHEEL_RADIUS = 0.25;
 	//Game Mech Costants, Not final
@@ -38,12 +39,12 @@ public class RobotMap {
 	public static final double CLOSED_BRIDGE_ANGLE = -180;
 	//Left GearBox PID Constants
 	public static final double LeftP = 0.118 * 2; //25% throttle within 1.5 rotations of target
-	public static final double LeftI = 0.0 /*LeftP / 100000*/ ;
+	public static final double LeftI = 0.002 /*LeftP / 100000*/ ;
 	public static final double LeftD = 0.0;
 	public static final double LeftF = 0.0;
 	//Right GearBox PID Constants
 	public static final double RightP = 0.118 * 2;
-	public static final double RightI = 0.0 /*RightP / 100000*/ ;
+	public static final double RightI = 0.002 /*RightP / 100000*/ ;
 	public static final double RightD = 0.0;
 	public static final double RightF = 0.0;
 	//Left GearBox Velocity PID Constants
