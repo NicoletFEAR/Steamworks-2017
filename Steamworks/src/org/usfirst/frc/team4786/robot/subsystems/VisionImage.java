@@ -63,7 +63,7 @@ public class VisionImage implements VisionPipeline {
 		//try statements ensure the MatRapper class releases the memory upon each iteration
         try(MatRapper blurred = new MatRapper(new Mat())) {
         	//blurs image to smooth out false positives
-        	GaussianBlur(image, blurred.getMat(), new Size(15, 15), 0);		
+        	GaussianBlur(image, blurred.getMat(), new Size(160, 120), 0);		
         	try(MatRapper filtered = new MatRapper(new Mat())) {
         		//for getDistance() in FrameData
         		fieldOfViewWidth = filtered.getWidth();
@@ -92,8 +92,8 @@ public class VisionImage implements VisionPipeline {
         			double rectRatio = (boundingRect.height*1.0)/boundingRect.width;
         			double ratioOfTape = 5/2;	//it will be 5/2 in competition
         			double errorMargin = .25;
-        			/*filtering out false positives - contour must be taller than it is wide 
-        			 * & the ratio of the target's height over width must be = to the tape's height over width with a margin of error */
+        			//filtering out false positives - contour must be taller than it is wide 
+        			// & the ratio of the target's height over width must be = to the tape's height over width with a margin of error
         			if(boundingRect.width < boundingRect.height ) {//&& (((1 - errorMargin)*(ratioOfTape)) < rectRatio && rectRatio < (1 + errorMargin)*(ratioOfTape))) 
         				filteredContours.add(contour); 	//adds contours that fit requirements to list of contours
         				filteredContoursRect.add(boundingRect);
@@ -113,8 +113,8 @@ public class VisionImage implements VisionPipeline {
         		}
         		
         		//For Testing
-        		SmartDashboard.putNumber("Distance", Robot.frameData.getDistance());
-        		SmartDashboard.putString("Location of Target", Robot.frameData.getLocationOfTarget().name());
+        		//SmartDashboard.putNumber("Distance", Robot.frameData.getDistance());
+        		//SmartDashboard.putString("Location of Target", Robot.frameData.getLocationOfTarget().name());
 
         }catch (Exception e) {
         	e.printStackTrace();

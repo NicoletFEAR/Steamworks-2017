@@ -44,9 +44,12 @@ public class Robot extends IterativeRobot {
 	public static Climber climber = new Climber();
 	public static VisionImage visionImage = new VisionImage();
 	public static FrameData frameData;
+	public static CvSink cvSink;
+	public static CvSource outputStream;
 
 	public static OI oi;
 	public static Arduino arduino;
+	public static Mat output;
 
 	Command autonomousCommand;
 	Command teleopCommand;
@@ -68,11 +71,11 @@ public class Robot extends IterativeRobot {
             int height = 240;
             camera.setResolution(width, height);
             //camera.setFPS(1);
-            CvSink cvSink = CameraServer.getInstance().getVideo();
-            CvSource outputStream = CameraServer.getInstance().putVideo("Blur", width, height);
+            cvSink = CameraServer.getInstance().getVideo();
+            outputStream = CameraServer.getInstance().putVideo("Blur", width, height);
             
             MatRapper source = new MatRapper(new Mat());
-            Mat output = new Mat();
+            output = new Mat();
             //Mat output2= new Mat();
             
             while(!Thread.interrupted()) {
@@ -82,7 +85,7 @@ public class Robot extends IterativeRobot {
                 visionImage.process(output);
                 //Imgproc.cvtColor(output, output2, Imgproc.COLOR_RGB2BGR);
                 //outputStream.putFrame(source.getMat());
-                outputStream.putFrame(visionImage.returnFilteredImage());
+                outputStream.putFrame(source.getMat());
             }
         }).start();
 
