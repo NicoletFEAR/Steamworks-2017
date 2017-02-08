@@ -46,6 +46,7 @@ public class Robot extends IterativeRobot {
 	public static FrameData frameData;
 	public static CvSink cvSink;
 	public static CvSource outputStream;
+	int count = 0;
 
 	public static OI oi;
 	public static Arduino arduino;
@@ -66,9 +67,9 @@ public class Robot extends IterativeRobot {
 		
 		new Thread(() -> {
             UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-            //camera.setResolution(640, 480);
-            int width = 320;
-            int height = 240;
+            //CameraServer.getInstance().removeCamera("USB Camera 0");
+            int width = 320;//320
+            int height = 240;//240
             camera.setResolution(width, height);
             //camera.setFPS(1);
             cvSink = CameraServer.getInstance().getVideo();
@@ -78,13 +79,17 @@ public class Robot extends IterativeRobot {
             output = new Mat();
             //Mat output2= new Mat();
             
-            while(!Thread.interrupted()) {
+            while(/*!Thread.interrupted()*/ true) {
+            	count++;
+                //SmartDashboard.putString("Is it null?", Boolean.toString(visionImage.filtered.equals(null)));
+            	SmartDashboard.putNumber("Thread while loop count: ",count);
                 cvSink.grabFrame(source.getMat());
                 //output = source.getMat();
                 Imgproc.cvtColor(source.getMat(), output, Imgproc.COLOR_BGR2RGB);
                 visionImage.process(output);
                 //Imgproc.cvtColor(output, output2, Imgproc.COLOR_RGB2BGR);
                 //outputStream.putFrame(source.getMat());
+                //source.getMat().setTo(visionImage.returnFilteredImage());
                 outputStream.putFrame(source.getMat());
             }
         }).start();

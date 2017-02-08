@@ -63,10 +63,10 @@ public class VisionImage implements VisionPipeline {
 		//try statements ensure the MatRapper class releases the memory upon each iteration
         try(MatRapper blurred = new MatRapper(new Mat())) {
         	//blurs image to smooth out false positives
-        	GaussianBlur(image, blurred.getMat(), new Size(160, 120), 0);		
-        	try(MatRapper filtered = new MatRapper(new Mat())) {
+        	GaussianBlur(image, blurred.getMat(), new Size(160, 120), 0);
+        	try(MatRapper processLocalFiltered = new MatRapper(image)) {
         		//for getDistance() in FrameData
-        		fieldOfViewWidth = filtered.getWidth();
+        		fieldOfViewWidth = processLocalFiltered.getWidth();
         		
         		double lowB = RobotMap.lowBlueValue;
         		double lowR = RobotMap.lowRedValue;
@@ -77,45 +77,46 @@ public class VisionImage implements VisionPipeline {
         		//values from image, R:251 G:252 B:250
         		
         		//filters out contours not within color range
-        		inRange(blurred.getMat(), new Scalar(lowR, lowG, lowB), new Scalar(highR, highG, highB), filtered.getMat());	
+        		inRange(blurred.getMat(), new Scalar(lowR, lowG, lowB), new Scalar(highR, highG, highB), processLocalFiltered.getMat());	
         		
         		Mat hierarchy = new Mat();
         		List<MatOfPoint> contours = new ArrayList<>();
         		
-        		findContours(filtered.getMat(), contours, hierarchy, RETR_LIST, CHAIN_APPROX_NONE);
+        		findContours(processLocalFiltered.getMat(), contours, hierarchy, RETR_LIST, CHAIN_APPROX_NONE);
         		
         		List<MatOfPoint> filteredContours = new ArrayList<>();	//List of filtered contours
         		List<Rect> filteredContoursRect = new ArrayList<>();	//List of x value of filtered contours
         		
         		for (MatOfPoint contour : contours)	{ //for every contour(Matrix of points) in contours
         			Rect boundingRect = boundingRect(contour);		//creates a rectangle around the contour
-        			double rectRatio = (boundingRect.height*1.0)/boundingRect.width;
-        			double ratioOfTape = 5/2;	//it will be 5/2 in competition
-        			double errorMargin = .25;
+        			//double rectRatio = (boundingRect.height*1.0)/boundingRect.width;
+        			//double ratioOfTape = 5/2;	//it will be 5/2 in competition
+        			//double errorMargin = .25;
         			//filtering out false positives - contour must be taller than it is wide 
         			// & the ratio of the target's height over width must be = to the tape's height over width with a margin of error
         			if(boundingRect.width < boundingRect.height ) {//&& (((1 - errorMargin)*(ratioOfTape)) < rectRatio && rectRatio < (1 + errorMargin)*(ratioOfTape))) 
         				filteredContours.add(contour); 	//adds contours that fit requirements to list of contours
         				filteredContoursRect.add(boundingRect);
         				contoursFound = true;
-        				widthOfTarget = boundingRect.width;
         				//draws filtered contours on video display
-        				drawContours(filtered.getMat(), filteredContours, -1, new Scalar(0xFF, 0xFF, 0xFF), FILLED);
+        				drawContours(processLocalFiltered.getMat(), filteredContours, -1, new Scalar(0xFF, 0xFF, 0xFF), FILLED);
         			}
         		}
         		if(filteredContoursRect.get(0).br().x < filteredContoursRect.get(1).br().x) {
         			//if the x value of first filtered contour < second filtered contour
         			leftContourArea = filteredContoursRect.get(0).area();
         			rightContourArea = filteredContoursRect.get(1).area();
+        			widthOfTarget = filteredContoursRect.get(0).width;
         		}else{
         			leftContourArea = filteredContoursRect.get(1).area();
         			rightContourArea = filteredContoursRect.get(0).area();
+        			widthOfTarget = filteredContoursRect.get(1).width;
         		}
         		
         		//For Testing
         		//SmartDashboard.putNumber("Distance", Robot.frameData.getDistance());
         		//SmartDashboard.putString("Location of Target", Robot.frameData.getLocationOfTarget().name());
-
+        		filtered = new MatRapper(processLocalFiltered.getMat());
         }catch (Exception e) {
         	e.printStackTrace();
         }
@@ -123,8 +124,7 @@ public class VisionImage implements VisionPipeline {
         	e1.printStackTrace();
         }
 	}
-	
-	public Mat returnFilteredImage() {	//returns filtered image as Capture object
+	public Mat returnFilteredImage() {	//returns filtered image
 		return filtered.getMat();
 	}
 	public int getWidth() {
