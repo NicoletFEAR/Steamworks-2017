@@ -74,7 +74,8 @@ public class RobotMap {
 	public static final int limitSwitchGearPort = 1;
 	public static final int limitSwitchPegPort = 2;
 
-  //LED arduino constants and values
+
+	//LED arduino constants and values
 	public static final int ledArduinoPort = 8;
 
 	
