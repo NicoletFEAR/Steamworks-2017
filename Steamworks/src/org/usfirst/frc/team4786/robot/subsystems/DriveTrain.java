@@ -41,32 +41,38 @@ public class DriveTrain extends Subsystem {
 		frontLeft.enable();
 		frontRight.enable();
 		
-
 		frontLeft.setInverted(true);
-		frontRight.setInverted(false);
+
 
 		//Beginning of the world of PID!!!!!!!!
 		
-		//Make sure the CANTalons are looking at the right stored PID values
-		frontLeft.setProfile(RobotMap.DRIVEBASE_PROFILE);
-		frontRight.setProfile(RobotMap.DRIVEBASE_PROFILE);
-		//Set our PID Values
-		frontLeft.setPID(RobotMap.LeftP, RobotMap.LeftI, RobotMap.LeftD, RobotMap.LeftF, 0, 0, 0);		
-		frontRight.setPID(RobotMap.RightP, RobotMap.RightI, RobotMap.RightD, RobotMap.RightF, 0, 0, 0);
+		//Set our feedback device, otherwise nothing works
+		frontLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		frontRight.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		
-		/* Set how fast of a rate the robot will accelerate
-		   Do not remove or you get a fabulous prize of a
-		   Flipping robot */
-		frontLeft.setCloseLoopRampRate(RobotMap.CLOSED_LOOP_RAMP_RATE);
-		frontRight.setCloseLoopRampRate(RobotMap.CLOSED_LOOP_RAMP_RATE);
-		frontLeft.setIZone(RobotMap.IZONE);
-		frontRight.setIZone(RobotMap.IZONE);
+		//The encoders need to be reversed
+		frontLeft.reverseSensor(true);
+		frontRight.reverseSensor(true);
+		
+		//Beginning of the world of PID!!!!!!!!
+		
 		//Set Up the Encoder Revolutions!
 		frontLeft.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV);
 		frontRight.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV);
-		//Set Encoder Position to 0
-		frontLeft.setEncPosition(0);
-		frontRight.setEncPosition(0);
+		
+		frontLeft.setPosition(0);
+		frontRight.setPosition(0);
+		
+		frontLeft.setAllowableClosedLoopErr(RobotMap.ERROR_CONSTANT);
+		frontRight.setAllowableClosedLoopErr(RobotMap.ERROR_CONSTANT);
+		
+		//Make sure the CANTalons are looking at the right stored PID values with the Profile
+		//Set our PID Values
+		/* Set how fast of a rate the robot will accelerate
+		   Do not remove or you get a fabulous prize of a
+		   Flipping robot - CLOSED_LOOP_RAMP_RATE */
+		frontLeft.setPID(RobotMap.LeftP, RobotMap.LeftI, RobotMap.LeftD, RobotMap.LeftF, RobotMap.IZONE, RobotMap.CLOSED_LOOP_RAMP_RATE, RobotMap.DRIVEBASE_PROFILE);		
+		frontRight.setPID(RobotMap.RightP, RobotMap.RightI, RobotMap.RightD, RobotMap.RightF, RobotMap.IZONE, RobotMap.CLOSED_LOOP_RAMP_RATE, RobotMap.DRIVEBASE_PROFILE);
 	}
 	
 	// Put methods for controlling this subsystem
@@ -99,13 +105,17 @@ public class DriveTrain extends Subsystem {
 	//Begin PID Functions
 	
 	public void driveToPosition(double distanceToDrive){
-		//Run convertToRotations function
-		double rot = convertToRotations(distanceToDrive);
-		
 		//Change Talon modes to "position" just in case
 		//they were in another mode before
 		frontLeft.changeControlMode(TalonControlMode.Position);
 		frontRight.changeControlMode(TalonControlMode.Position);
+		
+		//Set Encoder Position to 0
+		frontLeft.setEncPosition(0);
+		frontRight.setEncPosition(0);
+		
+		//Run convertToRotations function
+		double rot = convertToRotations(distanceToDrive);
 		
 		//Make motors drive number of rotations
 		//calculated before by convertToRotations()
@@ -114,8 +124,21 @@ public class DriveTrain extends Subsystem {
 		//otherwise, you have a spinning robot on your hands
 		frontRight.set(-rot);
 		
-		SmartDashboard.putNumber("Position", frontLeft.getPosition());
+		SmartDashboard.putNumber("Rotations Calculated", rot);
 	}
+	
+	
+	public double getLeftEncoderPosition()
+	{
+		//Make sure graph isn't upside down (The stocks are going into the toilet!!)
+		return -frontLeft.getEncPosition();
+	}
+	
+	public double getRightEncoderPosition()
+	{
+		return frontRight.getEncPosition();
+	}
+	
 	
 	public void driveWithVelocityInit(){
 		//Set our type of feedback device/encoder type

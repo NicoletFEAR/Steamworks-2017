@@ -2,28 +2,25 @@ package org.usfirst.frc.team4786.robot.commands;
 
 import org.usfirst.frc.team4786.robot.Robot;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class OpenClimb extends Command {
+public class PositionPIDClimb extends Command {
 
-    public OpenClimb() {
-    	//We need the only people who can climb on ice(A rope)!
-    	//The ICE CLIMBERS!
-        requires(Robot.climber);
+    public PositionPIDClimb() {
+        //We need a climber to climb!
+    	requires(Robot.climber);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.climber.startPIDClimbing();
     }
 
-    //Called repeatedly when this Command is scheduled to run
-    //We just start climbing!
+    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.climber.startOpenClimbing();
     }
 
     // Make this return true when this Command no longer needs to run execute()
