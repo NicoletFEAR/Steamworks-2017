@@ -2,14 +2,9 @@
 package org.usfirst.frc.team4786.robot;
 
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
-
-import org.usfirst.frc.team4786.robot.subsystems.Climber;
-import org.usfirst.frc.team4786.robot.commands.OpenBridge;
-import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
-import org.usfirst.frc.team4786.robot.commands.GreenLight;
-
-import org.usfirst.frc.team4786.robot.commands.RedLight;
+import org.usfirst.frc.team4786.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
+import org.usfirst.frc.team4786.robot.subsystems.Climber;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4786.robot.subsystems.Gear;
@@ -59,7 +54,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-
+		autonomousCommand = new TurnToAngle(90);
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();
