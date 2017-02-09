@@ -23,7 +23,7 @@ public class RobotMap {
 	
 	//General PID Constants
 	public static final int ERROR_CONSTANT = 360; //In native units
-	public static final int ALLOWABLE_TURN_ERROR = 5; //In degrees
+	public static final int ALLOWABLE_TURN_ERROR = 1; //In degrees
 	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV = 360;
 	public static final double CLOSED_LOOP_RAMP_RATE = 0.015625;
 	public static final int IZONE = 0;
@@ -60,8 +60,8 @@ public class RobotMap {
 	public static final double RightVelocityF = 0.1097;
 	//NavX turn PID Constants
 	public static final double TurnP = 0.03;
-	public static final double TurnI = 0.0001;
-	public static final double TurnD = 0.0;
+	public static final double TurnI = 0.0005;
+	public static final double TurnD = 0.004;
 	public static final double TurnF = 0.0;
 	//Climbing PID Constants
 	public static final double ClimbingP = 0.0;

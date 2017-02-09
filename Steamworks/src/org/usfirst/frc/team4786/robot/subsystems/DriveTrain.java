@@ -218,6 +218,10 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("NavX Turn Rate", navX.getRate());
 	}
 	
+	public boolean turnToAngleIsFinished(){
+		return false;
+	}
+	
 	public void turnToAngleEnd(){
 		turnController.disable();
 	}
