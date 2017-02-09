@@ -79,7 +79,7 @@ public class Robot extends IterativeRobot {
             output = new Mat();
             //Mat output2= new Mat();
             
-            while(/*!Thread.interrupted()*/ true) {
+            while(!Thread.interrupted()) {
             	count++;
                 //SmartDashboard.putString("Is it null?", Boolean.toString(visionImage.filtered.equals(null)));
             	SmartDashboard.putNumber("Thread while loop count: ",count);
@@ -90,7 +90,7 @@ public class Robot extends IterativeRobot {
                 //Imgproc.cvtColor(output, output2, Imgproc.COLOR_RGB2BGR);
                 //outputStream.putFrame(source.getMat());
                 //source.getMat().setTo(visionImage.returnFilteredImage());
-                outputStream.putFrame(source.getMat());
+                outputStream.putFrame(visionImage.returnFilteredImage());
             }
         }).start();
 

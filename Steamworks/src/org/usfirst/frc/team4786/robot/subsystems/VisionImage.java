@@ -21,7 +21,7 @@ public class VisionImage implements VisionPipeline {
 	private double rightContourArea;
 	private double leftContourArea;
 	
-	public MatRapper filtered;
+	public Mat filtered = new Mat();
 	
 	/*	put in robot class - robotInnit()
 	Mat image = new Mat();
@@ -116,7 +116,7 @@ public class VisionImage implements VisionPipeline {
         		//For Testing
         		//SmartDashboard.putNumber("Distance", Robot.frameData.getDistance());
         		//SmartDashboard.putString("Location of Target", Robot.frameData.getLocationOfTarget().name());
-        		filtered = new MatRapper(processLocalFiltered.getMat());
+        		filtered = processLocalFiltered.getMat();
         }catch (Exception e) {
         	e.printStackTrace();
         }
@@ -125,12 +125,12 @@ public class VisionImage implements VisionPipeline {
         }
 	}
 	public Mat returnFilteredImage() {	//returns filtered image
-		return filtered.getMat();
+		return filtered;
 	}
-	public int getWidth() {
-		return filtered.getWidth();
+	/*public int getWidth() {
+		return processLocalFiltered.getWidth();
 	}
 	public int getHeight() {
-		return filtered.getHeight();
-	}
+		//return filtered.getHeight();
+	}*/
 }
