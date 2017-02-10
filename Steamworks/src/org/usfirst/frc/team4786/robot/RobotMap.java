@@ -68,13 +68,18 @@ public class RobotMap {
 	
 	//Vision constants
 	//for filtering
-	public static final int highRedValue = 10;
+	public static final int highRedValue = 50;
 	public static final int highGreenValue = 255;
-	public static final int highBlueValue = 130;
+	public static final int highBlueValue = 140;
 	
 	public static final int lowRedValue = 0;
-	public static final int lowGreenValue = 200;
-	public static final int lowBlueValue = 100;
+	public static final int lowGreenValue = 70;
+	public static final int lowBlueValue = 20;
+	
+	public static final int exposure = 1;
+	//new values: R:0, G: 196. B: 120
+	//values from image, R:251 G:252 B:250
+
 	
     /* For example to map the left and right motors, you could define the
      following variables to use with your drivetrain subsystem.

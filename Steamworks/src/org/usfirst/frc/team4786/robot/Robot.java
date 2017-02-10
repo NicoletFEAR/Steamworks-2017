@@ -9,8 +9,12 @@ import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4786.robot.subsystems.FrameData;
 import org.usfirst.frc.team4786.robot.subsystems.Intake;
 import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
+import org.usfirst.frc.team4786.robot.subsystems.Test;
 import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.GreenLight;
@@ -37,16 +41,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
+	Thread visionThread;
+	
 	//We setup our subsystem objects here
 	public static DriveTrain driveTrain = new DriveTrain();
 	public static Intake intake = new Intake();
 	public static DrawBridge drawBridge = new DrawBridge();
 	public static Climber climber = new Climber();
-	public static VisionImage visionImage = new VisionImage();
+	/*public static VisionImage visionImage = new VisionImage();
 	public static FrameData frameData;
 	public static CvSink cvSink;
 	public static CvSource outputStream;
-	int count = 0;
+	int count = 0;*/
 
 	public static OI oi;
 	public static Arduino arduino;
@@ -62,37 +68,65 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		frameData = new FrameData();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
 		
-		new Thread(() -> {
-            UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-            //CameraServer.getInstance().removeCamera("USB Camera 0");
-            int width = 320;//320
-            int height = 240;//240
-            camera.setResolution(width, height);
-            //camera.setFPS(1);
-            cvSink = CameraServer.getInstance().getVideo();
-            outputStream = CameraServer.getInstance().putVideo("Blur", width, height);
-            
-            MatRapper source = new MatRapper(new Mat());
-            output = new Mat();
-            //Mat output2= new Mat();
-            
-            while(!Thread.interrupted()) {
-            	count++;
-                //SmartDashboard.putString("Is it null?", Boolean.toString(visionImage.filtered.equals(null)));
-            	SmartDashboard.putNumber("Thread while loop count: ",count);
-                cvSink.grabFrame(source.getMat());
-                //output = source.getMat();
-                Imgproc.cvtColor(source.getMat(), output, Imgproc.COLOR_BGR2RGB);
-                visionImage.process(output);
-                //Imgproc.cvtColor(output, output2, Imgproc.COLOR_RGB2BGR);
-                //outputStream.putFrame(source.getMat());
-                //source.getMat().setTo(visionImage.returnFilteredImage());
-                outputStream.putFrame(visionImage.returnFilteredImage());
-            }
-        }).start();
+		visionThread = new Thread(() -> {
+			// Get the UsbCamera from CameraServer
+			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+			// Set the resolution
+			camera.setResolution(640, 480);
+			camera.setExposureManual(RobotMap.exposure);
+
+			// Get a CvSink. This will capture Mats from the camera
+			CvSink cvSink = CameraServer.getInstance().getVideo();
+			// Setup a CvSource. This will send images back to the Dashboard
+			CvSource outputStream = CameraServer.getInstance().putVideo("Rectangle", 320, 240);
+			CvSource regStream = CameraServer.getInstance().putVideo("Regular", 320, 240);
+
+			// Mats are very memory expensive. Lets reuse this Mat.
+			
+			try(MatRapper mat = new MatRapper(new Mat());)
+			{
+			// This cannot be 'true'. The program will never exit if it is. This
+			// lets the robot stop this thread when restarting robot code or
+			// deploying.
+			while (!Thread.interrupted()) {
+				// Tell the CvSink to grab a frame from the camera and put it
+				// in the source mat.  If there is an error notify the output.
+				if (cvSink.grabFrame(mat.getMat()) == 0) {
+					// Send the output the error.
+					outputStream.notifyError(cvSink.getError());
+					regStream.notifyError(cvSink.getError());
+
+					// skip the rest of the current iteration
+					continue;
+				}
+				
+				// Put a rectangle on the image
+				//Imgproc.rectangle(mat.getMat(), new Point(100, 100), new Point(400, 400), new Scalar(255, 255, 255), 5);
+				//Mat output = new Mat();
+				//Imgproc.GaussianBlur(mat, output, new Size(160,120), 0);
+				//Imgproc.blur(mat, output, new Size(320,240));
+				regStream.putFrame(mat.getMat());
+
+				//Core.inRange(mat.getMat(), new Scalar(250,250,250), new Scalar(255,255,255), mat.getMat());
+
+				//BGR
+				Core.inRange(mat.getMat(), new Scalar(RobotMap.lowBlueValue,RobotMap.lowGreenValue,RobotMap.lowRedValue), new Scalar(RobotMap.highBlueValue,RobotMap.highGreenValue,RobotMap.highRedValue), mat.getMat());
+
+				
+				// Give the output stream a new image to display
+				outputStream.putFrame(mat.getMat());
+			}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		visionThread.setDaemon(true);
+		visionThread.start();
+		
+		
 
 	}
 
@@ -172,10 +206,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
 		SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
 		
-		SmartDashboard.putBoolean("Found strips?", visionImage.getContoursFound());
-		SmartDashboard.putNumber("Left area", visionImage.getLeftContourArea());
-		SmartDashboard.putNumber("Right area", visionImage.getRightContourArea());
-		SmartDashboard.putNumber("Number of targets found", visionImage.getNumberOfTargets());
+		
 	}
 
 	@Override

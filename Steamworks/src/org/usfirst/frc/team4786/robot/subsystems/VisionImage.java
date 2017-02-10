@@ -3,6 +3,8 @@ package org.usfirst.frc.team4786.robot.subsystems;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionPipeline;
 import org.opencv.core.*;
+import org.opencv.imgproc.Imgproc;
+
 import java.util.ArrayList;
 import java.util.List;
 import static org.opencv.imgproc.Imgproc.*;
@@ -60,10 +62,12 @@ public class VisionImage implements VisionPipeline {
 	}
 	
 	public void process(Mat image) {
+		
+		
 		//try statements ensure the MatRapper class releases the memory upon each iteration
         try(MatRapper blurred = new MatRapper(new Mat())) {
         	//blurs image to smooth out false positives
-        	GaussianBlur(image, blurred.getMat(), new Size(160, 120), 0);
+        	GaussianBlur(image, blurred.getMat(), new Size(320, 240), 0);
         	try(MatRapper processLocalFiltered = new MatRapper(image)) {
         		//for getDistance() in FrameData
         		fieldOfViewWidth = processLocalFiltered.getWidth();
@@ -116,7 +120,7 @@ public class VisionImage implements VisionPipeline {
         		//For Testing
         		//SmartDashboard.putNumber("Distance", Robot.frameData.getDistance());
         		//SmartDashboard.putString("Location of Target", Robot.frameData.getLocationOfTarget().name());
-        		filtered = processLocalFiltered.getMat();
+        		filtered = blurred.getMat();
         }catch (Exception e) {
         	e.printStackTrace();
         }

@@ -8,10 +8,10 @@ public class VisionListener implements Listener<VisionImage> {
 
 	@Override
 	public void copyPipelineOutputs(VisionImage pipeline) {
-		Robot.frameData.targetAcquired = Robot.visionImage.getContoursFound();
+		/*Robot.frameData.targetAcquired = Robot.visionImage.getContoursFound();
 		Robot.frameData.pixelWidthOfTarget = Robot.visionImage.getWidthOfTarget();
 		Robot.frameData.pixelFieldOfViewWidth = Robot.visionImage.getFieldOfViewWidth();
 		Robot.frameData.leftTargetArea = Robot.visionImage.getLeftContourArea();
-		Robot.frameData.rightTargetArea = Robot.visionImage.getRightContourArea();
+		Robot.frameData.rightTargetArea = Robot.visionImage.getRightContourArea();*/
 	}
 }
