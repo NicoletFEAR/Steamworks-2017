@@ -1,4 +1,4 @@
-
+ 
 package org.usfirst.frc.team4786.robot;
 
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
@@ -9,6 +9,7 @@ import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4786.robot.subsystems.FrameData;
 import org.usfirst.frc.team4786.robot.subsystems.Intake;
 import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
+import org.usfirst.frc.team4786.robot.subsystems.SwitchState;
 import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
@@ -176,6 +177,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Left area", visionImage.getLeftContourArea());
 		SmartDashboard.putNumber("Right area", visionImage.getRightContourArea());
 		SmartDashboard.putNumber("Number of targets found", visionImage.getNumberOfTargets());
+		SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
+		SmartDashboard.putNumber("Old State", SwitchState.oldState);  // get rid of them if we don't have this method
 	}
 
 	@Override
