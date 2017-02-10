@@ -59,9 +59,9 @@ public class RobotMap {
 	public static final double RightVelocityD = 0.0;
 	public static final double RightVelocityF = 0.1097;
 	//NavX turn PID Constants
-	public static final double TurnP = 0.03;
-	public static final double TurnI = 0.0005;
-	public static final double TurnD = 0.004;
+	public static final double TurnP = 0.025;
+	public static final double TurnI = 0.006;
+	public static final double TurnD = 0.04;
 	public static final double TurnF = 0.0;
 	//Climbing PID Constants
 	public static final double ClimbingP = 0.0;

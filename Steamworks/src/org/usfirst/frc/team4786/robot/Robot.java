@@ -54,7 +54,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = new TurnToAngle(90);
+		autonomousCommand = new TurnToAngle(180);
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();

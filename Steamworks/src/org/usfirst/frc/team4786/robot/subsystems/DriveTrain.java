@@ -219,7 +219,7 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 	}
 	
 	public boolean turnToAngleIsFinished(){
-		return false;
+		return turnController.onTarget();
 	}
 	
 	public void turnToAngleEnd(){
