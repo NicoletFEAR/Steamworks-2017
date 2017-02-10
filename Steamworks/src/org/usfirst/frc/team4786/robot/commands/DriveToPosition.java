@@ -23,7 +23,7 @@ public class DriveToPosition extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//Let's drive!
-    	Robot.driveTrain.driveToPosition(targetPosition);
+    	Robot.driveTrain.driveToPositionInit(targetPosition);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -32,7 +32,7 @@ public class DriveToPosition extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.driveTrain.driveToPositionIsFinished();
     }
 
     // Called once after isFinished returns true

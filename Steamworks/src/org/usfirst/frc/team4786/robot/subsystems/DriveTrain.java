@@ -29,6 +29,9 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 	private PIDController turnController;
 	private double turnToAngleRate;
 	
+	//Timer for DriveToPosition command, helps with IsFinished() command
+	private int time = 0;
+	
 	//Robot will drive as if the front side is the back when reversed is true
 	private boolean reversed;
 	
@@ -119,7 +122,7 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 	
 	//Begin PID Functions
 	
-	public void driveToPosition(double distanceToDrive){
+	public void driveToPositionInit(double distanceToDrive){
 		//Change Talon modes to "position" just in case
 		//they were in another mode before
 		frontLeft.changeControlMode(TalonControlMode.Position);
@@ -142,6 +145,13 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("Rotations Calculated", rot);
 	}
 	
+	//Some special isFinished() command stuff to not stop before the robot has even moved
+	public boolean driveToPositionIsFinished() 
+	{
+		if (Math.abs(frontLeft.getError()) <= RobotMap.ERROR_CONSTANT && Math.abs(frontRight.getError()) <= RobotMap.ERROR_CONSTANT)
+			time++;
+		return (time > 1);
+	}
 	
 	public double getLeftEncoderPosition()
 	{
