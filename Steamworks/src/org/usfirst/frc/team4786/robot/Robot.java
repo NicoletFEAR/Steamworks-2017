@@ -11,9 +11,22 @@ import org.usfirst.frc.team4786.robot.subsystems.Intake;
 import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
 import org.usfirst.frc.team4786.robot.subsystems.Test;
 import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
+
+import static org.opencv.core.Core.FILLED;
+import static org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE;
+import static org.opencv.imgproc.Imgproc.RETR_LIST;
+import static org.opencv.imgproc.Imgproc.boundingRect;
+import static org.opencv.imgproc.Imgproc.drawContours;
+import static org.opencv.imgproc.Imgproc.findContours;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
+import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
@@ -113,7 +126,31 @@ public class Robot extends IterativeRobot {
 
 				//BGR
 				Core.inRange(mat.getMat(), new Scalar(RobotMap.lowBlueValue,RobotMap.lowGreenValue,RobotMap.lowRedValue), new Scalar(RobotMap.highBlueValue,RobotMap.highGreenValue,RobotMap.highRedValue), mat.getMat());
-
+				
+				Mat hierarchy = new Mat();
+        		List<MatOfPoint> contours = new ArrayList<>();
+        		
+        		//filtered camera feed won't show filtered objects after this - until draw contours
+        		findContours(mat.getMat(), contours, hierarchy, RETR_LIST, CHAIN_APPROX_NONE);
+        		
+        		List<MatOfPoint> filteredContours = new ArrayList<>();	//List of filtered contours
+        		List<Rect> filteredContoursRect = new ArrayList<>();	//List of filtered contours as Rect objects
+        		
+        		for (MatOfPoint contour : contours)	{ //for every contour(Matrix of points) in contours
+        			Rect boundingRect = boundingRect(contour);		//creates a rectangle around the contour
+        			//double rectRatio = (boundingRect.height*1.0)/boundingRect.width;
+        			//double ratioOfTape = 5/2;	//it will be 5/2 in competition
+        			//double errorMargin = .25;
+        			//filtering out false positives - contour must be taller than it is wide 
+        			// & the ratio of the target's height over width must be = to the tape's height over width with a margin of error
+        			if(boundingRect.width < boundingRect.height ) {//&& (((1 - errorMargin)*(ratioOfTape)) < rectRatio && rectRatio < (1 + errorMargin)*(ratioOfTape))) 
+        				filteredContours.add(contour); 	//adds contours that fit requirements to list of contours
+        				filteredContoursRect.add(boundingRect);
+        				//contoursFound = true;
+        				//draws filtered contours on video display
+        				drawContours(mat.getMat(), filteredContours, -1, new Scalar(0xFF, 0xFF, 0xFF), FILLED);
+        			}
+        		}
 				
 				// Give the output stream a new image to display
 				outputStream.putFrame(mat.getMat());

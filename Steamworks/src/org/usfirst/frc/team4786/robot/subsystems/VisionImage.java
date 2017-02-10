@@ -89,7 +89,7 @@ public class VisionImage implements VisionPipeline {
         		findContours(processLocalFiltered.getMat(), contours, hierarchy, RETR_LIST, CHAIN_APPROX_NONE);
         		
         		List<MatOfPoint> filteredContours = new ArrayList<>();	//List of filtered contours
-        		List<Rect> filteredContoursRect = new ArrayList<>();	//List of x value of filtered contours
+        		List<Rect> filteredContoursRect = new ArrayList<>();	//List of filtered contours as Rect objects
         		
         		for (MatOfPoint contour : contours)	{ //for every contour(Matrix of points) in contours
         			Rect boundingRect = boundingRect(contour);		//creates a rectangle around the contour
