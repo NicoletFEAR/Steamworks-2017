@@ -1,12 +1,9 @@
 package org.usfirst.frc.team4786.robot;
 
-import org.usfirst.frc.team4786.robot.commands.SwitchFrontSide;
-
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 
 
@@ -16,11 +13,14 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	//instantiate buttons, sensors, joysticks, and Xbox controllers here
-	private Joystick leftDriveJoy;
-    private Joystick rightDriveJoy;
+	private final Joystick leftDriveJoy;
+    private final Joystick rightDriveJoy;
 	private final DigitalInput limitSwitchGear;
 	private final DigitalInput limitSwitchPeg;
 	private final XboxController xbox;
+	public static GenericHID.Hand kLeft;
+	public static GenericHID.Hand kRight;
+	
     public OI(){
     	//Init the objects for all the buttons, sensors, joysticks, and Xbox controllers
     	leftDriveJoy = new Joystick(0);
@@ -31,6 +31,32 @@ public class OI {
     	    	
     	limitSwitchGear = new DigitalInput(RobotMap.limitSwitchGearPort);
     	limitSwitchPeg = new DigitalInput(RobotMap.limitSwitchPegPort);
+    	
+    	/*if (xbox.getAButton() == true) {
+    		//would be automated gear
+    	} */
+    	//all buttons are only while held
+    	if (xbox.getBButton() == true) {
+        	Robot.climber.startOpenClimbing();
+    	}
+    	
+    	/*if (xbox.get?Button() == true) {
+        	//stop climbing, or if drivers want to hold, it doesn't matter
+    	} */
+    	
+    	if (xbox.getBumper(kLeft) == true) {
+    		Robot.drawBridge.openThyBridge();
+    	} else if (xbox.getBumper(kLeft) == false) {
+    		Robot.drawBridge.closeThyBridge();
+    	}
+    	//need a button to switch cameras
+    	
+    	//drawbridge closes when false
+    	
+    	if (xbox.getBumper(kRight) == true) {
+    		Robot.intake.collectBalls();
+    		//might not be correct, we kinda just put whatever we found
+    	}
     }
 	
 	public Joystick getLeftDriveJoy() {
@@ -51,10 +77,5 @@ public class OI {
 	public DigitalInput getPegLimitSwitch(){
 		return limitSwitchPeg;
 	}
-	
-	public void switchJoystickIDs(){
-		int temp = leftDriveJoy.getPort();
-		leftDriveJoy = new Joystick(rightDriveJoy.getPort());
-		rightDriveJoy = new Joystick(temp);
-	}
+
 }
