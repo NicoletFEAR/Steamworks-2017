@@ -38,11 +38,9 @@ public class OI {
     	//all buttons are only while held
     	if (xbox.getBButton() == true) {
         	Robot.climber.startOpenClimbing();
+    	} else if (xbox.getBButton() == false) {
+    		Robot.climber.stopClimbing();
     	}
-    	
-    	/*if (xbox.get?Button() == true) {
-        	//stop climbing, or if drivers want to hold, it doesn't matter
-    	} */
     	
     	if (xbox.getBumper(kLeft) == true) {
     		Robot.drawBridge.openThyBridge();
