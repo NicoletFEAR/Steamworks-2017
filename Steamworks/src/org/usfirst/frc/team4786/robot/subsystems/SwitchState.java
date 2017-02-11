@@ -91,7 +91,7 @@ public class SwitchState extends Subsystem {
 	    	Robot.arduino.writeStringData("heartbeat");
 	    	return;
 		}
-        if (newState > 7){
+        if (newState >= 7){
 	    	Robot.arduino.writeStringData("redlight");
 	    	return;
 		}
