@@ -14,7 +14,7 @@ public class RobotMap {
 	
 	//Our CANTalon game mech ports
 	//Change these mech Talon IDs, do not know final CANTalon ids yet
-	public static final int intakePort = 18;
+	public static final int intakePort = 16;
 	public static final int climbMotorPort = 16;
 	public static final int bridgeServoChannel = 4;
 	
@@ -59,9 +59,13 @@ public class RobotMap {
 	public static final double RightVelocityD = 0.0;
 	public static final double RightVelocityF = 0.1097;
 	//NavX turn PID Constants
-	public static final double TurnP = 0.025;
+/*	public static final double TurnP = 0.025;
 	public static final double TurnI = 0.006;
 	public static final double TurnD = 0.04;
+	public static final double TurnF = 0.0; */
+	public static final double TurnP = 0.02;
+	public static final double TurnI = 0.006;
+	public static final double TurnD = 0.06;
 	public static final double TurnF = 0.0;
 	//Climbing PID Constants
 	public static final double ClimbingP = 0.0;

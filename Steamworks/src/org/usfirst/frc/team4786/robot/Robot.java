@@ -1,7 +1,6 @@
 
 package org.usfirst.frc.team4786.robot;
 
-import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
 import org.usfirst.frc.team4786.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
@@ -55,7 +54,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = new DriveToPosition(10);
+		autonomousCommand = new TurnToAngle(30);
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -69,7 +68,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
 		SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
-
+		SmartDashboard.putNumber("Servo Angle", drawBridge.getServoAngle());
 	}
 
 	@Override
@@ -86,8 +85,6 @@ public class Robot extends IterativeRobot {
 		
 		if(teleopCommand != null)
 			teleopCommand.start();
-		
-		
 	}
 
 

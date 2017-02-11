@@ -228,6 +228,7 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("NavX Turn Rate", navX.getRate());
 	}
 	
+	//Another weird variable check for if turning should stop
 	public boolean turnToAngleIsFinished(){
 		return turnController.onTarget();
 	}
