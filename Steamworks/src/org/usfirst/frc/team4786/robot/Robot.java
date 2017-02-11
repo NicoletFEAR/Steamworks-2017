@@ -51,6 +51,7 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static Arduino arduino;
+	public static SwitchState switchState;
 	public static Mat output;
 
 	Command autonomousCommand;
@@ -65,6 +66,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		frameData = new FrameData();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
+		switchState = new SwitchState();
 		
 		new Thread(() -> {
             UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
@@ -168,6 +170,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		switchState.switchChange();
 		SmartDashboard.putNumber("Left Motor Output", driveTrain.motorOutputLeft);
 		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
 		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());

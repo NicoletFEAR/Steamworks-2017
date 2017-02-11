@@ -54,11 +54,30 @@ public class SwitchState extends Subsystem {
 
 	public void switchChange() {
 		oldState = newState;
-		newState = setNewState();
+		newState = setNewState(); 
+		if (oldState == newState) {
+			return;
+		}
+		if (newState == 0){
+			Robot.arduino.writeStringData("greenlight");
+	    	return;	
+		}
 		
+		if (newState == 4){
+			Robot.arduino.writeStringData("yellowlight");
+	    	return;	
+		}
+		if (newState == 8){
+			Robot.arduino.writeStringData("teallight");
+	    	return;	
+		}
 		if (oldState == 1 && newState == 3){
 	    	Robot.arduino.writeStringData("teallight");
 	    	return;			
+		}
+		if (newState == 3){
+			Robot.arduino.writeStringData("orangelight");
+	    	return;	
 		}
 		if (oldState == 2 && newState == 3){ // pressing just 2 then 2 + 1
 	    	Robot.arduino.writeStringData("heartbeat");
@@ -69,7 +88,7 @@ public class SwitchState extends Subsystem {
 	    	return;
 		}
 		if (newState == 1 | newState == 3 | newState == 5 | newState == 7 | newState == 9 | newState == 11 | newState == 13 | newState == 15) {
-	    	Robot.arduino.writeStringData("bluelight");
+	    	Robot.arduino.writeStringData("heartbeat");
 	    	return;
 		}
         if (newState > 7){
@@ -85,16 +104,16 @@ public class SwitchState extends Subsystem {
 
 	public int setNewState() {
 		int calcState = 0;
-		if (Robot.oi.getLimit1Switch().get()) {
+		if (!Robot.oi.getLimit1Switch().get()) {
 			calcState = calcState +1;
 		}
-		if (Robot.oi.getLimit2Switch().get()) {
+		if (!Robot.oi.getLimit2Switch().get()) {
 			calcState = calcState +2;
 		}
-		if (Robot.oi.getLimit3Switch().get()) {
+		if (!Robot.oi.getLimit3Switch().get()) {
 			calcState = calcState +4;
 		}
-		if (Robot.oi.getLimit4Switch().get()) {
+		if (!Robot.oi.getLimit4Switch().get()) {
 			calcState = calcState +8;
 		}
 		return calcState;
