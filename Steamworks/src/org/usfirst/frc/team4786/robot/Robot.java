@@ -120,14 +120,7 @@ public class Robot extends IterativeRobot {
 				// Put a rectangle on the image
 				//Imgproc.rectangle(mat.getMat(), new Point(100, 100), new Point(400, 400), new Scalar(255, 255, 255), 5);
 				//Mat output = new Mat();
-				//Imgproc.GaussianBlur(mat, output, new Size(160,120), 0);
-				//Imgproc.blur(mat, output, new Size(320,240));
 				regStream.putFrame(mat.getMat());
-
-				//Core.inRange(mat.getMat(), new Scalar(250,250,250), new Scalar(255,255,255), mat.getMat());
-				
-				//BGR
-				
 				
 			}
 			} catch (Exception e) {

@@ -21,8 +21,8 @@ public class VisionImage {
 	static double smallestRectArea = 100;
 	static Rect leftRect;
 	static Rect rightRect;
-	static double distanceToLeft;
-	static double distanceToRight;
+	static double distanceToLeft = 0;
+	static double distanceToRight = 0;
 	
 	public static void processImage(MatRapper mat){
 		Core.inRange(mat.getMat(), new Scalar(RobotMap.lowBlueValue,RobotMap.lowGreenValue,RobotMap.lowRedValue), new Scalar(RobotMap.highBlueValue,RobotMap.highGreenValue,RobotMap.highRedValue), mat.getMat());
