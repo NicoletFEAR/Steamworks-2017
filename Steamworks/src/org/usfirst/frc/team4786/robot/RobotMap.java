@@ -68,6 +68,7 @@ public class RobotMap {
 	
 	//Vision constants
 	//for filtering
+	//new values: R:0, G: 196. B: 120
 	public static final int highRedValue = 50;
 	public static final int highGreenValue = 255;
 	public static final int highBlueValue = 140;
@@ -77,9 +78,18 @@ public class RobotMap {
 	public static final int lowBlueValue = 20;
 	
 	public static final int exposure = 1;
-	//new values: R:0, G: 196. B: 120
-	//values from image, R:251 G:252 B:250
-
+	public static final int cameraFOVHeight = 480;
+	public static final int cameraFOVWidth = 640;
+	public static final int minPixelCount = 500;
+	
+	//for calculating distance
+	public static final double heightOfTargetInFeet = 5.0/12; 
+	public static final double cameraFOVHeightInFeet = .19685;//10.6cm - 4.173228in - 0.19685ft
+	public static final double distanceAtCalibration = .262467;//12.8cm - 5.03937in - 0.262467ft
+	public static final double distanceOfCamFromFrontOfBot = 0;
+	
+	//for calculating angles
+	public static final double distanceBetweenCentersOfTargets = 8.25/12;
 	
     /* For example to map the left and right motors, you could define the
      following variables to use with your drivetrain subsystem.
