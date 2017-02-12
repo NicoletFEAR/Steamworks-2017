@@ -1,8 +1,11 @@
 
 package org.usfirst.frc.team4786.robot;
 
+import org.usfirst.frc.team4786.robot.commands.DoNothing;
+import org.usfirst.frc.team4786.robot.commands.DriveToLeftGearPeg;
+import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
+import org.usfirst.frc.team4786.robot.commands.DriveToRightGearPeg;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
-import org.usfirst.frc.team4786.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.Climber;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
@@ -14,6 +17,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -33,11 +37,20 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	Command teleopCommand;
 
-
+	SendableChooser<Command> sendableChooser;
+	
 	@Override
 	public void robotInit() {
 		oi = new OI();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
+		
+		sendableChooser = new SendableChooser<Command>();
+		sendableChooser.addDefault("Do nothing", new DoNothing());
+		sendableChooser.addObject("Drive to baseline", new DriveToPosition(10));
+		sendableChooser.addObject("Drive to center gear peg", new DriveToPosition(8));
+		sendableChooser.addObject("Drive to left gear peg", new DriveToLeftGearPeg());
+		sendableChooser.addObject("Drive to right gear peg", new DriveToRightGearPeg());
+		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 	}
 
 
@@ -54,7 +67,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = new TurnToAngle(30);
+		autonomousCommand = new DriveToLeftGearPeg();
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();
