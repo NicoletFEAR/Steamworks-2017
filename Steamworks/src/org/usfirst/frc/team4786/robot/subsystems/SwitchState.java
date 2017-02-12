@@ -58,6 +58,11 @@ public class SwitchState extends Subsystem {
 		if (oldState == newState) {
 			return;
 		}
+		if (newState == 14){
+			Robot.arduino.writeStringData("whitelight");
+	    	Robot.arduino.writeStringData("playFifth");
+	    	return;	
+		}
 		if (newState == 0){
 			Robot.arduino.writeStringData("greenlight");
 	    	return;	
