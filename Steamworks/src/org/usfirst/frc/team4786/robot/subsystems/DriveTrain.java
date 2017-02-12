@@ -1,7 +1,5 @@
 package org.usfirst.frc.team4786.robot.subsystems;
-import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.RobotMap;
-import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
 
 import com.ctre.CANTalon;
@@ -9,22 +7,30 @@ import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.SPI.Port;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class DriveTrain extends Subsystem {
+public class DriveTrain extends Subsystem implements PIDOutput {
 	
 	//CANTalon objects, there is a reason why they are private
 
 	private CANTalon frontLeft = new CANTalon(RobotMap.frontLeftPort);
 	private CANTalon frontRight = new CANTalon(RobotMap.frontRightPort);
+	
+	//NavX and PIDController objects
+	private AHRS navX;
+	private PIDController turnController;
+	private double turnToAngleRate;
+	
+	//Timer for DriveToPosition command, helps with IsFinished() command
+	private int time = 0;
 	
 	//Robot will drive as if the front side is the back when reversed is true
 	private boolean reversed;
@@ -73,6 +79,18 @@ public class DriveTrain extends Subsystem {
 		   Flipping robot - CLOSED_LOOP_RAMP_RATE */
 		frontLeft.setPID(RobotMap.LeftP, RobotMap.LeftI, RobotMap.LeftD, RobotMap.LeftF, RobotMap.IZONE, RobotMap.CLOSED_LOOP_RAMP_RATE, RobotMap.DRIVEBASE_PROFILE);		
 		frontRight.setPID(RobotMap.RightP, RobotMap.RightI, RobotMap.RightD, RobotMap.RightF, RobotMap.IZONE, RobotMap.CLOSED_LOOP_RAMP_RATE, RobotMap.DRIVEBASE_PROFILE);
+		
+		//Initialize NavX and turnController objects
+		navX = new AHRS(SPI.Port.kMXP);
+		turnController = new PIDController(RobotMap.TurnP, RobotMap.TurnI, RobotMap.TurnD, RobotMap.TurnF, navX, this);
+		turnController.setInputRange(-180.0f,  180.0f);
+		turnController.setOutputRange(-1.0, 1.0);
+		turnController.setAbsoluteTolerance(RobotMap.ALLOWABLE_TURN_ERROR);
+		turnController.setContinuous(true);
+		/* Add the PID Controller to the Test-mode dashboard, allowing manual
+		 * tuning of the Turn Controller's P, I and D coefficients.
+		 * Typically, only the P value needs to be modified. */
+		LiveWindow.addActuator("DriveTrain", "TurnController", turnController);
 	}
 	
 	// Put methods for controlling this subsystem
@@ -104,7 +122,7 @@ public class DriveTrain extends Subsystem {
 	
 	//Begin PID Functions
 	
-	public void driveToPosition(double distanceToDrive){
+	public void driveToPositionInit(double distanceToDrive){
 		//Change Talon modes to "position" just in case
 		//they were in another mode before
 		frontLeft.changeControlMode(TalonControlMode.Position);
@@ -127,6 +145,13 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("Rotations Calculated", rot);
 	}
 	
+	//Some special isFinished() command stuff to not stop before the robot has even moved
+	public boolean driveToPositionIsFinished() 
+	{
+		if (Math.abs(frontLeft.getError()) <= RobotMap.ERROR_CONSTANT && Math.abs(frontRight.getError()) <= RobotMap.ERROR_CONSTANT)
+			time++;
+		return (time > 1);
+	}
 	
 	public double getLeftEncoderPosition()
 	{
@@ -181,6 +206,37 @@ public class DriveTrain extends Subsystem {
 
 	}
 	
+	//Methods called by TurnToAngle
+	public void turnToAngleInit(double targetAngle){
+		/* PIDController calculates a rate of motor output,
+		 * so the CANTalons need to be in PercentVbus mode */
+		frontLeft.changeControlMode(TalonControlMode.PercentVbus);
+		frontRight.changeControlMode(TalonControlMode.PercentVbus);
+		
+		//Initialize turnController and set the target
+		navX.reset();
+		turnController.enable();
+		turnController.setSetpoint(targetAngle);
+	}
+	
+	public void turnToAngleExecute(){
+		//Set the CANTalons to the speed calculated by PIDController
+		frontLeft.set(-turnToAngleRate);
+		frontRight.set(turnToAngleRate);
+		
+		SmartDashboard.putNumber("NavX Angle", navX.getAngle());
+		SmartDashboard.putNumber("NavX Turn Rate", navX.getRate());
+	}
+	
+	//Another weird variable check for if turning should stop
+	public boolean turnToAngleIsFinished(){
+		return turnController.onTarget();
+	}
+	
+	public void turnToAngleEnd(){
+		turnController.disable();
+	}
+	
 	//Take a distance in feet and convert to
 	//rotations that CANTalons can take as input
 	private double convertToRotations(double distanceInFeet){
@@ -204,5 +260,11 @@ public class DriveTrain extends Subsystem {
 		frontLeft.setInverted(!frontLeft.getInverted());
 		frontRight.setInverted(!frontRight.getInverted());
 		reversed = !reversed;
+	}
+	
+	//Overrides PIDOutput
+	@Override
+	public void pidWrite(double output) {
+		turnToAngleRate = output;
 	}
 }
