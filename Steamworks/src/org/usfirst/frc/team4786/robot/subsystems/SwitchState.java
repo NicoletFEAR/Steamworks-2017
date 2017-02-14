@@ -73,7 +73,7 @@ public class SwitchState extends Subsystem {
 	    	return;	
 		}
 		if (newState == 8){
-			Robot.arduino.writeStringData("teallight");
+			Robot.arduino.writeStringData("playMario");
 	    	return;	
 		}
 		if (oldState == 1 && newState == 3){
