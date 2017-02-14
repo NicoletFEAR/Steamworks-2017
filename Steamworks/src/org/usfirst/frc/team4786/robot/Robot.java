@@ -45,11 +45,11 @@ public class Robot extends IterativeRobot {
 		arduino = new Arduino(RobotMap.ledArduinoPort);
 		
 		sendableChooser = new SendableChooser<Command>();
-		sendableChooser.addDefault("Do nothing", new DoNothing());
-		sendableChooser.addObject("Drive to baseline", new DriveToPosition(10));
-		sendableChooser.addObject("Drive to center gear peg", new DriveToPosition(8));
-		sendableChooser.addObject("Drive to left gear peg", new DriveToLeftGearPeg());
-		sendableChooser.addObject("Drive to right gear peg", new DriveToRightGearPeg());
+		sendableChooser.addDefault("Do Nothing!", new DoNothing());
+		sendableChooser.addObject("Drive to Baseline", new DriveToPosition(10));
+		sendableChooser.addObject("Drive to Center Gear Peg", new DriveToPosition(8));
+		sendableChooser.addObject("Drive to Left Gear Peg", new DriveToLeftGearPeg());
+		sendableChooser.addObject("Drive to Right Gear Peg", new DriveToRightGearPeg());
 		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 	}
 
@@ -67,7 +67,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = new DriveToLeftGearPeg();
+		autonomousCommand = sendableChooser.getSelected();
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();
