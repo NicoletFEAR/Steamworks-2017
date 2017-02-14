@@ -62,7 +62,8 @@ public class Robot extends IterativeRobot {
 	public static Intake intake = new Intake();
 	public static DrawBridge drawBridge = new DrawBridge();
 	public static Climber climber = new Climber();
-	/*public static VisionImage visionImage = new VisionImage();
+	//public static VisionImage visionImage = new VisionImage();
+	/*
 	public static FrameData frameData;
 	public static CvSink cvSink;
 	public static CvSource outputStream;
@@ -116,11 +117,16 @@ public class Robot extends IterativeRobot {
 					// skip the rest of the current iteration
 					continue;
 				}
+				regStream.putFrame(mat.getMat());
+
+				
+				VisionImage.processImage(mat, outputStream);
+				/*if(VisionImage.getTwoTargets()){
+					outputStream.putFrame(VisionImage.getFilteredMat());
+				}*/
 				
 				// Put a rectangle on the image
 				//Imgproc.rectangle(mat.getMat(), new Point(100, 100), new Point(400, 400), new Scalar(255, 255, 255), 5);
-				//Mat output = new Mat();
-				regStream.putFrame(mat.getMat());
 				
 			}
 			} catch (Exception e) {
