@@ -23,13 +23,15 @@ public class VisionImage {
 	static double smallestRectArea = 100;
 	static double distanceToLeft = 0;
 	static double distanceToRight = 0;
-	static double centerX;
-	static double matHeight;
-	static Rect leftRect;
-	static Rect rightRect;
+	static double centerX = 0;
+	static double matHeight = 0;
+	static Rect leftRect = null;
+	static Rect rightRect = null;
 	//static Mat filteredMat = new Mat();
-	static Mat hierarchy;
-	static Mat mat;
+	static Mat hierarchy = null;
+	static Mat mat = null;
+	static List<Rect> filteredContoursRect;
+	static List<MatOfPoint> filteredContours;
 	/*public static enum locationOfTargets{
 		Right, Left, Ahead, NoTargetVisible
 	}
@@ -44,9 +46,7 @@ public class VisionImage {
 	public static int getNumOfTargets(){
 		return numOfTargets;
 	}
-	/*public static Mat getFilteredMat(){
-		return filteredMat;
-	}*/
+
 	public static boolean getTwoTargets(){
 		return twoTargets;
 	}
@@ -65,8 +65,8 @@ public class VisionImage {
 		//filtered camera feed won't show filtered objects after this - until draw contours
 		findContours(mat, contours, hierarchy, RETR_LIST, CHAIN_APPROX_NONE);
 		
-		List<MatOfPoint> filteredContours = new ArrayList<>();	//List of filtered contours
-		List<Rect> filteredContoursRect = new ArrayList<>();	//List of filtered contours as Rect objects
+		filteredContours = new ArrayList<>();	//List of filtered contours
+		filteredContoursRect = new ArrayList<>();	//List of filtered contours as Rect objects
 		
 		for (MatOfPoint contour : contours)	{ //for every contour(Matrix of points) in contours
 			Rect boundingRect = boundingRect(contour);		//creates a rectangle around the contour
@@ -82,6 +82,11 @@ public class VisionImage {
 					smallestRectArea = boundingRect.area();
 			}
 		}
+		
+		cameraStream.putFrame(mat);
+		//filteredMat = mat;
+	}
+	public static void analysis(){
 		//double centerY = (leftRect.y + leftRect.height * .5);
 		//Imgproc.circle(mat.getMat(), new Point(centerX,centerY), 20, new Scalar(255,255,255), 2);
 		//Imgproc.rectangle(mat.getMat(), new Point(leftRect.x,leftRect.y), new Point(rightRect.x,rightRect.y), new Scalar(255,255,255),2);
@@ -92,7 +97,7 @@ public class VisionImage {
 			twoTargets = true;
 		}
 		numOfTargets = filteredContours.size();
-		if(twoTargets){
+		if(twoTargets && filteredContoursRect.size() >= 2){
 			
 			if(filteredContoursRect.get(0).x < filteredContoursRect.get(1).x){	//sets left & right rect based off of x coordinates
 				leftRect = filteredContoursRect.get(0);
@@ -125,8 +130,5 @@ public class VisionImage {
 		SmartDashboard.putNumber("Number of targets", numOfTargets);
 		SmartDashboard.putNumber("Area of largest Rect", largestRectArea);
 		SmartDashboard.putNumber("Area of smallest Rect", smallestRectArea);
-		
-		cameraStream.putFrame(mat);
-		//filteredMat = mat;
 	}
 }

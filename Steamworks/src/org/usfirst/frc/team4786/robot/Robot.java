@@ -119,11 +119,13 @@ public class Robot extends IterativeRobot {
 				}
 				regStream.putFrame(mat.getMat());
 
-				
 				VisionImage.processImage(mat, outputStream);
+
 				/*if(VisionImage.getTwoTargets()){
-					outputStream.putFrame(VisionImage.getFilteredMat());
+
 				}*/
+				//outputStream.putFrame(mat.getMat());
+
 				
 				// Put a rectangle on the image
 				//Imgproc.rectangle(mat.getMat(), new Point(100, 100), new Point(400, 400), new Scalar(255, 255, 255), 5);
@@ -195,7 +197,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		
+		//visionThread.yield();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		

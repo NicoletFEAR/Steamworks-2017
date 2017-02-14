@@ -11,8 +11,8 @@ public class RobotMap {
 	//CANTalon ports, use instead of random numbers
 	public static final int backLeftPort = 14;
 	public static final int backRightPort = 13;
-	public static final int frontLeftPort = 15;
-	public static final int frontRightPort = 12;
+	public static final int frontLeftPort = 13;
+	public static final int frontRightPort = 14;
 	
 	//Our CANTalon game mech ports
 	//Change these mech Talon IDs, do not know final CANTalon ids yet
