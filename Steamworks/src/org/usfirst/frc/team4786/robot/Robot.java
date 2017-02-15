@@ -1,7 +1,10 @@
 
 package org.usfirst.frc.team4786.robot;
 
+import org.usfirst.frc.team4786.robot.commands.DoNothing;
+import org.usfirst.frc.team4786.robot.commands.DriveToLeftGearPeg;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
+import org.usfirst.frc.team4786.robot.commands.DriveToRightGearPeg;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.Climber;
@@ -9,11 +12,11 @@ import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4786.robot.subsystems.Gear;
 import org.usfirst.frc.team4786.robot.subsystems.Intake;
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -33,11 +36,20 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	Command teleopCommand;
 
-
+	SendableChooser<Command> sendableChooser;
+	
 	@Override
 	public void robotInit() {
 		oi = new OI();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
+		
+		sendableChooser = new SendableChooser<Command>();
+		sendableChooser.addDefault("Do Nothing!", new DoNothing());
+		sendableChooser.addObject("Drive to Baseline", new DriveToPosition(10));
+		sendableChooser.addObject("Drive to Center Gear Peg", new DriveToPosition(8));
+		sendableChooser.addObject("Drive to Left Gear Peg", new DriveToLeftGearPeg());
+		sendableChooser.addObject("Drive to Right Gear Peg", new DriveToRightGearPeg());
+		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 	}
 
 
@@ -54,7 +66,8 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = new DriveToPosition(10);
+
+    autonomousCommand = sendableChooser.getSelected();
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();

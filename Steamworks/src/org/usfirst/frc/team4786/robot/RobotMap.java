@@ -14,12 +14,14 @@ public class RobotMap {
 	
 	//Our CANTalon game mech ports
 	//Change these mech Talon IDs, do not know final CANTalon ids yet
-	public static final int intakePort = 16;
+	public static final int intakePort = 18;
 	public static final int climbMotorPort = 16;
 	public static final int bridgeServoChannel = 4;
 	
 	//Scaling used only for open loop drive system
 	public static final double openLoopSpeedScaling = .6;
+	
+	public static final double MESHBOT_ROBOT_LENGTH = 2.34375; //In feet
 	
 	//General PID Constants
 	public static final int ERROR_CONSTANT = 360; //In native units
