@@ -5,6 +5,7 @@ import org.usfirst.frc.team4786.robot.commands.DoNothing;
 import org.usfirst.frc.team4786.robot.commands.DriveToLeftGearPeg;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.DriveToRightGearPeg;
+import org.usfirst.frc.team4786.robot.commands.GearFromOffset;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.Climber;
@@ -134,6 +135,7 @@ public class Robot extends IterativeRobot {
 		sendableChooser.addObject("Drive to Center Gear Peg", new DriveToPosition(8));
 		sendableChooser.addObject("Drive to Left Gear Peg", new DriveToLeftGearPeg());
 		sendableChooser.addObject("Drive to Right Gear Peg", new DriveToRightGearPeg());
+		sendableChooser.addObject("GetToGearTest", new GearFromOffset());
 		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 	}
 
