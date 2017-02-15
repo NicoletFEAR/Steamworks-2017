@@ -3,6 +3,7 @@ package org.usfirst.frc.team4786.robot.subsystems;
 import org.usfirst.frc.team4786.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**

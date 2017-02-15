@@ -9,6 +9,7 @@ package org.usfirst.frc.team4786.robot;
 public class RobotMap {
 	
 	//CANTalon ports, use instead of random numbers
+
 	public static final int frontLeftPort = 13;
 	public static final int frontRightPort = 14;
 	
@@ -21,8 +22,11 @@ public class RobotMap {
 	//Scaling used only for open loop drive system
 	public static final double openLoopSpeedScaling = .6;
 	
+	public static final double MESHBOT_ROBOT_LENGTH = 2.34375; //In feet
+	
 	//General PID Constants
-	public static final int ERROR_CONSTANT = 360;
+	public static final int ERROR_CONSTANT = 360; //In native units
+	public static final int ALLOWABLE_TURN_ERROR = 1; //In degrees
 	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV = 360;
 	public static final double CLOSED_LOOP_RAMP_RATE = 0.015625;
 	public static final int IZONE = 0;
@@ -57,6 +61,15 @@ public class RobotMap {
 	public static final double RightVelocityI = 0.0;
 	public static final double RightVelocityD = 0.0;
 	public static final double RightVelocityF = 0.1097;
+	//NavX turn PID Constants
+/*	public static final double TurnP = 0.025;
+	public static final double TurnI = 0.006;
+	public static final double TurnD = 0.04;
+	public static final double TurnF = 0.0; */
+	public static final double TurnP = 0.02;
+	public static final double TurnI = 0.006;
+	public static final double TurnD = 0.06;
+	public static final double TurnF = 0.0;
 	//Climbing PID Constants
 	public static final double ClimbingP = 0.0;
 	public static final double ClimbingI = 0.0;
@@ -77,7 +90,31 @@ public class RobotMap {
 
 	//LED arduino constants and values
 	public static final int ledArduinoPort = 8;
-
+	
+	//Vision constants
+	//for filtering
+	//new values: R:0, G: 196. B: 120
+	public static final int highRedValue = 50;
+	public static final int highGreenValue = 255;
+	public static final int highBlueValue = 140;
+	
+	public static final int lowRedValue = 0;
+	public static final int lowGreenValue = 70;
+	public static final int lowBlueValue = 20;
+	
+	public static final int exposure = 1;
+	public static final int cameraFOVHeight = 480;//former resolution 320, 240
+	public static final int cameraFOVWidth = 640;
+	public static final int minPixelCount = 500;
+	
+	//for calculating distance
+	public static final double heightOfTargetInFeet = 5.0/12; 
+	public static final double cameraFOVHeightInFeet = .19685;//10.6cm - 4.173228in - 0.19685ft
+	public static final double distanceAtCalibration = .262467;//12.8cm - 5.03937in - 0.262467ft
+	public static final double distanceOfCamFromFrontOfBot = 0;
+	
+	//for calculating angles
+	public static final double distanceBetweenCentersOfTargets = 8.25/12;
 	
     /* For example to map the left and right motors, you could define the
      following variables to use with your drivetrain subsystem.
