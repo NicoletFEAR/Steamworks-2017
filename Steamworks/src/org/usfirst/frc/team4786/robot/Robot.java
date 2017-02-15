@@ -12,7 +12,6 @@ import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4786.robot.subsystems.Gear;
 import org.usfirst.frc.team4786.robot.subsystems.Intake;
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -67,7 +66,8 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = sendableChooser.getSelected();
+
+    autonomousCommand = sendableChooser.getSelected();
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();

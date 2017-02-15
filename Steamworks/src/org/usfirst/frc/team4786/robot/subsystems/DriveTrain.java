@@ -143,13 +143,13 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 	}
 	
 	//Some special isFinished() command stuff to not stop before the robot has even moved
-	public boolean driveToPositionIsFinished() 
-	{		
-		return false;
+
+
+	public boolean driveToPositionIsFinished() {
+		return Math.abs(frontLeft.getError()) <= RobotMap.ERROR_CONSTANT && Math.abs(frontRight.getError()) <= RobotMap.ERROR_CONSTANT;
 	}
 	
-	public void driveToPositionEnd()
-	{
+	public void driveToPositionEnd(){
 		frontLeft.setEncPosition(0);
 		frontRight.setEncPosition(0);
 	}
