@@ -120,6 +120,8 @@ public class Robot extends IterativeRobot {
 				regStream.putFrame(mat.getMat());
 
 				VisionImage.processImage(mat, outputStream);
+				VisionImage.analysis();
+				VisionImage.putValuesToSmartDashboard();
 
 				//outputStream.putFrame(mat.getMat());
 				// Put a rectangle on the image

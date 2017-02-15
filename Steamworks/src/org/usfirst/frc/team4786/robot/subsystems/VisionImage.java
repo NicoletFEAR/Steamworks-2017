@@ -114,6 +114,7 @@ public class VisionImage {
 			distanceToRight += .088;
 			distanceToLeft /= 1.886;
 			distanceToRight /= 1.886;
+			//subtract distance of camera to front of robot to final calculations
     		centerX = .5 * ((leftRect.x + leftRect.width) + rightRect.x);
 		}
 	}
