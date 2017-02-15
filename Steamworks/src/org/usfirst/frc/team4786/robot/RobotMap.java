@@ -78,7 +78,7 @@ public class RobotMap {
 	public static final int lowBlueValue = 20;
 	
 	public static final int exposure = 1;
-	public static final int cameraFOVHeight = 480;
+	public static final int cameraFOVHeight = 480;//former resolution 320, 240
 	public static final int cameraFOVWidth = 640;
 	public static final int minPixelCount = 500;
 	

@@ -90,7 +90,7 @@ public class Robot extends IterativeRobot {
 			// Get the UsbCamera from CameraServer
 			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 			// Set the resolution
-			camera.setResolution(RobotMap.cameraFOVWidth,RobotMap.cameraFOVHeight);//320, 240
+			camera.setResolution(RobotMap.cameraFOVWidth,RobotMap.cameraFOVHeight);
 			camera.setExposureManual(RobotMap.exposure);
 
 			// Get a CvSink. This will capture Mats from the camera
@@ -121,15 +121,9 @@ public class Robot extends IterativeRobot {
 
 				VisionImage.processImage(mat, outputStream);
 
-				/*if(VisionImage.getTwoTargets()){
-
-				}*/
 				//outputStream.putFrame(mat.getMat());
-
-				
 				// Put a rectangle on the image
 				//Imgproc.rectangle(mat.getMat(), new Point(100, 100), new Point(400, 400), new Scalar(255, 255, 255), 5);
-				
 			}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -137,9 +131,6 @@ public class Robot extends IterativeRobot {
 		});
 		visionThread.setDaemon(true);
 		visionThread.start();
-		
-		
-
 	}
 
 	/**
