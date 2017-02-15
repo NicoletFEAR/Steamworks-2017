@@ -15,6 +15,7 @@ import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4786.robot.subsystems.Gear;
 import org.usfirst.frc.team4786.robot.subsystems.Intake;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -103,10 +104,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
 		SmartDashboard.putNumber("Left Motor Output", driveTrain.motorOutputLeft);
 		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
-
 		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
 		SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
-
+		
+		//Look in OI for comments on this command
+		Robot.oi.checkXboxButtonStates();
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
@@ -17,17 +18,19 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	//instantiate buttons, sensors, joysticks, and Xbox controllers here
-	private final Joystick leftDriveJoy;
-    private final Joystick rightDriveJoy;
+	private Joystick leftDriveJoy;
+    private Joystick rightDriveJoy;
 	private final DigitalInput limitSwitchGear;
 	private final DigitalInput limitSwitchPeg;
 	private final XboxController xbox;
-	public static GenericHID.Hand kLeft;
-	public static GenericHID.Hand kRight;
-	public static Button kLeftJoy6Button;
-	public static Button kRightJoy6Button;
-	public static Button kLeftJoy11Button;
-	public static Button kRightJoy11Button;
+	private static Button kLeftJoy6Button;
+	private static Button kRightJoy6Button;
+	private static Button kLeftJoy7Button;
+	private static Button kRightJoy7Button;
+	private static Button kLeftJoy10Button;
+	private static Button kRightJoy10Button;
+	private static Button kLeftJoy11Button;
+	private static Button kRightJoy11Button;
 	
     public OI(){
     	//Init the objects for all the buttons, sensors, joysticks, and Xbox controllers
@@ -36,6 +39,10 @@ public class OI {
     	xbox = new XboxController(2);
     	kLeftJoy6Button = new JoystickButton(leftDriveJoy, 6);
     	kRightJoy6Button = new JoystickButton(rightDriveJoy, 6);
+    	kLeftJoy7Button = new JoystickButton(leftDriveJoy, 7);
+    	kRightJoy7Button = new JoystickButton(rightDriveJoy, 7);
+    	kLeftJoy10Button = new JoystickButton(leftDriveJoy, 10);
+    	kRightJoy10Button = new JoystickButton(rightDriveJoy, 10);
     	kLeftJoy11Button = new JoystickButton(leftDriveJoy, 11);
     	kRightJoy11Button = new JoystickButton(rightDriveJoy, 11);
     	
@@ -45,30 +52,36 @@ public class OI {
     	limitSwitchPeg = new DigitalInput(RobotMap.limitSwitchPegPort);
     	
     	/*if (xbox.getAButton() == true) {
-    		//would be automated gear
+    		//would be automated gear placement command in teleop, and if gotten to of course :)
     	} */
     	//all buttons are only while held
-    	if (xbox.getBButton() == true) {
+    	/*if (xbox.getBButton() == true) {
+    		SmartDashboard.putNumber("B Button", 1);
         	Robot.climber.startOpenClimbing();
     	} else if (xbox.getBButton() == false) {
+    		SmartDashboard.putNumber("B Button", 0);
     		Robot.climber.stopClimbing();
     	}
     	
-    	if (xbox.getBumper(kLeft) == true) {
+    	if (xbox.getBumper(GenericHID.Hand.kLeft) == true) {
     		Robot.drawBridge.openThyBridge();
-    	} else if (xbox.getBumper(kLeft) == false) {
+    	} else if (xbox.getBumper(GenericHID.Hand.kLeft) == false) {
     		Robot.drawBridge.closeThyBridge();
     	}
     	
-    	if (xbox.getBumper(kRight) == true) {
+    	if (xbox.getBumper(GenericHID.Hand.kRight) == true) {
     		Robot.intake.collectBalls();
-    	} else if (xbox.getBumper(kRight) == false) {
+    	} else if (xbox.getBumper(GenericHID.Hand.kRight) == false) {
     		Robot.intake.stopIntaking();
-    	} 
+    	} */
     	
     	//We map a bunch of buttons to switch the front side for Andy's convience ;)
     	kLeftJoy6Button.whileHeld(new SwitchFrontSide());
     	kRightJoy6Button.whileHeld(new SwitchFrontSide());
+    	kLeftJoy7Button.whileHeld(new SwitchFrontSide());
+    	kRightJoy7Button.whileHeld(new SwitchFrontSide());
+    	kLeftJoy10Button.whileHeld(new SwitchFrontSide());
+    	kRightJoy10Button.whileHeld(new SwitchFrontSide());
     	kLeftJoy11Button.whileHeld(new SwitchFrontSide());
     	kRightJoy11Button.whileHeld(new SwitchFrontSide());
     	
@@ -77,6 +90,28 @@ public class OI {
     	//drawbridge closes when false
     }
 	
+    //We have this since checking the button states in the OI constructor doesn't work
+    //We instead run this command within teleopPeriodic() for it to work properly
+    public void checkXboxButtonStates() {
+    	if (xbox.getBButton() == true) {
+        	Robot.climber.startOpenClimbing();
+    	} else if (xbox.getBButton() == false) {
+    		Robot.climber.stopClimbing();
+    	}
+    	
+    	if (xbox.getBumper(GenericHID.Hand.kLeft) == true) {
+    		Robot.drawBridge.openThyBridge();
+    	} else if (xbox.getBumper(GenericHID.Hand.kLeft) == false) {
+    		Robot.drawBridge.closeThyBridge();
+    	}
+    	
+    	if (xbox.getBumper(GenericHID.Hand.kRight) == true) {
+    		Robot.intake.collectBalls();
+    	} else if (xbox.getBumper(GenericHID.Hand.kRight) == false) {
+    		Robot.intake.stopIntaking();
+    	} 
+    }
+    
 	public Joystick getLeftDriveJoy() {
 	    return leftDriveJoy;
 	}
@@ -95,5 +130,10 @@ public class OI {
 	public DigitalInput getPegLimitSwitch(){
 		return limitSwitchPeg;
 	}
-
+	
+	public void switchJoystickIDs(){ 
+		int temp = leftDriveJoy.getPort(); 
+		leftDriveJoy = new Joystick(rightDriveJoy.getPort()); 
+		rightDriveJoy = new Joystick(temp); 
+	} 
 }
