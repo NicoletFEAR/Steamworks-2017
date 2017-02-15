@@ -9,8 +9,7 @@ package org.usfirst.frc.team4786.robot;
 public class RobotMap {
 	
 	//CANTalon ports, use instead of random numbers
-	public static final int backLeftPort = 14;
-	public static final int backRightPort = 13;
+
 	public static final int frontLeftPort = 13;
 	public static final int frontRightPort = 14;
 	
@@ -23,13 +22,17 @@ public class RobotMap {
 	//Scaling used only for open loop drive system
 	public static final double openLoopSpeedScaling = .6;
 	
+	public static final double MESHBOT_ROBOT_LENGTH = 2.34375; //In feet
+	
 	//General PID Constants
-	//public static final double ERROR_CONSTANT = 45;
+	public static final int ERROR_CONSTANT = 360; //In native units
+	public static final int ALLOWABLE_TURN_ERROR = 1; //In degrees
 	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV = 360;
 	public static final double CLOSED_LOOP_RAMP_RATE = 0.015625;
 	public static final int IZONE = 0;
 	public static final int DRIVEBASE_PROFILE = 0;
 	public static final double MAXIMUM_SPEED_VELOCITY_PID = 0.6;
+	public static final double fudgeFactor = .65;
 	//Wheel Radius measured in feet
 	public static final double WHEEL_RADIUS = 0.25;
 	//Game Mech Costants, Not final
@@ -39,13 +42,13 @@ public class RobotMap {
 	public static final double OPEN_BRIDGE_ANGLE = 180;
 	public static final double CLOSED_BRIDGE_ANGLE = -180;
 	//Left GearBox PID Constants
-	public static final double LeftP = 0.05071428571; //35% throttle within 5 rotations of target
-	public static final double LeftI = LeftP / 100000;
+	public static final double LeftP = 0.118 * 2; //25% throttle within 1.5 rotations of target
+	public static final double LeftI = 0.002 /*LeftP / 100000*/ ;
 	public static final double LeftD = 0.0;
 	public static final double LeftF = 0.0;
 	//Right GearBox PID Constants
-	public static final double RightP = 0.05071428571;
-	public static final double RightI = RightP / 100000;
+	public static final double RightP = 0.118 * 2;
+	public static final double RightI = 0.002 /*RightP / 100000*/ ;
 	public static final double RightD = 0.0;
 	public static final double RightF = 0.0;
 	//Left GearBox Velocity PID Constants
@@ -58,12 +61,34 @@ public class RobotMap {
 	public static final double RightVelocityI = 0.0;
 	public static final double RightVelocityD = 0.0;
 	public static final double RightVelocityF = 0.1097;
+	//NavX turn PID Constants
+/*	public static final double TurnP = 0.025;
+	public static final double TurnI = 0.006;
+	public static final double TurnD = 0.04;
+	public static final double TurnF = 0.0; */
+	public static final double TurnP = 0.02;
+	public static final double TurnI = 0.006;
+	public static final double TurnD = 0.06;
+	public static final double TurnF = 0.0;
+	//Climbing PID Constants
+	public static final double ClimbingP = 0.0;
+	public static final double ClimbingI = 0.0;
+	public static final double ClimbingD = 0.0;
+	public static final double ClimbingF = 0.0;
+	public static final int ENCODER_CODES_PER_REV_CLIMBER = 360;
+	public static final double CLOSED_LOOP_RAMP_RATE_CLIMBER = 0.0;
+	public static final int IZONE_CLIMBER = 0;
+	public static final int CLIMBER_PROFILE = 1;
+	//This converts to climbing 4feet 11inches
+	//We assume a quad encoder is being used, not final
+	public static final int CLIMBING_DISTANCE_NATIVE_UNITS = 0; 
 	
 	// limit switch ports on RoboRIO DIO
 	public static final int limitSwitchGearPort = 1;
 	public static final int limitSwitchPegPort = 2;
 
-  //LED arduino constants and values
+
+	//LED arduino constants and values
 	public static final int ledArduinoPort = 8;
 	
 	//Vision constants

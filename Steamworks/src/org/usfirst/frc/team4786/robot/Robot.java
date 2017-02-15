@@ -1,9 +1,13 @@
 
 package org.usfirst.frc.team4786.robot;
 
+import org.usfirst.frc.team4786.robot.commands.DoNothing;
+import org.usfirst.frc.team4786.robot.commands.DriveToLeftGearPeg;
+import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
+import org.usfirst.frc.team4786.robot.commands.DriveToRightGearPeg;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
+import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.Climber;
-import org.usfirst.frc.team4786.robot.commands.OpenBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4786.robot.subsystems.FrameData;
@@ -40,34 +44,27 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
- */
+
 public class Robot extends IterativeRobot {
 
 	Thread visionThread;
 	
 	//We setup our subsystem objects here
+
 	public static DriveTrain driveTrain = new DriveTrain();
 	public static Intake intake = new Intake();
 	public static DrawBridge drawBridge = new DrawBridge();
+	public static Gear gear = new Gear();
 	public static Climber climber = new Climber();
-	//public static VisionImage visionImage = new VisionImage();
-	/*
-	public static FrameData frameData;
-	public static CvSink cvSink;
-	public static CvSource outputStream;
-	int count = 0;*/
+
 
 	public static OI oi;
 	public static Arduino arduino;
@@ -76,11 +73,9 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	Command teleopCommand;
 
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
-	@SuppressWarnings("unused")
+
+	SendableChooser<Command> sendableChooser;
+	
 	@Override
 	public void robotInit() {
 		oi = new OI();
@@ -133,13 +128,16 @@ public class Robot extends IterativeRobot {
 		});
 		visionThread.setDaemon(true);
 		visionThread.start();
+		sendableChooser = new SendableChooser<Command>();
+		sendableChooser.addDefault("Do Nothing!", new DoNothing());
+		sendableChooser.addObject("Drive to Baseline", new DriveToPosition(10));
+		sendableChooser.addObject("Drive to Center Gear Peg", new DriveToPosition(8));
+		sendableChooser.addObject("Drive to Left Gear Peg", new DriveToLeftGearPeg());
+		sendableChooser.addObject("Drive to Right Gear Peg", new DriveToRightGearPeg());
+		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 	}
 
-	/**
-	 * This function is called once each time the robot enters Disabled mode.
-	 * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
-	 */
+
 	@Override
 	public void disabledInit() {
 
@@ -150,28 +148,12 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 	}
 
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
-	 */
+
 	@Override
 	public void autonomousInit() {
-		
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
 
-		// schedule the autonomous command (example)
+    autonomousCommand = sendableChooser.getSelected();
+
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
@@ -182,6 +164,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
+		SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
+		SmartDashboard.putNumber("Servo Angle", drawBridge.getServoAngle());
 	}
 
 	@Override
@@ -200,27 +185,25 @@ public class Robot extends IterativeRobot {
 			teleopCommand.start();
 	}
 
-	/**
-	 * This function is called periodically during operator control
-	 */
+
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
+		SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
+		SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
 		SmartDashboard.putNumber("Left Motor Output", driveTrain.motorOutputLeft);
 		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
 		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
 		SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
-		
-		
+
 	}
 
 	@Override
 	public void testInit(){
 	}
 	
-	/**
-	 * This function is called periodically during test mode
-	 */
+
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
