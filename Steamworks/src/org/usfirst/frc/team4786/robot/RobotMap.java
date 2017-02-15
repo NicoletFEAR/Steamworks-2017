@@ -9,6 +9,7 @@ package org.usfirst.frc.team4786.robot;
 public class RobotMap {
 	
 	//CANTalon ports, use instead of random numbers
+
 	public static final int frontLeftPort = 13;
 	public static final int frontRightPort = 14;
 	
@@ -89,7 +90,31 @@ public class RobotMap {
 
 	//LED arduino constants and values
 	public static final int ledArduinoPort = 8;
-
+	
+	//Vision constants
+	//for filtering
+	//new values: R:0, G: 196. B: 120
+	public static final int highRedValue = 50;
+	public static final int highGreenValue = 255;
+	public static final int highBlueValue = 140;
+	
+	public static final int lowRedValue = 0;
+	public static final int lowGreenValue = 70;
+	public static final int lowBlueValue = 20;
+	
+	public static final int exposure = 1;
+	public static final int cameraFOVHeight = 480;//former resolution 320, 240
+	public static final int cameraFOVWidth = 640;
+	public static final int minPixelCount = 500;
+	
+	//for calculating distance
+	public static final double heightOfTargetInFeet = 5.0/12; 
+	public static final double cameraFOVHeightInFeet = .19685;//10.6cm - 4.173228in - 0.19685ft
+	public static final double distanceAtCalibration = .262467;//12.8cm - 5.03937in - 0.262467ft
+	public static final double distanceOfCamFromFrontOfBot = 0;
+	
+	//for calculating angles
+	public static final double distanceBetweenCentersOfTargets = 8.25/12;
 	
     /* For example to map the left and right motors, you could define the
      following variables to use with your drivetrain subsystem.
