@@ -1,4 +1,5 @@
 
+
 package org.usfirst.frc.team4786.robot;
 
 import org.usfirst.frc.team4786.robot.commands.DoNothing;
@@ -64,7 +65,7 @@ public class Robot extends IterativeRobot {
 	public static DrawBridge drawBridge = new DrawBridge();
 	public static Gear gear = new Gear();
 	public static Climber climber = new Climber();
-
+  public static switchState;
 
 	public static OI oi;
 	public static Arduino arduino;
@@ -78,6 +79,8 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void robotInit() {
+    switchState = new SwitchState();
+
 		oi = new OI();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
 		
@@ -188,6 +191,8 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
+    		switchState.switchChange();
+
 		Scheduler.getInstance().run();
 
 		SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
@@ -196,6 +201,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
 		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
 		SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
+    		SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
+		SmartDashboard.putNumber("Old State", SwitchState.oldState);  // get rid of them if we don't have this method
 
 	}
 
