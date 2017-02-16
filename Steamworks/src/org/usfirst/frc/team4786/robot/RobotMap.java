@@ -85,9 +85,9 @@ public class RobotMap {
 	public static final int CLIMBING_DISTANCE_NATIVE_UNITS = 0; 
 	
 	// limit switch ports on RoboRIO DIO
-	public static final int limitSwitchGearPort = 1;
-	public static final int limitSwitchPegPort = 2;
-  public static final int limitSwitch1Port = 1;
+	public static final int limitSwitchGearPort = 5;
+	public static final int limitSwitchPegPort = 6;
+    public static final int limitSwitch1Port = 1;
 	public static final int limitSwitch2Port = 2;
 	public static final int limitSwitch3Port = 3;
 	public static final int limitSwitch4Port = 4;
