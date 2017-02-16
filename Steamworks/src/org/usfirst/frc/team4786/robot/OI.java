@@ -18,8 +18,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
 	//instantiate buttons, sensors, joysticks, and Xbox controllers here
 	private Joystick leftDriveJoy;
-  private Joystick rightDriveJoy;
-  private final XboxController xbox;
+    private Joystick rightDriveJoy;
+    private final XboxController xbox;
 	private final DigitalInput limitSwitchGear;
 	private final DigitalInput limitSwitchPeg;
 	private final DigitalInput limitSwitch1;
@@ -39,7 +39,7 @@ public class OI {
     	//Init the objects for all the buttons, sensors, joysticks, and Xbox controllers
     	leftDriveJoy = new Joystick(0);
     	rightDriveJoy = new Joystick(1);
-      xbox = new XboxController(2);
+        xbox = new XboxController(2);
      	kLeftJoy6Button = new JoystickButton(leftDriveJoy, 6);
     	kRightJoy6Button = new JoystickButton(rightDriveJoy, 6);
     	kLeftJoy7Button = new JoystickButton(leftDriveJoy, 7);
@@ -58,7 +58,7 @@ public class OI {
     	limitSwitch3 = new DigitalInput(RobotMap.limitSwitch3Port);
     	limitSwitch4 = new DigitalInput(RobotMap.limitSwitch4Port);
     
-   	//We map a bunch of buttons to switch the front side for Andy's convience ;)
+   	//We map a bunch of buttons to switch the front side for Andy's convenience ;)
     	kLeftJoy6Button.whileHeld(new SwitchFrontSide());
     	kRightJoy6Button.whileHeld(new SwitchFrontSide());
     	kLeftJoy7Button.whileHeld(new SwitchFrontSide());
@@ -91,14 +91,12 @@ public class OI {
     }
  
   
-  public Joystick getLeftDriveJoy() {
+    public Joystick getLeftDriveJoy() {
 	    return leftDriveJoy;
 	}
-	
 	public Joystick getRightDriveJoy() {
 	    return rightDriveJoy;
 	}
-	
 	// return DigitalInput value of limit switches
 	public DigitalInput getGearLimitSwitch(){
 		return limitSwitchGear;
@@ -122,7 +120,7 @@ public class OI {
 		return xbox;
 	}
   
-  public void switchJoystickIDs(){
+    public void switchJoystickIDs(){
 		int temp = leftDriveJoy.getPort();
 		leftDriveJoy = new Joystick(rightDriveJoy.getPort());
 		rightDriveJoy = new Joystick(temp);
