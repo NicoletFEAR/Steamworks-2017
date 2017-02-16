@@ -27,6 +27,7 @@ import static org.opencv.imgproc.Imgproc.findContours;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -65,7 +66,7 @@ public class Robot extends IterativeRobot {
 	public static DrawBridge drawBridge = new DrawBridge();
 	public static Gear gear = new Gear();
 	public static Climber climber = new Climber();
-
+	public static VisionImage visionImage = new VisionImage();
 
 	public static OI oi;
 	public static Arduino arduino;
@@ -103,6 +104,7 @@ public class Robot extends IterativeRobot {
 			// lets the robot stop this thread when restarting robot code or
 			// deploying.
 			while (!Thread.interrupted()) {
+				//TimeUnit.SECONDS.sleep(1);
 				// Tell the CvSink to grab a frame from the camera and put it
 				// in the source mat.  If there is an error notify the output.
 				if (cvSink.grabFrame(mat.getMat()) == 0) {
@@ -154,7 +156,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 
-    autonomousCommand = sendableChooser.getSelected();
+    autonomousCommand = (Command) sendableChooser.getSelected();
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();

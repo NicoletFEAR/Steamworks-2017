@@ -11,10 +11,12 @@ import static org.opencv.core.Core.*;
 import org.opencv.videoio.VideoCapture;
 import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.RobotMap;
+import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
+import org.usfirst.frc.team4786.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
 
 public class VisionImage {	
-	
+	static double d3 = 8.25 / 12;
 	static boolean twoTargets = false;
 	static int numOfTargets = 0;
 	static double largestRectArea = 0;
@@ -23,6 +25,12 @@ public class VisionImage {
 	static double distanceToRight = 0;
 	static double centerX = 0;
 	static double matHeight = 0;
+	static double x = 0;
+	static double theta = 0;
+	private static double angle = 0;
+	static double dm = 0;
+	static double dm2 = 0;
+	static double temp = 0;
 	static Rect leftRect = null;
 	static Rect rightRect = null;
 	static Mat hierarchy = null;
@@ -90,8 +98,7 @@ public class VisionImage {
 		cameraStream.putFrame(mat);
 	}
 	public static void analysis(){				
-		matHeight = mat.rows();	//.getHeight();
-		//(widthOfTarget*pixelFieldOfViewWidth)/(pixelWidthOfTarget*(.5*fieldOfViewWidth)/distanceAtCalibration)-distanceOfCamFromFrontOfBot;
+		matHeight = mat.rows();
 		if(filteredContours.size() >= 2){
 			twoTargets = true;
 		}
@@ -116,7 +123,23 @@ public class VisionImage {
 			distanceToRight /= 1.886;
 			//subtract distance of camera to front of robot to final calculations
     		centerX = .5 * ((leftRect.x + leftRect.width) + rightRect.x);
+    		
+    		//angle calculations
+        	temp = (distanceToLeft * distanceToLeft - distanceToRight * distanceToRight - d3 * d3);
+        	temp /= (-2 * distanceToRight * d3);
+        	SmartDashboard.putNumber("Test line", temp);
+
+        	x = Math.acos(temp);
+        	dm2 = Math.pow(d3 / 2, 2) + distanceToRight*distanceToRight - 2 * (d3/2) * distanceToRight * Math.cos(x);
+        	dm = Math.sqrt(dm2);
+        	theta = Math.asin(((d3 / 2) * Math.sin(x)) / dm);
+        	
+        	angle = Math.toDegrees(theta + x);
+        	dm = Math.sqrt(dm2);
+        	SmartDashboard.putNumber("jkgdslkgglk;j", angle);
 		}
+
+
 	}
 	public static void putValuesToSmartDashboard(){	//this is for testing
 		if(twoTargets && filteredContoursRect.size() >= 2){
@@ -126,10 +149,22 @@ public class VisionImage {
 			SmartDashboard.putNumber("Right Width", rightRect.width);
 			SmartDashboard.putNumber("Distance to left Rect", distanceToLeft);
 			SmartDashboard.putNumber("Distance to right Rect", distanceToRight);
+			SmartDashboard.putNumber("!!!!!!!!!!!Angle", angle);
+			SmartDashboard.putNumber("Theta", theta);
+	    	SmartDashboard.putNumber("x", x);
+
+
+
 		}
 		SmartDashboard.putBoolean("Rectangles detected?", twoTargets);
 		SmartDashboard.putNumber("Number of targets", numOfTargets);
 		SmartDashboard.putNumber("Area of largest Rect", largestRectArea);
 		SmartDashboard.putNumber("Area of smallest Rect", smallestRectArea);
+	}
+	public static double getAngle(){
+    	return angle;
+	}
+	public static double getFirstDistance(){
+    	return dm;
 	}
 }
