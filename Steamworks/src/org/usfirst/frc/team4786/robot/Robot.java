@@ -83,6 +83,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
 		
+		
 		visionThread = new Thread(() -> {
 			// Get the UsbCamera from CameraServer
 			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
