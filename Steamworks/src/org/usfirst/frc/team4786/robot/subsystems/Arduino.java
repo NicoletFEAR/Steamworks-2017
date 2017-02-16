@@ -32,12 +32,14 @@ public class Arduino extends Subsystem {
     //method to send data over i2c to arduino
     public void writeStringData(String writeable){
     	String WriteString = writeable;
-    	char[] CharArray = WriteString.toCharArray();
+    	char[] CharArray;
+    	CharArray = WriteString.toCharArray();
     	byte[] WriteData = new byte[CharArray.length];
     	for (int i = 0; i < CharArray.length; i++) {
     		WriteData[i] = (byte) CharArray[i];
     	}
     	wire.writeBulk(WriteData);
+    	WriteData = null;
     }
     
     public String readStringData(){

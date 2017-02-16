@@ -1,8 +1,12 @@
 package org.usfirst.frc.team4786.robot;
 
+import org.usfirst.frc.team4786.robot.commands.SwitchFrontSide;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
-
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 
 /**
@@ -11,8 +15,9 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class OI {
 	//instantiate buttons, sensors, joysticks, and Xbox controllers here
-	private final Joystick leftDriveJoy;
-    private final Joystick rightDriveJoy;
+	private Joystick leftDriveJoy;
+    private Joystick rightDriveJoy;
+  private final XboxController xbox;
 	private final DigitalInput limitSwitchGear;
 	private final DigitalInput limitSwitchPeg;
 	private final DigitalInput limitSwitch1;
@@ -24,6 +29,7 @@ public class OI {
     	//Init the objects for all the buttons, sensors, joysticks, and Xbox controllers
     	leftDriveJoy = new Joystick(0);
     	rightDriveJoy = new Joystick(1);
+      xbox = new XboxController(2);
     	
     	//Tie our many buttons, sensors, joysticks, and Xbox controllers to robot commands
     	
@@ -64,6 +70,15 @@ public class OI {
 	}
 	public DigitalInput getLimit4Switch(){
 		return limitSwitch4;
+	}
+  	public XboxController getXbox() {
+		return xbox;
+	}
+  
+  public void switchJoystickIDs(){
+		int temp = leftDriveJoy.getPort();
+		leftDriveJoy = new Joystick(rightDriveJoy.getPort());
+		rightDriveJoy = new Joystick(temp);
 	}
 
 }

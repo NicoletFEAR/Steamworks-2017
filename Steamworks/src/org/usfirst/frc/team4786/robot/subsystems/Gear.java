@@ -1,7 +1,7 @@
 package org.usfirst.frc.team4786.robot.subsystems;
 
-import org.usfirst.frc.team4786.robot.OI;
 import org.usfirst.frc.team4786.robot.Robot;
+import org.usfirst.frc.team4786.robot.commands.ArduinoLimitSwitchMonitor;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -18,8 +18,7 @@ public class Gear extends Subsystem {
 	public Gear() {
 	}
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new ArduinoLimitSwitchMonitor());
     }
     
     public static boolean gearLimitSwitchPressed(){

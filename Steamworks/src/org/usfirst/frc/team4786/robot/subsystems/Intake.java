@@ -3,6 +3,7 @@ package org.usfirst.frc.team4786.robot.subsystems;
 import org.usfirst.frc.team4786.robot.RobotMap;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -19,11 +20,13 @@ public class Intake extends Subsystem {
     
     //Set the motor on the intake to take-in/collect balls
     public void collectBalls() {
+    	intakeMotor.changeControlMode(TalonControlMode.PercentVbus);
     	intakeMotor.set(RobotMap.INTAKE_TALON_COLLECT_SPEED);
     }
     
     //Set the motor on the intake to eject/spit out balls
     public void spitBalls() {
+    	intakeMotor.changeControlMode(TalonControlMode.PercentVbus);
     	intakeMotor.set(RobotMap.INTAKE_TALON_SPIT_SPEED);
     }
     

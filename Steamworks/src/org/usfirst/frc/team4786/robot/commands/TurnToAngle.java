@@ -2,38 +2,39 @@ package org.usfirst.frc.team4786.robot.commands;
 
 import org.usfirst.frc.team4786.robot.Robot;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class OpenClimb extends Command {
+public class TurnToAngle extends Command {
 
-    public OpenClimb() {
-    	//We need the only people who can climb on ice(A rope)!
-    	//The ICE CLIMBERS!
-        requires(Robot.climber);
+	double targetAngle;
+	
+    public TurnToAngle(double angle) {
+        requires(Robot.driveTrain);
+        
+        targetAngle = angle;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.driveTrain.turnToAngleInit(targetAngle);
     }
 
-    //Called repeatedly when this Command is scheduled to run
-    //We just start climbing!
+    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.climber.startOpenClimbing();
+    	Robot.driveTrain.turnToAngleExecute();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.driveTrain.turnToAngleIsFinished();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.climber.stopClimbing();
+    	Robot.driveTrain.turnToAngleEnd();
     }
 
     // Called when another command which requires one or more of the same
