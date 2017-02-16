@@ -1,5 +1,3 @@
-
-
 package org.usfirst.frc.team4786.robot;
 
 import org.usfirst.frc.team4786.robot.commands.DoNothing;
@@ -46,6 +44,7 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -80,7 +79,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
     switchState = new SwitchState();
-
 		oi = new OI();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
 		
@@ -191,8 +189,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
-    		switchState.switchChange();
-
+    switchState.switchChange();
 		Scheduler.getInstance().run();
 
 		SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
@@ -201,7 +198,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
 		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
 		SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
-    		SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
+    SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
 		SmartDashboard.putNumber("Old State", SwitchState.oldState);  // get rid of them if we don't have this method
 
 	}

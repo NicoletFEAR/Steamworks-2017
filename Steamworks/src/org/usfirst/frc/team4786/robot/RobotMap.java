@@ -87,7 +87,7 @@ public class RobotMap {
 	// limit switch ports on RoboRIO DIO
 	public static final int limitSwitchGearPort = 1;
 	public static final int limitSwitchPegPort = 2;
-  	public static final int limitSwitch1Port = 1;
+  public static final int limitSwitch1Port = 1;
 	public static final int limitSwitch2Port = 2;
 	public static final int limitSwitch3Port = 3;
 	public static final int limitSwitch4Port = 4;
@@ -140,4 +140,4 @@ public class RobotMap {
 	 * 
 	 * P = .25 * 1023 / (4 * 5 * 400) = 0.03196875
 	 */
-}
+}r
