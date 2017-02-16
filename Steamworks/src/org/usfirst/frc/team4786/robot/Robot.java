@@ -14,6 +14,7 @@ import org.usfirst.frc.team4786.robot.subsystems.Intake;
 import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
 import org.usfirst.frc.team4786.robot.subsystems.Test;
 import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
+import org.usfirst.frc.team4786.robot.subsystems.SwitchState;
 
 import static org.opencv.core.Core.FILLED;
 import static org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE;
@@ -64,7 +65,7 @@ public class Robot extends IterativeRobot {
 	public static DrawBridge drawBridge = new DrawBridge();
 	public static Gear gear = new Gear();
 	public static Climber climber = new Climber();
-  public static switchState;
+    public static SwitchState switchState = new SwitchState();
 
 	public static OI oi;
 	public static Arduino arduino;
@@ -78,7 +79,7 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void robotInit() {
-    switchState = new SwitchState();
+
 		oi = new OI();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
 		
