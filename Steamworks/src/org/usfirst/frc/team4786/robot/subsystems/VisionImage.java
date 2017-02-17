@@ -95,7 +95,7 @@ public class VisionImage {
 					smallestRectArea = boundingRect.area();
 			}
 		}
-		cameraStream.putFrame(mat);
+		//cameraStream.putFrame(mat);
 	}
 	public static void analysis(){				
 		matHeight = mat.rows();
@@ -138,8 +138,6 @@ public class VisionImage {
         	dm = Math.sqrt(dm2);
         	SmartDashboard.putNumber("jkgdslkgglk;j", angle);
 		}
-
-
 	}
 	public static void putValuesToSmartDashboard(){	//this is for testing
 		if(twoTargets && filteredContoursRect.size() >= 2){
@@ -152,9 +150,6 @@ public class VisionImage {
 			SmartDashboard.putNumber("!!!!!!!!!!!Angle", angle);
 			SmartDashboard.putNumber("Theta", theta);
 	    	SmartDashboard.putNumber("x", x);
-
-
-
 		}
 		SmartDashboard.putBoolean("Rectangles detected?", twoTargets);
 		SmartDashboard.putNumber("Number of targets", numOfTargets);
