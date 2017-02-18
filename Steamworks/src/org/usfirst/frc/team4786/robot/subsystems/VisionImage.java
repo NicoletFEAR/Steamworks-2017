@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4786.robot.subsystems;
 
 import edu.wpi.cscore.CvSource;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
@@ -15,45 +16,52 @@ import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
 
-public class VisionImage {	
-	static double d3 = 8.25 / 12;
-	static boolean twoTargets = false;
-	static int numOfTargets = 0;
-	static double largestRectArea = 0;
-	static double smallestRectArea = 1000;
-	static double distanceToLeft = 0;
-	static double distanceToRight = 0;
-	static double centerX = 0;
-	static double matHeight = 0;
-	static double x = 0;
-	static double theta = 0;
-	private static double angle = 0;
-	static double dm = 0;
-	static double dm2 = 0;
-	static double temp = 0;
-	static Rect leftRect = null;
-	static Rect rightRect = null;
-	static Mat hierarchy = null;
-	static Mat mat = null;
-	static List<Rect> filteredContoursRect = null;
-	static List<MatOfPoint> filteredContours = null;
-	public static enum locationOfTargets{
+public class VisionImage extends Subsystem{	
+	double d3 = .0783;
+	boolean twoTargets = false;
+	int numOfTargets = 0;
+	double largestRectArea = 0;
+	double smallestRectArea = 1000;
+	double distanceToLeft = 0;
+	double distanceToRight = 0;
+	double centerX = 0;
+	double matHeight = 0;
+	double x = 0;
+	double theta = 0;
+	double angle = 0;
+	double dm = 0;
+	double dm2 = 0;
+	double temp = 0;
+	Rect leftRect = null;
+	Rect rightRect = null;
+	Mat hierarchy = null;
+	Mat mat = null;
+	List<Rect> filteredContoursRect = null;
+	List<MatOfPoint> filteredContours = null;
+	public enum locationOfTargets{
 		Right, Left, Ahead, NoTargetVisible
 	}
 	
-	public static double getDistanceLeft(){//distance to left target
+	public double getDistanceLeft(){//distance to left target
 		return distanceToLeft;
 	}
-	public static double getDistanceRight(){//distance to left target
+	public double getDistanceRight(){//distance to left target
 		return distanceToRight;
 	}
-	public static int getNumOfTargets(){
+	public int getNumOfTargets(){
 		return numOfTargets;
 	}
-	public static boolean getTwoTargets(){
+	public  boolean getTwoTargets(){
 		return twoTargets;
 	}
-	public static locationOfTargets getLocationOfTarget(){//returns if targets are right, left, ahead, or not visible
+	public double getAngle(){
+    	return angle;
+	}
+	public double getFirstDistance(){
+		double d = dm;
+    	return d;
+	}
+	public locationOfTargets getLocationOfTarget(){//returns if targets are right, left, ahead, or not visible
 		if(leftRect != null && rightRect != null){	//if targets have the same area they are ahead
 			if(leftRect.area() == rightRect.area()){
 				return locationOfTargets.Ahead;
@@ -66,7 +74,7 @@ public class VisionImage {
 			return locationOfTargets.NoTargetVisible;
 		}
 	}
-	public static void processImage(MatRapper image, CvSource cameraStream){
+	public void processImage(MatRapper image){
 		mat = image.getMat();
 		
 		Core.inRange(mat, new Scalar(RobotMap.lowBlueValue,RobotMap.lowGreenValue,RobotMap.lowRedValue), 
@@ -97,7 +105,7 @@ public class VisionImage {
 		}
 		//cameraStream.putFrame(mat);
 	}
-	public static void analysis(){				
+	public void analysis(){				
 		matHeight = mat.rows();
 		if(filteredContours.size() >= 2){
 			twoTargets = true;
@@ -126,20 +134,19 @@ public class VisionImage {
     		
     		//angle calculations
         	temp = (distanceToLeft * distanceToLeft - distanceToRight * distanceToRight - d3 * d3);
-        	temp /= (-2 * distanceToRight * d3);
-        	SmartDashboard.putNumber("Test line", temp);
+        	temp /= (-2.0 * distanceToRight * d3);
 
         	x = Math.acos(temp);
-        	dm2 = Math.pow(d3 / 2, 2) + distanceToRight*distanceToRight - 2 * (d3/2) * distanceToRight * Math.cos(x);
+        	
+        	dm2 = Math.pow(d3 / 2.0, 2.0) + distanceToRight*distanceToRight - 2.0 * (d3/2.0) * distanceToRight * Math.cos(x);
+
         	dm = Math.sqrt(dm2);
-        	theta = Math.asin(((d3 / 2) * Math.sin(x)) / dm);
+        	theta = Math.asin(((d3 / 2.0) * (Math.sin(x)) / dm));
         	
         	angle = Math.toDegrees(theta + x);
-        	dm = Math.sqrt(dm2);
-        	SmartDashboard.putNumber("jkgdslkgglk;j", angle);
 		}
 	}
-	public static void putValuesToSmartDashboard(){	//this is for testing
+	public void putValuesToSmartDashboard(){	//this is for testing
 		if(twoTargets && filteredContoursRect.size() >= 2){
 			SmartDashboard.putNumber("Left Height", leftRect.height);
 			SmartDashboard.putNumber("Right Height", rightRect.height);
@@ -147,19 +154,18 @@ public class VisionImage {
 			SmartDashboard.putNumber("Right Width", rightRect.width);
 			SmartDashboard.putNumber("Distance to left Rect", distanceToLeft);
 			SmartDashboard.putNumber("Distance to right Rect", distanceToRight);
-			SmartDashboard.putNumber("!!!!!!!!!!!Angle", angle);
-			SmartDashboard.putNumber("Theta", theta);
-	    	SmartDashboard.putNumber("x", x);
+			SmartDashboard.putNumber("Angle To Turn", angle);
+			SmartDashboard.putNumber("First Distance", Robot.visionImage.getFirstDistance());
+
 		}
 		SmartDashboard.putBoolean("Rectangles detected?", twoTargets);
 		SmartDashboard.putNumber("Number of targets", numOfTargets);
 		SmartDashboard.putNumber("Area of largest Rect", largestRectArea);
 		SmartDashboard.putNumber("Area of smallest Rect", smallestRectArea);
 	}
-	public static double getAngle(){
-    	return angle;
-	}
-	public static double getFirstDistance(){
-    	return dm;
+	@Override
+	protected void initDefaultCommand() {
+		// TODO Auto-generated method stub
+		
 	}
 }
