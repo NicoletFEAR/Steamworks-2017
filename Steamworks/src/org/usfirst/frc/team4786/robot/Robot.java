@@ -70,7 +70,9 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Arduino arduino;
 	public static Mat output;
-
+	public static UsbCamera camera;
+	public static CvSink cvSink;
+	
 	Command autonomousCommand;
 	Command teleopCommand;
 
@@ -86,13 +88,13 @@ public class Robot extends IterativeRobot {
 		
 		visionThread = new Thread(() -> {
 			// Get the UsbCamera from CameraServer
-			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+			camera = CameraServer.getInstance().startAutomaticCapture();
 			// Set the resolution
 			camera.setResolution(RobotMap.cameraFOVWidth,RobotMap.cameraFOVHeight);
 			camera.setExposureManual(RobotMap.exposure);
 
 			// Get a CvSink. This will capture Mats from the camera
-			CvSink cvSink = CameraServer.getInstance().getVideo();
+			cvSink = CameraServer.getInstance().getVideo();
 			// Setup a CvSource. This will send images back to the Dashboard
 			CvSource outputStream = CameraServer.getInstance().putVideo("Rectangle", RobotMap.cameraFOVWidth, RobotMap.cameraFOVHeight);
 			CvSource regStream = CameraServer.getInstance().putVideo("Regular", RobotMap.cameraFOVWidth, RobotMap.cameraFOVHeight);
@@ -114,9 +116,10 @@ public class Robot extends IterativeRobot {
 
 					// skip the rest of the current iteration
 					continue;
+				}else {
+					cvSink.grabFrame(mat.getMat());
 				}
 				regStream.putFrame(mat.getMat());
-
 				VisionImage.processImage(mat, outputStream);
 				VisionImage.analysis();
 				VisionImage.putValuesToSmartDashboard();
@@ -179,6 +182,7 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		//visionThread.yield();
+		camera.setExposureAuto();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		
@@ -200,7 +204,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
 		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
 		SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
-    SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
+		SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
 		SmartDashboard.putNumber("Old State", SwitchState.oldState);  // get rid of them if we don't have this method
 
 	}
