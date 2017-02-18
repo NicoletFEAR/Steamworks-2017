@@ -160,8 +160,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 	//camera.setExposureManual(RobotMap.exposure);
-    //autonomousCommand = (Command) sendableChooser.getSelected();
-	autonomousCommand = new GearFromOffset();
+    autonomousCommand = (Command) sendableChooser.getSelected();
+	//autonomousCommand = new GearFromOffset();
     //VisionSetup visionSetup = new VisionSetup();
 
 		if (autonomousCommand != null)

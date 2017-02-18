@@ -17,7 +17,7 @@ import org.usfirst.frc.team4786.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
 
 public class VisionImage extends Subsystem{	
-	double d3 = .0783;
+	double d3 = .7083;
 	boolean twoTargets = false;
 	int numOfTargets = 0;
 	double largestRectArea = 0;
@@ -26,12 +26,6 @@ public class VisionImage extends Subsystem{
 	double distanceToRight = 0;
 	double centerX = 0;
 	double matHeight = 0;
-	double x = 0;
-	double theta = 0;
-	double angle = 0;
-	double dm = 0;
-	double dm2 = 0;
-	double temp = 0;
 	Rect leftRect = null;
 	Rect rightRect = null;
 	Mat hierarchy = null;
@@ -54,12 +48,32 @@ public class VisionImage extends Subsystem{
 	public  boolean getTwoTargets(){
 		return twoTargets;
 	}
-	public double getAngle(){
-    	return angle;
+	public double getFirstAngleToBePerpendicular(){
+		double d3 = .7083;
+		double x;
+		double theta;
+		double angle;
+		double dm;
+		double dl = Robot.visionImage.getDistanceLeft();
+		double dr = Robot.visionImage.getDistanceRight();
+		x = Math.acos(((dl*dl) - (dr*dr) - (d3*d3)) / (-2.0*dr*d3));
+		dm = Math.sqrt((.5*d3)*(.5*d3) + dr*dr - d3*dr*Math.cos(x));
+		theta = Math.asin(.5*d3*Math.sin(x)/dm);
+		angle = theta + x;
+
+    	return Math.toDegrees(angle);
 	}
-	public double getFirstDistance(){
-		double d = dm;
-    	return d;
+	public double getFirstDistanceToBePerpendicular(){
+		double d3 = .7083;
+		double x;
+		double dm;
+		double dl = Robot.visionImage.getDistanceLeft();
+		double dr = Robot.visionImage.getDistanceRight();
+		x = Math.acos(((dl*dl) - (dr*dr) - (d3*d3)) / (-2.0*dr*d3));
+		dm = Math.sqrt((.5*d3)*(.5*d3) + dr*dr - d3*dr*Math.cos(x));
+
+
+    	return dm * .5;
 	}
 	public locationOfTargets getLocationOfTarget(){//returns if targets are right, left, ahead, or not visible
 		if(leftRect != null && rightRect != null){	//if targets have the same area they are ahead
@@ -133,7 +147,7 @@ public class VisionImage extends Subsystem{
     		centerX = .5 * ((leftRect.x + leftRect.width) + rightRect.x);
     		
     		//angle calculations
-        	temp = (distanceToLeft * distanceToLeft - distanceToRight * distanceToRight - d3 * d3);
+        	/*temp = (distanceToLeft * distanceToLeft - distanceToRight * distanceToRight - d3 * d3);
         	temp /= (-2.0 * distanceToRight * d3);
 
         	x = Math.acos(temp);
@@ -143,7 +157,8 @@ public class VisionImage extends Subsystem{
         	dm = Math.sqrt(dm2);
         	theta = Math.asin(((d3 / 2.0) * (Math.sin(x)) / dm));
         	
-        	angle = Math.toDegrees(theta + x);
+        	angle = Math.toDegrees(theta + x);*/
+        	
 		}
 	}
 	public void putValuesToSmartDashboard(){	//this is for testing
@@ -154,8 +169,8 @@ public class VisionImage extends Subsystem{
 			SmartDashboard.putNumber("Right Width", rightRect.width);
 			SmartDashboard.putNumber("Distance to left Rect", distanceToLeft);
 			SmartDashboard.putNumber("Distance to right Rect", distanceToRight);
-			SmartDashboard.putNumber("Angle To Turn", angle);
-			SmartDashboard.putNumber("First Distance", Robot.visionImage.getFirstDistance());
+			SmartDashboard.putNumber("Angle To Turn", Robot.visionImage.getFirstAngleToBePerpendicular());
+			SmartDashboard.putNumber("First Distance", Robot.visionImage.getFirstDistanceToBePerpendicular());
 
 		}
 		SmartDashboard.putBoolean("Rectangles detected?", twoTargets);
