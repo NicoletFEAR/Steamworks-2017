@@ -199,6 +199,7 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		//visionThread.yield();
+		camera.setResolution(320,240);
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		
