@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveToLeftGearPeg extends CommandGroup {
 
     public DriveToLeftGearPeg() {
-    	addSequential(new DriveToPosition(7.75 + (RobotMap.MESHBOT_ROBOT_LENGTH / 2)));
+    	addSequential(new DriveToPosition(3));
     	addSequential(new TurnToAngle(60));
-    	addSequential(new DriveToPosition(4.208333));
+    	addSequential(new DriveToPosition(1));
     	
         // To run multiple commands at the same time,
         // use addParallel()

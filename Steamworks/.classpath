@@ -10,7 +10,9 @@
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRLib.jar"/>
 
 	<classpathentry kind="var" path="USERLIBS_DIR/TalonSRXLibJava.jar"/>
+
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRLib.jar"/>
+
 	<classpathentry kind="var" path="USERLIBS_DIR/niVisionWPI.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
