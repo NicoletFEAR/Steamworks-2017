@@ -108,7 +108,6 @@ public class Robot extends IterativeRobot {
 		sendableChooser.addObject("Drive to Center Gear Peg", new DriveToPosition(4));
 		sendableChooser.addObject("Drive to Left Gear Peg", new DriveToLeftGearPeg());
 		sendableChooser.addObject("Drive to Right Gear Peg", new DriveToRightGearPeg());
-		//sendableChooser.addObject("GetToGearTest", new GearFromOffset());
 		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 		
 		
