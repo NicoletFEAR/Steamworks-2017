@@ -231,7 +231,7 @@ public class Robot extends IterativeRobot {
 	public void testInit(){
 		//runs motors and output
 		Robot.driveTrain.openLoopDrive(1, 1);
-		Robot.intake.collectBalls();
+		//Robot.intake.collectBalls();
 		Robot.arduino.writeStringData("rainbowlight");
 	}
 	
