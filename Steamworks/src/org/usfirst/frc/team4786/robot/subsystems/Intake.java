@@ -30,6 +30,10 @@ public class Intake extends Subsystem {
     	intakeMotor.set(RobotMap.INTAKE_TALON_SPIT_SPEED);
     }
     
+    public boolean isFinishedIntaking(){
+    	return true;
+    }
+    
     //Just stops the motor
     public void stopIntaking() {
     	intakeMotor.set(0.0);
