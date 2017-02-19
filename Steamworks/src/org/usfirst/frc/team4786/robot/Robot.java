@@ -44,7 +44,7 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
-
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -74,15 +74,16 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	Command teleopCommand;
 
-
 	SendableChooser<Command> sendableChooser;
+	
+	DriverStation.Alliance alliance;
 	
 	@Override
 	public void robotInit() {
 
 		oi = new OI();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
-		
+		alliance = DriverStation.getInstance().getAlliance();
 		
 		visionThread = new Thread(() -> {
 			// Get the UsbCamera from CameraServer
@@ -138,6 +139,7 @@ public class Robot extends IterativeRobot {
 		sendableChooser.addObject("Drive to Left Gear Peg", new DriveToLeftGearPeg());
 		sendableChooser.addObject("Drive to Right Gear Peg", new DriveToRightGearPeg());
 		SmartDashboard.putData("Autonomous Selector", sendableChooser);
+		SmartDashboard.putString("Alliance", alliance.toString());
 	}
 
 
