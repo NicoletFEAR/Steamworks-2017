@@ -21,7 +21,7 @@ public class RobotMap {
 	public static final int bridgeServoChannel = 4;
 	
 	//Scaling used only for open loop drive system
-	public static final double openLoopSpeedScaling = .6;
+	public static final double openLoopSpeedScaling = 1;
 	
 	public static final double MESHBOT_ROBOT_LENGTH = 2.34375; //In feet
 	

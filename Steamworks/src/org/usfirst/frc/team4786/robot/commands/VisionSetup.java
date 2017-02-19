@@ -24,7 +24,7 @@ public class VisionSetup extends Command {
 			Robot.cvSink.grabFrame(mat.getMat());	//sets mat to an image from the camera
 			Robot.visionImage.processImage(mat);
 			Robot.visionImage.analysis();
-			Robot.visionImage.putValuesToSmartDashboard();
+			//Robot.visionImage.putValuesToSmartDashboard();
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

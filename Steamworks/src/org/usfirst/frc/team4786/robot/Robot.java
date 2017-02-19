@@ -110,7 +110,7 @@ public class Robot extends IterativeRobot {
 		sendableChooser.addObject("Drive to Left Gear Peg", new DriveToLeftGearPeg());
 		sendableChooser.addObject("Drive to Right Gear Peg", new DriveToRightGearPeg());
 		//sendableChooser.addObject("GetToGearTest", new GearFromOffset());
-		SmartDashboard.putData("Autonomous Selector", sendableChooser);
+		//SmartDashboard.putData("Autonomous Selector", sendableChooser);
 		
 		// Get the UsbCamera from CameraServer
 		// Set the resolution
@@ -185,9 +185,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
-		SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
-		SmartDashboard.putNumber("Servo Angle", drawBridge.getServoAngle());
+		//SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
+		//SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
+		//SmartDashboard.putNumber("Servo Angle", drawBridge.getServoAngle());
 	}
 
 	@Override
@@ -215,14 +215,14 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		timer = new Timer();
 
-		SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
-		SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
-		SmartDashboard.putNumber("Left Motor Output", driveTrain.motorOutputLeft);
-		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
-		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
-		SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
-    SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
-		SmartDashboard.putNumber("Old State", SwitchState.oldState);  // get rid of them if we don't have this method
+		//SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
+		//SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
+		//SmartDashboard.putNumber("Left Motor Output", driveTrain.motorOutputLeft);
+		//SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
+		//SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
+		//SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
+		//SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
+		//SmartDashboard.putNumber("Old State", SwitchState.oldState);  // get rid of them if we don't have this method
 
 	}
 

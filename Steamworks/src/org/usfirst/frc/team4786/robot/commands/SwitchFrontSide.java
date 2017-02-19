@@ -17,7 +17,7 @@ public class SwitchFrontSide extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(Robot.oi == null){ end(); }
+    	//if(Robot.oi == null){ end(); }
     	//Flip direction of travel
     	Robot.driveTrain.switchFront();
     	//Flip left and right
