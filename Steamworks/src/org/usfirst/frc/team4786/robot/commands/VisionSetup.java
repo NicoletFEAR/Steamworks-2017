@@ -21,7 +21,7 @@ public class VisionSetup extends Command {
     	Robot.camera.setExposureManual(RobotMap.exposure);
     	try(MatRapper mat = new MatRapper(new Mat());){
 			
-			Robot.cvSink.grabFrame(mat.getMat());
+			Robot.cvSink.grabFrame(mat.getMat());	//sets mat to an image from the camera
 			Robot.visionImage.processImage(mat);
 			Robot.visionImage.analysis();
 			Robot.visionImage.putValuesToSmartDashboard();
@@ -34,7 +34,6 @@ public class VisionSetup extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-
     }
 
     // Make this return true when this Command no longer needs to run execute()

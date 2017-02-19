@@ -55,6 +55,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Timer;
 
 
 public class Robot extends IterativeRobot {
@@ -75,6 +76,7 @@ public class Robot extends IterativeRobot {
 	public static UsbCamera camera;
 	public static OI oi;
 	public static Arduino arduino;
+	public static Timer timer;
 	//public static Mat output;
 
 	Command autonomousCommand;
@@ -161,8 +163,8 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 	//camera.setExposureManual(RobotMap.exposure);
     autonomousCommand = (Command) sendableChooser.getSelected();
+    
 	//autonomousCommand = new GearFromOffset();
-    //VisionSetup visionSetup = new VisionSetup();
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -182,6 +184,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		camera.setExposureAuto();
+		
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
@@ -200,6 +203,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		timer = new Timer();
 
 		SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
 		SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());

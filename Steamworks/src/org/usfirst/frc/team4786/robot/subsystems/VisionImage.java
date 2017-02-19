@@ -17,23 +17,26 @@ import org.usfirst.frc.team4786.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
 
 public class VisionImage extends Subsystem{	
-	double d3 = .7083;
+	
 	boolean twoTargets = false;
 	int numOfTargets = 0;
+	double centerOfCamera = 0;//x coordinate of middle of camera
+	double d3 = .7083;
 	double largestRectArea = 0;
 	double smallestRectArea = 1000;
 	double distanceToLeft = 0;
 	double distanceToRight = 0;
 	double centerX = 0;
-	double matHeight = 0;
+	double matHeight = 0;//height of image from camera feed
+	double diffBetweenCenterXAndCamCenter = 0;
 	Rect leftRect = null;
 	Rect rightRect = null;
 	Mat hierarchy = null;
 	Mat mat = null;
 	List<Rect> filteredContoursRect = null;
 	List<MatOfPoint> filteredContours = null;
-	public enum locationOfTargets{
-		Right, Left, Ahead, NoTargetVisible
+	public enum location{
+		Right, Left, Ahead, Center, TargetsNotVisible
 	}
 	
 	public double getDistanceLeft(){//distance to left target
@@ -47,6 +50,9 @@ public class VisionImage extends Subsystem{
 	}
 	public  boolean getTwoTargets(){
 		return twoTargets;
+	}
+	public double getDiffBetweenCenterXAndCamCenter(){
+		return diffBetweenCenterXAndCamCenter;
 	}
 	public double getFirstAngleToBePerpendicular(){
 		double d3 = .7083;
@@ -72,25 +78,43 @@ public class VisionImage extends Subsystem{
 		x = Math.acos(((dl*dl) - (dr*dr) - (d3*d3)) / (-2.0*dr*d3));
 		dm = Math.sqrt((.5*d3)*(.5*d3) + dr*dr - d3*dr*Math.cos(x));
 
-
     	return dm * .5;
 	}
-	public locationOfTargets getLocationOfTarget(){//returns if targets are right, left, ahead, or not visible
-		if(leftRect != null && rightRect != null){	//if targets have the same area they are ahead
-			if(leftRect.area() == rightRect.area()){
-				return locationOfTargets.Ahead;
-			}else if(leftRect.area() > rightRect.area()){	//if the left target is bigger than the right they are to the right
-				return locationOfTargets.Right;
-			}else{
-				return locationOfTargets.Left;
-			}	
-		}else{
-			return locationOfTargets.NoTargetVisible;
+	public location getLocationOfTarget(){//returns if targets are right, left, ahead, or not visible
+		if (leftRect != null && rightRect != null) {	//if targets have the about the same area they are ahead
+			if (((leftRect.area()*.95) < rightRect.area()) && (rightRect.area() < (leftRect.area()*1.05))) {
+				return location.Ahead;
+			} else if (leftRect.area() > rightRect.area()){	//if the left target is bigger than the right they are to the right
+				return location.Right;
+			} else {
+				return location.Left;
+		} } else {
+			return location.TargetsNotVisible;
+		}
+	}
+	public location getWhereCameraIsPointing(){
+		if (leftRect != null && rightRect != null && centerOfCamera != 0){
+			if (.95*(centerOfCamera-(leftRect.x+leftRect.width)) < (rightRect.x-centerOfCamera)
+					&& (rightRect.x-centerOfCamera) < 1.05*(centerOfCamera-(leftRect.x+leftRect.width)))
+				return location.Center;	//camera is pointing at peg
+			if (rightRect.x  < centerOfCamera){
+				return location.Left;	//camera is pointing left of peg
+			} else if (leftRect.x > centerOfCamera) {
+				return location.Right;	//camera is pointing right of peg
+			} else if ((centerOfCamera-(leftRect.x+leftRect.width))<(rightRect.x-centerOfCamera)) {
+				return location.Left;	//camera is pointing left of peg
+			} else if ((rightRect.x-centerOfCamera)<(centerOfCamera-(leftRect.x+leftRect.width))) {
+				return location.Right;	//camera is pointing right of peg
+			} else {	//this should never be returned
+				return location.Center;
+		} } else {
+			return location.TargetsNotVisible;
 		}
 	}
 	public void processImage(MatRapper image){
 		mat = image.getMat();
 		
+		//filters mat by specified color range in BGR
 		Core.inRange(mat, new Scalar(RobotMap.lowBlueValue,RobotMap.lowGreenValue,RobotMap.lowRedValue), 
 				new Scalar(RobotMap.highBlueValue,RobotMap.highGreenValue,RobotMap.highRedValue), mat);
 		
@@ -119,7 +143,8 @@ public class VisionImage extends Subsystem{
 		}
 		//cameraStream.putFrame(mat);
 	}
-	public void analysis(){				
+	public void analysis(){	
+		centerOfCamera = mat.cols() / 2.0;
 		matHeight = mat.rows();
 		if(filteredContours.size() >= 2){
 			twoTargets = true;
@@ -145,7 +170,9 @@ public class VisionImage extends Subsystem{
 			distanceToRight /= 1.886;
 			//subtract distance of camera to front of robot to final calculations
     		centerX = .5 * ((leftRect.x + leftRect.width) + rightRect.x);
+    		diffBetweenCenterXAndCamCenter = centerX - centerOfCamera;
     		
+    		//Imgproc.rectangle(mat, new Point(100, 100), new Point(400, 400), new Scalar(255, 255, 255), 5);
     		//angle calculations
         	/*temp = (distanceToLeft * distanceToLeft - distanceToRight * distanceToRight - d3 * d3);
         	temp /= (-2.0 * distanceToRight * d3);
@@ -171,16 +198,16 @@ public class VisionImage extends Subsystem{
 			SmartDashboard.putNumber("Distance to right Rect", distanceToRight);
 			SmartDashboard.putNumber("Angle To Turn", Robot.visionImage.getFirstAngleToBePerpendicular());
 			SmartDashboard.putNumber("First Distance", Robot.visionImage.getFirstDistanceToBePerpendicular());
-
+			
 		}
 		SmartDashboard.putBoolean("Rectangles detected?", twoTargets);
 		SmartDashboard.putNumber("Number of targets", numOfTargets);
 		SmartDashboard.putNumber("Area of largest Rect", largestRectArea);
 		SmartDashboard.putNumber("Area of smallest Rect", smallestRectArea);
+		SmartDashboard.putNumber("Difference between center x & center of camera", diffBetweenCenterXAndCamCenter);
 	}
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-		
 	}
 }
