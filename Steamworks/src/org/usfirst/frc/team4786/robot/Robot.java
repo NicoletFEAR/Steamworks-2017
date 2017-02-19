@@ -83,7 +83,6 @@ public class Robot extends IterativeRobot {
 
 		oi = new OI();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
-		alliance = DriverStation.getInstance().getAlliance();
 		
 		visionThread = new Thread(() -> {
 			// Get the UsbCamera from CameraServer
@@ -139,9 +138,10 @@ public class Robot extends IterativeRobot {
 		sendableChooser.addObject("Drive to Left Gear Peg", new DriveToLeftGearPeg());
 		sendableChooser.addObject("Drive to Right Gear Peg", new DriveToRightGearPeg());
 		SmartDashboard.putData("Autonomous Selector", sendableChooser);
-		SmartDashboard.putString("Alliance", alliance.toString());
-	}
+		
 
+	}
+	
 
 	@Override
 	public void disabledInit() {
@@ -156,6 +156,21 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
+		alliance = DriverStation.getInstance().getAlliance();
+
+		//send correct alliance data to arduino
+		String allianceColorVal;
+		if(alliance.toString().equalsIgnoreCase("blue")){
+			allianceColorVal = "bluelight";
+			arduino.writeStringData(allianceColorVal);
+		}else if(alliance.toString().equalsIgnoreCase("red")){
+			allianceColorVal = "redlight";
+			arduino.writeStringData(allianceColorVal);
+		}else{
+			allianceColorVal = "purplelight";
+			arduino.writeStringData(allianceColorVal);
+		}
+		SmartDashboard.putString("Alliance", allianceColorVal);
 
     autonomousCommand = sendableChooser.getSelected();
 
