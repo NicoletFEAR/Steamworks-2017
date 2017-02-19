@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team4786.robot;
 
 import org.usfirst.frc.team4786.robot.commands.DoNothing;
@@ -17,6 +16,7 @@ import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
 //import org.usfirst.frc.team4786.robot.subsystems.Test;
 //import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
 import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
+import org.usfirst.frc.team4786.robot.subsystems.SwitchState;
 
 import static org.opencv.core.Core.FILLED;
 import static org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE;
@@ -48,6 +48,7 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -69,11 +70,16 @@ public class Robot extends IterativeRobot {
 	public static DrawBridge drawBridge = new DrawBridge();
 	public static Gear gear = new Gear();
 	public static Climber climber = new Climber();
+
 	public static VisionImage visionImage = new VisionImage();
 	public static CvSink cvSink;
 	public static CvSource outputStream;
 	public static CvSource regStream;
 	public static UsbCamera camera;
+
+    public static SwitchState switchState = new SwitchState();
+
+
 	public static OI oi;
 	public static Arduino arduino;
 	public static Timer timer;
@@ -87,13 +93,16 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void robotInit() {
+
 		camera = CameraServer.getInstance().startAutomaticCapture();
 		camera.setResolution(RobotMap.cameraFOVWidth,RobotMap.cameraFOVHeight);
 		cvSink = CameraServer.getInstance().getVideo();
+
 		oi = new OI();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
 		//VisionImage.putValuesToSmartDashboard();
 		
+
 		sendableChooser = new SendableChooser<Command>();
 		sendableChooser.addDefault("Do Nothing!", new DoNothing());
 		sendableChooser.addObject("Drive to Baseline", new DriveToPosition(6));
@@ -202,6 +211,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
+    switchState.switchChange();
 		Scheduler.getInstance().run();
 		timer = new Timer();
 
@@ -211,6 +221,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
 		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
 		SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
+    SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
+		SmartDashboard.putNumber("Old State", SwitchState.oldState);  // get rid of them if we don't have this method
 
 	}
 
