@@ -40,6 +40,7 @@ import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.GreenLight;
 import org.usfirst.frc.team4786.robot.commands.RedLight;
+import org.usfirst.frc.team4786.robot.commands.VisionSetup;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.Gear;
 
@@ -228,11 +229,23 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void testInit(){
+		//runs motors and output
+		Robot.driveTrain.openLoopDrive(1, 1);
+		//Robot.intake.collectBalls();
+		Robot.arduino.writeStringData("rainbowlight");
 	}
 	
 
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
+		
+
+		
+		//shows smartdashboard values
+		/*Command visionTest = new VisionSetup();
+		visionTest.start();*/
+		
+
 	}
 }
