@@ -220,8 +220,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
 		SmartDashboard.putNumber("Left Motor Output", driveTrain.motorOutputLeft);
 		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
-		SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
-		SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
+		SmartDashboard.putBoolean("Gear Present", gear.gearLimitSwitchPressed());
+		SmartDashboard.putBoolean("Peg Present", gear.pegLimitSwitchPressed());
     SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
 		SmartDashboard.putNumber("Old State", SwitchState.oldState);  // get rid of them if we don't have this method
 
