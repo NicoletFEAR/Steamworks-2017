@@ -21,12 +21,12 @@ public class Gear extends Subsystem {
         setDefaultCommand(new ArduinoLimitSwitchMonitor());
     }
     
-    public static boolean gearLimitSwitchPressed(){
+    public boolean gearLimitSwitchPressed(){
     	return !Robot.oi.getGearLimitSwitch().get();
     }
     //returns true when pressed; must invert logic
     
-    public static boolean pegLimitSwitchPressed(){
+    public boolean pegLimitSwitchPressed(){
     	return !Robot.oi.getPegLimitSwitch().get();
 
     //returns true when pressed; must invert logic

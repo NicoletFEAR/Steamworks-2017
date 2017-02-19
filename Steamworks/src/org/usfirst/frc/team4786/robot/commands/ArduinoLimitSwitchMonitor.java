@@ -26,7 +26,7 @@ public class ArduinoLimitSwitchMonitor extends Command {
     	//RedLight red = new RedLight();
     	//BlueLight blue = new BlueLight(); 
 		
-    	if(Gear.pegLimitSwitchPressed() == false && !last.equals("blue")){
+    	if(Robot.gear.pegLimitSwitchPressed() == false && !last.equals("blue")){
     		Robot.oi.getXbox().setRumble(RumbleType.kLeftRumble, 0);
     		Robot.oi.getXbox().setRumble(RumbleType.kRightRumble, 0);
     		//blue.start();
@@ -36,8 +36,8 @@ public class ArduinoLimitSwitchMonitor extends Command {
       		}	
 	
 
-    	if(Gear.pegLimitSwitchPressed() == true && !last.equals("red")){
-    		SmartDashboard.putString("Working", "test");
+    	if(Robot.gear.pegLimitSwitchPressed() == true && !last.equals("red")){
+    		//SmartDashboard.putString("Working", "test");
     		Robot.oi.getXbox().setRumble(RumbleType.kLeftRumble, 1);
     		Robot.oi.getXbox().setRumble(RumbleType.kRightRumble, 1);
     		last = "red";

@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import org.usfirst.frc.team4786.robot.RobotMap;
+import org.usfirst.frc.team4786.robot.commands.ArduinoLimitSwitchMonitor;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
@@ -25,8 +26,6 @@ public class Arduino extends Subsystem {
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
     }
     
     //method to send data over i2c to arduino
