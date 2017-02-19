@@ -66,6 +66,10 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		frontLeft.setPosition(0);
 		frontRight.setPosition(0);
 		
+		//Possibly the fix to the "jumping" in DriveToPosition()
+		frontLeft.setEncPosition(0);
+		frontRight.setEncPosition(0);
+		
 		frontLeft.setAllowableClosedLoopErr(RobotMap.ERROR_CONSTANT);
 		frontRight.setAllowableClosedLoopErr(RobotMap.ERROR_CONSTANT);
 		
