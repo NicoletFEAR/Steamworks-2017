@@ -100,7 +100,6 @@ public class Robot extends IterativeRobot {
 
 		oi = new OI();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
-		//VisionImage.putValuesToSmartDashboard();
 		
 
 		sendableChooser = new SendableChooser<Command>();
@@ -110,52 +109,9 @@ public class Robot extends IterativeRobot {
 		sendableChooser.addObject("Drive to Left Gear Peg", new DriveToLeftGearPeg());
 		sendableChooser.addObject("Drive to Right Gear Peg", new DriveToRightGearPeg());
 		//sendableChooser.addObject("GetToGearTest", new GearFromOffset());
-		//SmartDashboard.putData("Autonomous Selector", sendableChooser);
+		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 		
-		// Get the UsbCamera from CameraServer
-		// Set the resolution
 		
-		//camera.setExposureManual(RobotMap.exposure);
-					
-		// Get a CvSink. This will capture Mats from the camera
-		// Setup a CvSource. This will send images back to the Dashboard
-		
-		// Mats are very memory expensive. Lets reuse this Mat.
-		/*try(MatRapper mat = new MatRapper(new Mat());){
-			if (cvSink.grabFrame(mat.getMat()) == 0) {
-				// Send the output the error.
-				outputStream.notifyError(cvSink.getError());
-				regStream.notifyError(cvSink.getError());
-				// skip the rest of the current iteration
-				//continue;
-			}
-			regStream.putFrame(mat.getMat());
-			VisionImage.processImage(mat, outputStream);
-			VisionImage.analysis();
-			VisionImage.putValuesToSmartDashboard();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
-		/*visionThread = new Thread(() -> {
-			try(MatRapper mat = new MatRapper(new Mat());){
-				// This cannot be 'true'. The program will never exit if it is. This
-				// lets the robot stop this thread when restarting robot code or
-				// deploying.
-				while (!Thread.interrupted()) {
-					//TimeUnit.SECONDS.sleep(1);
-					// Tell the CvSink to grab a frame from the camera and put it
-					// in the source mat.  If there is an error notify the output.
-					//outputStream.putFrame(mat.getMat());
-					// Put a rectangle on the image
-					//Imgproc.rectangle(mat.getMat(), new Point(100, 100), new Point(400, 400), new Scalar(255, 255, 255), 5);
-				}
-			} catch (Exception e) {
-			e.printStackTrace();
-			}
-		});
-		visionThread.setDaemon(true);
-		visionThread.start();*/
 	}
 
 	@Override
@@ -185,20 +141,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		//SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
-		//SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
-		//SmartDashboard.putNumber("Servo Angle", drawBridge.getServoAngle());
+		
 	}
 
 	@Override
 	public void teleopInit() {
 		camera.setExposureAuto();
 		
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		//visionThread.yield();
+		
 		camera.setResolution(320,240);
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
@@ -214,16 +164,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
     switchState.switchChange();
 		Scheduler.getInstance().run();
-		timer = new Timer();
 
-		//SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
-		//SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
-		//SmartDashboard.putNumber("Left Motor Output", driveTrain.motorOutputLeft);
-		//SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
-		//SmartDashboard.putBoolean("Gear Present", Gear.gearLimitSwitchPressed());
-		//SmartDashboard.putBoolean("Peg Present", Gear.pegLimitSwitchPressed());
-		//SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
-		//SmartDashboard.putNumber("Old State", SwitchState.oldState);  // get rid of them if we don't have this method
+		
 
 	}
 
