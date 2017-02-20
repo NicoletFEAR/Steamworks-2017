@@ -1,12 +1,8 @@
 package org.usfirst.frc.team4786.robot.commands;
 
 import org.usfirst.frc.team4786.robot.Robot;
-import org.usfirst.frc.team4786.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *

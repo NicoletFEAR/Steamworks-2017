@@ -3,13 +3,10 @@ package org.usfirst.frc.team4786.robot.subsystems;
 import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.RobotMap;
 import org.usfirst.frc.team4786.robot.commands.OpenClimb;
-import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
-
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *

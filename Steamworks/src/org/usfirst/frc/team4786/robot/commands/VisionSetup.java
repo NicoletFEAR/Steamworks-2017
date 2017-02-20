@@ -5,8 +5,6 @@ import org.opencv.core.Mat;
 import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.RobotMap;
 import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
-import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class VisionSetup extends Command {
