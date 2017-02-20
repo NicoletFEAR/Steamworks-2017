@@ -204,9 +204,11 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void testInit(){
+		//everything is awesome code
 		//runs motors and output
 		Robot.driveTrain.openLoopDrive(1, 1);
-		//Robot.intake.collectBalls();
+		Robot.intake.collectBalls();
+		Robot.climber.startOpenClimbing(1);
 		Robot.arduino.writeStringData("rainbowlight");
 	}
 	

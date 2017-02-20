@@ -26,7 +26,7 @@ public class OpenClimb extends Command {
     //Called repeatedly when this Command is scheduled to run
     //We just start climbing!
     protected void execute() {
-    	double speed = RobotMap.OPEN_LOOP_CLIMBING_SPEED_SCALING * Robot.oi.getXbox().getTriggerAxis(GenericHID.Hand.kRight);
+    	double speed = Robot.oi.getXbox().getTriggerAxis(GenericHID.Hand.kRight);
     	Robot.climber.startOpenClimbing(speed);
     }
 
