@@ -37,6 +37,8 @@ public class OI {
 	private static Button kRightJoy10Button;
 	private static Button kLeftJoy11Button;
 	private static Button kRightJoy11Button;
+	
+	private static Button rightBumper;
 
     public OI(){
     	//Init the objects for all the buttons, sensors, joysticks, and Xbox controllers
@@ -52,6 +54,7 @@ public class OI {
     	kLeftJoy11Button = new JoystickButton(leftDriveJoy, 11);
     	kRightJoy11Button = new JoystickButton(rightDriveJoy, 11);
     	  
+    	rightBumper = new JoystickButton(xbox, Buttons.RightBump);
       //Tie our many buttons, sensors, joysticks, and Xbox controllers to robot commands
     		    	
     	limitSwitchGear = new DigitalInput(RobotMap.limitSwitchGearPort);
@@ -72,8 +75,9 @@ public class OI {
     	kRightJoy11Button.whileHeld(new SwitchFrontSide());
     	
      
+    	rightBumper.whileHeld(new CollectBalls());
     }
-    public void checkXboxButtonStates() {
+    /*public void checkXboxButtonStates() {
     	if (xbox.getBButton() && Robot.climber.getCurrentCommand() == null) {
         	new OpenClimb().start();
     	}
@@ -87,7 +91,7 @@ public class OI {
     	if (xbox.getBumper(GenericHID.Hand.kRight) && Robot.intake.getCurrentCommand() == null) {
     		new CollectBalls().start();
     	}
-    }
+    }*/
  
   
     public Joystick getLeftDriveJoy() {
