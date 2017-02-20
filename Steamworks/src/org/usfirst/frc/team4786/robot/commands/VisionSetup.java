@@ -18,7 +18,7 @@ public class VisionSetup extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	b = false;
-    	Robot.camera.setExposureManual(RobotMap.exposure);
+    	Robot.gearPlacementCamera.setExposureManual(RobotMap.exposure);
     	try(MatRapper mat = new MatRapper(new Mat());){
 			
 			Robot.cvSink.grabFrame(mat.getMat());	//sets mat to an image from the camera

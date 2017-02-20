@@ -76,7 +76,8 @@ public class Robot extends IterativeRobot {
 	public static CvSink cvSink;
 	public static CvSource outputStream;
 	public static CvSource regStream;
-	public static UsbCamera camera;
+	public static UsbCamera gearPlacementCamera;
+	public static UsbCamera ballPlacementCamera;
 
     public static SwitchState switchState = new SwitchState();
 
@@ -98,8 +99,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 
-		camera = CameraServer.getInstance().startAutomaticCapture();
-		camera.setResolution(RobotMap.cameraFOVWidth,RobotMap.cameraFOVHeight);
+		gearPlacementCamera = CameraServer.getInstance().startAutomaticCapture("Gear", 0);
+		ballPlacementCamera = CameraServer.getInstance().startAutomaticCapture("Ball Camera", 1);
+		gearPlacementCamera.setResolution(RobotMap.cameraFOVWidth,RobotMap.cameraFOVHeight);
 		cvSink = CameraServer.getInstance().getVideo();
 
 		oi = new OI();
@@ -168,7 +170,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		camera.setExposureAuto();
+		gearPlacementCamera.setExposureAuto();
 		
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
