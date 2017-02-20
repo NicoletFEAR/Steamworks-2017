@@ -26,7 +26,7 @@ public class OpenClimb extends Command {
     //We just start climbing!
     protected void execute() {
     	double speed = Robot.oi.getXbox().getTriggerAxis(GenericHID.Hand.kRight);
-    	Robot.climber.startOpenClimbing(-speed);
+    	Robot.climber.startOpenClimbing(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

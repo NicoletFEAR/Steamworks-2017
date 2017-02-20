@@ -91,7 +91,9 @@ public class Robot extends IterativeRobot {
 
 	SendableChooser<Command> sendableChooser;
 	
-	DriverStation.Alliance alliance;
+	public static DriverStation.Alliance alliance;
+	public static String allianceColorVal = "";
+
 	
 	@Override
 	public void robotInit() {
@@ -102,7 +104,6 @@ public class Robot extends IterativeRobot {
 
 		oi = new OI();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
-		//VisionImage.putValuesToSmartDashboard();
 		
 
 
@@ -115,7 +116,7 @@ public class Robot extends IterativeRobot {
 		//sendableChooser.addObject("GetToGearTest", new GearFromOffset());
 		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 		
-
+	}
 	@Override
 	public void disabledInit() {
 
@@ -131,7 +132,6 @@ public class Robot extends IterativeRobot {
 		alliance = DriverStation.getInstance().getAlliance();
 
 		//send correct alliance data to arduino
-		String allianceColorVal;
 		if(alliance.toString().equalsIgnoreCase("blue")){
 			allianceColorVal = "bluelight";
 			arduino.writeStringData(allianceColorVal);
