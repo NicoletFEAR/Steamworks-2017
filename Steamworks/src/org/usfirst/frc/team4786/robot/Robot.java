@@ -48,7 +48,7 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
-
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -89,8 +89,9 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	Command teleopCommand;
 
-
 	SendableChooser<Command> sendableChooser;
+	
+	DriverStation.Alliance alliance;
 	
 	@Override
 	public void robotInit() {
@@ -104,6 +105,7 @@ public class Robot extends IterativeRobot {
 		//VisionImage.putValuesToSmartDashboard();
 		
 
+
 		sendableChooser = new SendableChooser<Command>();
 		sendableChooser.addDefault("Do Nothing!", new DoNothing());
 		sendableChooser.addObject("Drive to Baseline", new DriveToPosition(6));
@@ -113,51 +115,6 @@ public class Robot extends IterativeRobot {
 		//sendableChooser.addObject("GetToGearTest", new GearFromOffset());
 		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 		
-		// Get the UsbCamera from CameraServer
-		// Set the resolution
-		
-		//camera.setExposureManual(RobotMap.exposure);
-					
-		// Get a CvSink. This will capture Mats from the camera
-		// Setup a CvSource. This will send images back to the Dashboard
-		
-		// Mats are very memory expensive. Lets reuse this Mat.
-		/*try(MatRapper mat = new MatRapper(new Mat());){
-			if (cvSink.grabFrame(mat.getMat()) == 0) {
-				// Send the output the error.
-				outputStream.notifyError(cvSink.getError());
-				regStream.notifyError(cvSink.getError());
-				// skip the rest of the current iteration
-				//continue;
-			}
-			regStream.putFrame(mat.getMat());
-			VisionImage.processImage(mat, outputStream);
-			VisionImage.analysis();
-			VisionImage.putValuesToSmartDashboard();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
-		/*visionThread = new Thread(() -> {
-			try(MatRapper mat = new MatRapper(new Mat());){
-				// This cannot be 'true'. The program will never exit if it is. This
-				// lets the robot stop this thread when restarting robot code or
-				// deploying.
-				while (!Thread.interrupted()) {
-					//TimeUnit.SECONDS.sleep(1);
-					// Tell the CvSink to grab a frame from the camera and put it
-					// in the source mat.  If there is an error notify the output.
-					//outputStream.putFrame(mat.getMat());
-					// Put a rectangle on the image
-					//Imgproc.rectangle(mat.getMat(), new Point(100, 100), new Point(400, 400), new Scalar(255, 255, 255), 5);
-				}
-			} catch (Exception e) {
-			e.printStackTrace();
-			}
-		});
-		visionThread.setDaemon(true);
-		visionThread.start();*/
-	}
 
 	@Override
 	public void disabledInit() {
@@ -171,10 +128,28 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
+		alliance = DriverStation.getInstance().getAlliance();
+
+		//send correct alliance data to arduino
+		String allianceColorVal;
+		if(alliance.toString().equalsIgnoreCase("blue")){
+			allianceColorVal = "bluelight";
+			arduino.writeStringData(allianceColorVal);
+		}else if(alliance.toString().equalsIgnoreCase("red")){
+			allianceColorVal = "redlight";
+			arduino.writeStringData(allianceColorVal);
+		}else{
+			allianceColorVal = "purplelight";
+			arduino.writeStringData(allianceColorVal);
+		}
+		SmartDashboard.putString("Alliance", allianceColorVal);
+
+
 	//camera.setExposureManual(RobotMap.exposure);
     autonomousCommand = (Command) sendableChooser.getSelected();
     
 	//autonomousCommand = new GearFromOffset();
+
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();
