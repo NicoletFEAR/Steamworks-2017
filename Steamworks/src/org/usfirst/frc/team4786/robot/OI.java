@@ -75,7 +75,6 @@ public class OI {
     	kRightJoy11Button.whileHeld(new SwitchFrontSide());
     	
      
-    	rightBumper.whileHeld(new CollectBalls());
     }
     /*public void checkXboxButtonStates() {
     	if (xbox.getBButton() && Robot.climber.getCurrentCommand() == null) {

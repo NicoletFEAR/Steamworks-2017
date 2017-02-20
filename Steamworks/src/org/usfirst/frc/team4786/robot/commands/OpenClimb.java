@@ -22,7 +22,7 @@ public class OpenClimb extends Command {
     //Called repeatedly when this Command is scheduled to run
     //We just start climbing!
     protected void execute() {
-    	double speed = Robot.oi.getXbox().getTriggerAxis(GenericHID.Hand.kRight);
+    	double speed = Robot.oi.getXbox().getTriggerAxis(GenericHID.Hand.kLeft);
     	Robot.climber.startOpenClimbing(speed);
     }
 

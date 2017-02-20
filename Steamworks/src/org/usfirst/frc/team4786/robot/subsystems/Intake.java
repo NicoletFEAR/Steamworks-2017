@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4786.robot.subsystems;
 
 import org.usfirst.frc.team4786.robot.RobotMap;
+import org.usfirst.frc.team4786.robot.commands.CollectBalls;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
@@ -15,13 +16,13 @@ public class Intake extends Subsystem {
     CANTalon intakeMotor = new CANTalon(RobotMap.intakePort);
 
     public void initDefaultCommand() {
-    	//No Default Command Needed for This
+    	setDefaultCommand(new CollectBalls());
     }
     
     //Set the motor on the intake to take-in/collect balls
-    public void collectBalls() {
+    public void collectBalls(double speed) {
     	intakeMotor.changeControlMode(TalonControlMode.PercentVbus);
-    	intakeMotor.set(RobotMap.INTAKE_TALON_COLLECT_SPEED);
+    	intakeMotor.set(speed * RobotMap.INTAKE_COLLECT_SPEED_SCALING);
     }
     
     //Set the motor on the intake to eject/spit out balls
@@ -31,7 +32,7 @@ public class Intake extends Subsystem {
     }
     
     public boolean isFinishedIntaking(){
-    	return true;
+    	return false;
     }
     
     //Just stops the motor

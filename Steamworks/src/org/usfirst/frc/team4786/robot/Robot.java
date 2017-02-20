@@ -73,7 +73,11 @@ public class Robot extends IterativeRobot {
 
 		gearPlacementCamera = CameraServer.getInstance().startAutomaticCapture("Gear", 0);
 		ballPlacementCamera = CameraServer.getInstance().startAutomaticCapture("Ball Camera", 1);
+		gearPlacementCamera.setFPS(15);		
+		ballPlacementCamera.setFPS(15);
+
 		gearPlacementCamera.setResolution(RobotMap.cameraFOVWidth,RobotMap.cameraFOVHeight);
+		ballPlacementCamera.setResolution(RobotMap.cameraFOVWidth, RobotMap.cameraFOVHeight);
 		cvSink = CameraServer.getInstance().getVideo();
 
 		oi = new OI();
@@ -171,7 +175,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
 		SmartDashboard.putBoolean("Gear Present", gear.gearLimitSwitchPressed());
 		SmartDashboard.putBoolean("Peg Present", gear.pegLimitSwitchPressed());
-    SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
+		SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
 		SmartDashboard.putNumber("Old State", SwitchState.oldState);  // get rid of them if we don't have this method
 
 	}
@@ -181,7 +185,7 @@ public class Robot extends IterativeRobot {
 		//everything is awesome code
 		//runs motors and output
 		Robot.driveTrain.openLoopDrive(1, 1);
-		Robot.intake.collectBalls();
+		Robot.intake.collectBalls(1);
 		Robot.climber.startOpenClimbing(1);
 		Robot.arduino.writeStringData("rainbowlight");
 	}

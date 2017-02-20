@@ -40,6 +40,8 @@ public class RobotMap {
 	//Game Mech Costants, Not final
 	public static final double INTAKE_TALON_COLLECT_SPEED = -1;
 	public static final double INTAKE_TALON_SPIT_SPEED = 1;
+	public static final double INTAKE_COLLECT_SPEED_SCALING = -1;
+	public static final double INTAKE_SPIT_SPEED_SCALING = 1;
 	//public static final double OPEN_LOOP_CLIMBING_SPEED = 0.5;
 	public static final double OPEN_LOOP_CLIMBING_SPEED_SCALING = -1;
 	public static final double OPEN_BRIDGE_ANGLE = 180;
@@ -98,8 +100,8 @@ public class RobotMap {
 	public static final int lowBlueValue = 20;
 	
 	public static final int exposure = 1;
-	public static final int cameraFOVHeight = 480;//former resolution 320, 240
-	public static final int cameraFOVWidth = 640;
+	public static final int cameraFOVHeight = 240;//former resolution 320, 240
+	public static final int cameraFOVWidth = 320;
 	public static final int minPixelCount = 500;
 	
 	//for calculating distance
