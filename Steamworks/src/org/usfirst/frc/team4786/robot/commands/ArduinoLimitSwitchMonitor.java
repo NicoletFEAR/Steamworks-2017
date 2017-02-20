@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class ArduinoLimitSwitchMonitor extends Command {
-	String last = "red";
- 
+	boolean pressedLast = false;
+	boolean tealLast = true;
 	public ArduinoLimitSwitchMonitor() {
         requires(Robot.gear);
     }
@@ -23,30 +23,23 @@ public class ArduinoLimitSwitchMonitor extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//RedLight red = new RedLight();
-    	//BlueLight blue = new BlueLight(); 
-		
-    	if(Gear.pegLimitSwitchPressed() == false && !last.equals("blue")){
-    		Robot.oi.getXbox().setRumble(RumbleType.kLeftRumble, 0);
-    		Robot.oi.getXbox().setRumble(RumbleType.kRightRumble, 0);
-    		//blue.start();
-    		last = "blue";
-        	Robot.arduino.writeStringData("bluelight");
-
-      		}	
-	
-
-    	if(Gear.pegLimitSwitchPressed() == true && !last.equals("red")){
-    		SmartDashboard.putString("Working", "test");
+    	if(Robot.gear.pegLimitSwitchPressed() == true && pressedLast == false){
+    		//SmartDashboard.putString("Working", "test");
     		Robot.oi.getXbox().setRumble(RumbleType.kLeftRumble, 1);
     		Robot.oi.getXbox().setRumble(RumbleType.kRightRumble, 1);
-    		last = "red";
+    		pressedLast = true;
     		//red.start();
-        	Robot.arduino.writeStringData("redlight");
-    		
-    		
-    		
-        	
+        	Robot.arduino.writeStringData("redblue");
+    		tealLast = false;
+    	}else if(pressedLast && Robot.gear.pegLimitSwitchPressed() == true){
+    		tealLast = false;
+    	}else if(!tealLast){
+    		pressedLast = false;
+    		Robot.oi.getXbox().setRumble(RumbleType.kLeftRumble, 0);
+    		Robot.oi.getXbox().setRumble(RumbleType.kRightRumble, 0);
+    		//send default color here'
+    		tealLast = true;
+    		Robot.arduino.writeStringData("teallight");
     	}
 
     	

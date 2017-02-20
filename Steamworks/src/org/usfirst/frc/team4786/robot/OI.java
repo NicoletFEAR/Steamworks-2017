@@ -1,9 +1,13 @@
 package org.usfirst.frc.team4786.robot;
 
+import org.usfirst.frc.team4786.robot.commands.CloseBridge;
+import org.usfirst.frc.team4786.robot.commands.CollectBalls;
+import org.usfirst.frc.team4786.robot.commands.OpenBridge;
+import org.usfirst.frc.team4786.robot.commands.OpenClimb;
 import org.usfirst.frc.team4786.robot.commands.SwitchFrontSide;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-  import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -67,27 +71,23 @@ public class OI {
     	kRightJoy10Button.whileHeld(new SwitchFrontSide());
     	kLeftJoy11Button.whileHeld(new SwitchFrontSide());
     	kRightJoy11Button.whileHeld(new SwitchFrontSide());
+    	
      
     }
-	
     public void checkXboxButtonStates() {
-    	if (xbox.getBButton() == true) {
-        	Robot.climber.startOpenClimbing();
-    	} else if (xbox.getBButton() == false) {
-    		Robot.climber.stopClimbing();
+    	if (xbox.getBButton() && Robot.climber.getCurrentCommand() == null) {
+        	new OpenClimb().start();
     	}
     	
-    	if (xbox.getBumper(GenericHID.Hand.kLeft) == true) {
-    		Robot.drawBridge.openThyBridge();
-    	} else if (xbox.getBumper(GenericHID.Hand.kLeft) == false) {
-    		Robot.drawBridge.closeThyBridge();
+    	if (xbox.getBumper(GenericHID.Hand.kLeft) && Robot.drawBridge.getCurrentCommand().getName() == "OpenBridge") {
+    		new OpenBridge().start();
+    	} else if (!xbox.getBumper(GenericHID.Hand.kLeft) && Robot.drawBridge.getCurrentCommand().getName() == "CloseBridge") {
+    		new CloseBridge().start();
     	}
     	
-    	if (xbox.getBumper(GenericHID.Hand.kRight) == true) {
-    		Robot.intake.collectBalls();
-    	} else if (xbox.getBumper(GenericHID.Hand.kRight) == false) {
-    		Robot.intake.stopIntaking();
-    	} 
+    	if (xbox.getBumper(GenericHID.Hand.kRight) && Robot.intake.getCurrentCommand() == null) {
+    		new CollectBalls().start();
+    	}
     }
  
   
