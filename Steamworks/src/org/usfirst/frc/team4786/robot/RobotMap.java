@@ -43,7 +43,7 @@ public class RobotMap {
 	public static final double INTAKE_COLLECT_SPEED_SCALING = -1;
 	public static final double INTAKE_SPIT_SPEED_SCALING = 1;
 	//public static final double OPEN_LOOP_CLIMBING_SPEED = 0.5;
-	public static final double OPEN_LOOP_CLIMBING_SPEED_SCALING = -1;
+	public static final double OPEN_LOOP_CLIMBING_SPEED_SCALING = -.5;
 	public static final double OPEN_BRIDGE_ANGLE = 180;
 	public static final double CLOSED_BRIDGE_ANGLE = -180;
 	//Left GearBox PID Constants
@@ -78,9 +78,9 @@ public class RobotMap {
 	
 	// limit switch ports on RoboRIO DIO
 	public static final int limitSwitchGearPort = 5;
-	public static final int limitSwitchPegPort = 6;
+	public static final int limitSwitchPegPort = 2;
     public static final int limitSwitch1Port = 1;
-	public static final int limitSwitch2Port = 2;
+	public static final int limitSwitch2Port = 9;
 	public static final int limitSwitch3Port = 3;
 	public static final int limitSwitch4Port = 4;
 
