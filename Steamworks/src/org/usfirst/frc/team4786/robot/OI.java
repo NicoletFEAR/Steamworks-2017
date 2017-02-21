@@ -39,6 +39,8 @@ public class OI {
 	private static Button kRightJoy11Button;
 	
 	private static Button rightBumper;
+	private static Button leftBumper;
+
 
     public OI(){
     	//Init the objects for all the buttons, sensors, joysticks, and Xbox controllers
@@ -55,6 +57,8 @@ public class OI {
     	kRightJoy11Button = new JoystickButton(rightDriveJoy, 11);
     	  
     	rightBumper = new JoystickButton(xbox, Buttons.RightBump);
+    	leftBumper = new JoystickButton(xbox, Buttons.LeftBump);
+
       //Tie our many buttons, sensors, joysticks, and Xbox controllers to robot commands
     		    	
     	limitSwitchGear = new DigitalInput(RobotMap.limitSwitchGearPort);
@@ -65,16 +69,18 @@ public class OI {
     	limitSwitch4 = new DigitalInput(RobotMap.limitSwitch4Port);
     
    	//We map a bunch of buttons to switch the front side for Andy's convenience ;)
-    	kLeftJoy6Button.whileHeld(new SwitchFrontSide());
-    	kRightJoy6Button.whileHeld(new SwitchFrontSide());
-    	kLeftJoy7Button.whileHeld(new SwitchFrontSide());
-    	kRightJoy7Button.whileHeld(new SwitchFrontSide());
-    	kLeftJoy10Button.whileHeld(new SwitchFrontSide());
-    	kRightJoy10Button.whileHeld(new SwitchFrontSide());
-    	kLeftJoy11Button.whileHeld(new SwitchFrontSide());
-    	kRightJoy11Button.whileHeld(new SwitchFrontSide());
+    	kLeftJoy6Button.whenPressed(new SwitchFrontSide());
+    	kRightJoy6Button.whenPressed(new SwitchFrontSide());
+    	kLeftJoy7Button.whenPressed(new SwitchFrontSide());
+    	kRightJoy7Button.whenPressed(new SwitchFrontSide());
+    	kLeftJoy10Button.whenPressed(new SwitchFrontSide());
+    	kRightJoy10Button.whenPressed(new SwitchFrontSide());
+    	kLeftJoy11Button.whenPressed(new SwitchFrontSide());
+    	kRightJoy11Button.whenPressed(new SwitchFrontSide());
     	
      
+    	rightBumper.whenPressed(new OpenBridge());
+    	leftBumper.whenPressed(new CloseBridge());
     }
     /*public void checkXboxButtonStates() {
     	if (xbox.getBButton() && Robot.climber.getCurrentCommand() == null) {
