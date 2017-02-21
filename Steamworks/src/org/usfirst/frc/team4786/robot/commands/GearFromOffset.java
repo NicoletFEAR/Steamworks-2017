@@ -1,8 +1,6 @@
 package org.usfirst.frc.team4786.robot.commands;
 
 import org.usfirst.frc.team4786.robot.Robot;
-import org.usfirst.frc.team4786.robot.subsystems.VisionCalculator;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 

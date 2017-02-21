@@ -1,19 +1,14 @@
 package org.usfirst.frc.team4786.robot.subsystems;
 
-import edu.wpi.cscore.CvSource;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.opencv.core.*;
-import org.opencv.imgproc.Imgproc;
 import java.util.ArrayList;
 import java.util.List;
 import static org.opencv.imgproc.Imgproc.*;
 import static org.opencv.core.Core.*;
-import org.opencv.videoio.VideoCapture;
 import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.RobotMap;
-import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
-import org.usfirst.frc.team4786.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
 
 public class VisionImage extends Subsystem{	

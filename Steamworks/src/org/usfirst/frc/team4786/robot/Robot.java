@@ -4,7 +4,6 @@ import org.usfirst.frc.team4786.robot.commands.DoNothing;
 import org.usfirst.frc.team4786.robot.commands.DriveToLeftGearPeg;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.DriveToRightGearPeg;
-import org.usfirst.frc.team4786.robot.commands.GearFromOffset;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.Climber;
@@ -12,36 +11,11 @@ import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 //import org.usfirst.frc.team4786.robot.subsystems.FrameData;
 import org.usfirst.frc.team4786.robot.subsystems.Intake;
-import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
 //import org.usfirst.frc.team4786.robot.subsystems.Test;
 //import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
 import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
 import org.usfirst.frc.team4786.robot.subsystems.SwitchState;
 
-import static org.opencv.core.Core.FILLED;
-import static org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE;
-import static org.opencv.imgproc.Imgproc.RETR_LIST;
-import static org.opencv.imgproc.Imgproc.boundingRect;
-import static org.opencv.imgproc.Imgproc.drawContours;
-import static org.opencv.imgproc.Imgproc.findContours;
-
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
-import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
-import org.usfirst.frc.team4786.robot.commands.GreenLight;
-import org.usfirst.frc.team4786.robot.commands.RedLight;
-import org.usfirst.frc.team4786.robot.commands.VisionSetup;
-import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.Gear;
 
 import edu.wpi.cscore.CvSink;
@@ -49,11 +23,9 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -76,7 +48,8 @@ public class Robot extends IterativeRobot {
 	public static CvSink cvSink;
 	public static CvSource outputStream;
 	public static CvSource regStream;
-	public static UsbCamera camera;
+	public static UsbCamera gearPlacementCamera;
+	public static UsbCamera ballPlacementCamera;
 
     public static SwitchState switchState = new SwitchState();
 
@@ -91,18 +64,24 @@ public class Robot extends IterativeRobot {
 
 	SendableChooser<Command> sendableChooser;
 	
-	DriverStation.Alliance alliance;
+	public static DriverStation.Alliance alliance;
+	public static String allianceColorVal = "";
+
 	
 	@Override
 	public void robotInit() {
 
-		camera = CameraServer.getInstance().startAutomaticCapture();
-		camera.setResolution(RobotMap.cameraFOVWidth,RobotMap.cameraFOVHeight);
+		gearPlacementCamera = CameraServer.getInstance().startAutomaticCapture("Gear", 0);
+		ballPlacementCamera = CameraServer.getInstance().startAutomaticCapture("Ball Camera", 1);
+		gearPlacementCamera.setFPS(15);		
+		ballPlacementCamera.setFPS(15);
+
+		gearPlacementCamera.setResolution(RobotMap.cameraFOVWidth,RobotMap.cameraFOVHeight);
+		ballPlacementCamera.setResolution(RobotMap.cameraFOVWidth, RobotMap.cameraFOVHeight);
 		cvSink = CameraServer.getInstance().getVideo();
 
 		oi = new OI();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
-		//VisionImage.putValuesToSmartDashboard();
 		
 
 
@@ -115,7 +94,7 @@ public class Robot extends IterativeRobot {
 		//sendableChooser.addObject("GetToGearTest", new GearFromOffset());
 		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 		
-
+	}
 	@Override
 	public void disabledInit() {
 
@@ -131,7 +110,6 @@ public class Robot extends IterativeRobot {
 		alliance = DriverStation.getInstance().getAlliance();
 
 		//send correct alliance data to arduino
-		String allianceColorVal;
 		if(alliance.toString().equalsIgnoreCase("blue")){
 			allianceColorVal = "bluelight";
 			arduino.writeStringData(allianceColorVal);
@@ -168,7 +146,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		camera.setExposureAuto();
+		gearPlacementCamera.setExposureAuto();
 		
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
@@ -195,18 +173,19 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
 		SmartDashboard.putNumber("Left Motor Output", driveTrain.motorOutputLeft);
 		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
-		SmartDashboard.putBoolean("Gear Present", gear.gearLimitSwitchPressed());
 		SmartDashboard.putBoolean("Peg Present", gear.pegLimitSwitchPressed());
-    SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
+		SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
 		SmartDashboard.putNumber("Old State", SwitchState.oldState);  // get rid of them if we don't have this method
 
 	}
 
 	@Override
 	public void testInit(){
+		//everything is awesome code
 		//runs motors and output
 		Robot.driveTrain.openLoopDrive(1, 1);
-		//Robot.intake.collectBalls();
+		Robot.intake.collectBalls(1);
+		Robot.climber.startOpenClimbing(1);
 		Robot.arduino.writeStringData("rainbowlight");
 	}
 	

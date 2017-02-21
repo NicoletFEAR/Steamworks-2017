@@ -5,8 +5,6 @@ import org.opencv.core.Mat;
 import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.RobotMap;
 import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
-import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class VisionSetup extends Command {
@@ -18,7 +16,7 @@ public class VisionSetup extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	b = false;
-    	Robot.camera.setExposureManual(RobotMap.exposure);
+    	Robot.gearPlacementCamera.setExposureManual(RobotMap.exposure);
     	try(MatRapper mat = new MatRapper(new Mat());){
 			
 			Robot.cvSink.grabFrame(mat.getMat());	//sets mat to an image from the camera

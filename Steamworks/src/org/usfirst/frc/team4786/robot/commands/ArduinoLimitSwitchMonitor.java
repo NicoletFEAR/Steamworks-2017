@@ -1,17 +1,15 @@
 package org.usfirst.frc.team4786.robot.commands;
 
 import org.usfirst.frc.team4786.robot.Robot;
-import org.usfirst.frc.team4786.robot.subsystems.*;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class ArduinoLimitSwitchMonitor extends Command {
 	boolean pressedLast = false;
-	boolean tealLast = true;
+	boolean defaulLast = true;
 	public ArduinoLimitSwitchMonitor() {
         requires(Robot.gear);
     }
@@ -30,16 +28,16 @@ public class ArduinoLimitSwitchMonitor extends Command {
     		pressedLast = true;
     		//red.start();
         	Robot.arduino.writeStringData("redblue");
-    		tealLast = false;
+    		defaulLast = false;
     	}else if(pressedLast && Robot.gear.pegLimitSwitchPressed() == true){
-    		tealLast = false;
-    	}else if(!tealLast){
+    		defaulLast = false;
+    	}else if(!defaulLast){
     		pressedLast = false;
     		Robot.oi.getXbox().setRumble(RumbleType.kLeftRumble, 0);
     		Robot.oi.getXbox().setRumble(RumbleType.kRightRumble, 0);
     		//send default color here'
-    		tealLast = true;
-    		Robot.arduino.writeStringData("teallight");
+    		defaulLast = true;
+    		Robot.arduino.writeStringData(Robot.allianceColorVal);
     	}
 
     	

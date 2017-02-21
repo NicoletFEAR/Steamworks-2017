@@ -17,7 +17,7 @@ public class RobotMap {
 	//Our CANTalon game mech ports
 	//Change these mech Talon IDs, do not know final CANTalon ids yet
 	public static final int intakePort = 16;
-	public static final int climbMotorPort = 18;
+	public static final int climbMotorPort = 17;
 
 	public static final int bridgeServoChannel = 4;
 	
@@ -38,10 +38,12 @@ public class RobotMap {
 	//Wheel Radius measured in feet
 	public static final double WHEEL_RADIUS = 0.25;
 	//Game Mech Costants, Not final
-	public static final double INTAKE_TALON_COLLECT_SPEED = 1;
-	public static final double INTAKE_TALON_SPIT_SPEED = -0.25;
+	public static final double INTAKE_TALON_COLLECT_SPEED = -1;
+	public static final double INTAKE_TALON_SPIT_SPEED = 1;
+	public static final double INTAKE_COLLECT_SPEED_SCALING = -1;
+	public static final double INTAKE_SPIT_SPEED_SCALING = 1;
 	//public static final double OPEN_LOOP_CLIMBING_SPEED = 0.5;
-	public static final double OPEN_LOOP_CLIMBING_SPEED_SCALING = 1;
+	public static final double OPEN_LOOP_CLIMBING_SPEED_SCALING = -.5;
 	public static final double OPEN_BRIDGE_ANGLE = 180;
 	public static final double CLOSED_BRIDGE_ANGLE = -180;
 	//Left GearBox PID Constants
@@ -76,9 +78,9 @@ public class RobotMap {
 	
 	// limit switch ports on RoboRIO DIO
 	public static final int limitSwitchGearPort = 5;
-	public static final int limitSwitchPegPort = 6;
+	public static final int limitSwitchPegPort = 2;
     public static final int limitSwitch1Port = 1;
-	public static final int limitSwitch2Port = 2;
+	public static final int limitSwitch2Port = 9;
 	public static final int limitSwitch3Port = 3;
 	public static final int limitSwitch4Port = 4;
 
@@ -98,8 +100,8 @@ public class RobotMap {
 	public static final int lowBlueValue = 20;
 	
 	public static final int exposure = 1;
-	public static final int cameraFOVHeight = 480;//former resolution 320, 240
-	public static final int cameraFOVWidth = 640;
+	public static final int cameraFOVHeight = 240;//former resolution 320, 240
+	public static final int cameraFOVWidth = 320;
 	public static final int minPixelCount = 500;
 	
 	//for calculating distance
