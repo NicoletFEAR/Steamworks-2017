@@ -153,8 +153,45 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("Rotations Calculated", rot);
 	}
 	
+	public void driveArcInit(double horizontalDist, double theta){
+		//Change Talon modes to "position" just in case
+		//they were in another mode before
+		frontLeft.changeControlMode(TalonControlMode.Position);
+		frontRight.changeControlMode(TalonControlMode.Position);
+		
+		//Set Encoder Position to 0
+		frontLeft.setEncPosition(0);
+		frontRight.setEncPosition(0);
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		frontLeft.setEncPosition(0);
+		frontRight.setEncPosition(0);
+		
+		//Calculate arc lengths
+		double radius = horizontalDist / (1 - Math.cos(theta));
+		double leftArcLength = theta * Math.PI * (radius + RobotMap.WHEEL_SEPARATION / 2) / 180;
+		double rightArcLength = theta * Math.PI * (radius - RobotMap.WHEEL_SEPARATION / 2) / 180;
+		if(horizontalDist < 0){
+			leftArcLength = -leftArcLength;
+			rightArcLength = -rightArcLength;
+		}
+		//Run convertToRotations functions
+		double leftRot = convertToRotations(leftArcLength);
+		double rightRot = convertToRotations(rightArcLength);
+		
+		//Make motors drive number of rotations
+		//calculated before by convertToRotations()
+		frontLeft.set(leftRot);
+		//Make sure we inverse this right side,
+		//otherwise, you have a spinning robot on your hands
+		frontRight.set(-rightRot);
+	}
+	
 	//Some special isFinished() command stuff to not stop before the robot has even moved
-
 
 	public boolean driveToPositionIsFinished() {
 		return Math.abs(frontLeft.getError()) <= RobotMap.ERROR_CONSTANT_LEFT && Math.abs(frontRight.getError()) <= RobotMap.ERROR_CONSTANT_RIGHT;

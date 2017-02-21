@@ -39,6 +39,8 @@ public class RobotMap {
 	public static final double fudgeFactor = 1;
 	//Wheel Radius measured in feet
 	public static final double WHEEL_RADIUS = 0.25;
+	//Distance between wheels measured in feet
+	public static final double WHEEL_SEPARATION = 2.5;
 	//Game Mech Costants, Not final
 	public static final double INTAKE_TALON_COLLECT_SPEED = -1;
 	public static final double INTAKE_TALON_SPIT_SPEED = 1;
@@ -81,8 +83,8 @@ public class RobotMap {
 	public static final double TurnD = 0.04;
 	public static final double TurnF = 0.0; */
 	public static final double TurnP = 0.02;
-	public static final double TurnI = 0.006;
-	public static final double TurnD = 0.06;
+	public static final double TurnI = 0.0;
+	public static final double TurnD = 0.0;
 	public static final double TurnF = 0.0;
 	
 	// limit switch ports on RoboRIO DIO
