@@ -5,6 +5,7 @@ import org.usfirst.frc.team4786.robot.commands.DriveToLeftGearPeg;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.DriveToRightGearPeg;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
+import org.usfirst.frc.team4786.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.Climber;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
@@ -130,6 +131,7 @@ public class Robot extends IterativeRobot {
     
 	//autonomousCommand = new GearFromOffset();
 
+    autonomousCommand = new TurnToAngle(60);
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
@@ -149,7 +151,7 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 
 		
-		gearPlacementCamera.setExposureAuto();
+		//gearPlacementCamera.setExposureAuto();
 		
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to

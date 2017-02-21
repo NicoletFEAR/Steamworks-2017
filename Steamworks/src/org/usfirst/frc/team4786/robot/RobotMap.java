@@ -19,7 +19,7 @@ public class RobotMap {
 	public static final int intakePort = 16;
 	public static final int climbMotorPort = 17;
 
-	public static final int bridgeServoChannel = 4;
+	public static final int bridgeServoChannel = 0;
 	
 	//Scaling used only for open loop drive system
 	public static final double openLoopSpeedScaling = 1;  
@@ -81,8 +81,8 @@ public class RobotMap {
 	public static final double TurnD = 0.04;
 	public static final double TurnF = 0.0; */
 	public static final double TurnP = 0.02;
-	public static final double TurnI = 0.006;
-	public static final double TurnD = 0.06;
+	public static final double TurnI = 0.0;
+	public static final double TurnD = 0.0;
 	public static final double TurnF = 0.0;
 	
 	// limit switch ports on RoboRIO DIO
