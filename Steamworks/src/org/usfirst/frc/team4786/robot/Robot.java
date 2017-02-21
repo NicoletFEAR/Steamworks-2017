@@ -124,10 +124,9 @@ public class Robot extends IterativeRobot {
 
 
 	//camera.setExposureManual(RobotMap.exposure);
-    //autonomousCommand = (Command) sendableChooser.getSelected();
+    autonomousCommand = (Command) sendableChooser.getSelected();
     
 	//autonomousCommand = new GearFromOffset();
-		autonomousCommand = new DriveToPosition(10);
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();
