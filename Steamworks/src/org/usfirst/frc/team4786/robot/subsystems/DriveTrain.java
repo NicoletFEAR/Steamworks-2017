@@ -60,8 +60,8 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		//Beginning of the world of PID!!!!!!!!
 		
 		//Set Up the Encoder Revolutions!
-		frontLeft.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV);
-		frontRight.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV);
+		frontLeft.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT);
+		frontRight.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV_RIGHT);
 		
 		frontLeft.setPosition(0);
 		frontRight.setPosition(0);
@@ -69,8 +69,8 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		frontLeft.setEncPosition(0);
 		frontRight.setEncPosition(0);
 		
-		frontLeft.setAllowableClosedLoopErr(RobotMap.ERROR_CONSTANT);
-		frontRight.setAllowableClosedLoopErr(RobotMap.ERROR_CONSTANT);
+		frontLeft.setAllowableClosedLoopErr(RobotMap.ERROR_CONSTANT_LEFT);
+		frontRight.setAllowableClosedLoopErr(RobotMap.ERROR_CONSTANT_RIGHT);
 		
 		//Make sure the CANTalons are looking at the right stored PID values with the Profile
 		//Set our PID Values
@@ -131,6 +131,14 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		//Set Encoder Position to 0
 		frontLeft.setEncPosition(0);
 		frontRight.setEncPosition(0);
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		frontLeft.setEncPosition(0);
+		frontRight.setEncPosition(0);
 		
 		//Run convertToRotations function
 		double rot = convertToRotations(distanceToDrive);
@@ -149,7 +157,7 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 
 
 	public boolean driveToPositionIsFinished() {
-		return Math.abs(frontLeft.getError()) <= RobotMap.ERROR_CONSTANT && Math.abs(frontRight.getError()) <= RobotMap.ERROR_CONSTANT;
+		return Math.abs(frontLeft.getError()) <= RobotMap.ERROR_CONSTANT_LEFT && Math.abs(frontRight.getError()) <= RobotMap.ERROR_CONSTANT_RIGHT;
 	}
 	
 	public void driveToPositionEnd(){
@@ -179,8 +187,8 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		frontRight.reverseSensor(false);
 		
 		//Define ticks per rev the encoders goes by
-		frontLeft.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV);
-		frontRight.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV);
+		frontLeft.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT);
+		frontRight.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV_RIGHT);
 		
 		//Set Our Mode to Speed!
 		frontLeft.changeControlMode(TalonControlMode.Speed);
@@ -252,7 +260,7 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 	//Possibly a non-needed method
 	private double convertToVelocity(double feetPerSecond){
 		double rotationsPerSecond = convertToRotations(feetPerSecond);
-		double temp = rotationsPerSecond / (RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV * 4);
+		double temp = rotationsPerSecond / (RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT * 4);
 		return temp / 10;
 	}
 	
