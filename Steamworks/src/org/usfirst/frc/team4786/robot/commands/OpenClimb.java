@@ -2,6 +2,7 @@ package org.usfirst.frc.team4786.robot.commands;
 
 import org.usfirst.frc.team4786.robot.Robot;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -28,7 +29,7 @@ public class OpenClimb extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.climber.isFinishedClimbing();
+        return Robot.climber.isFinishedClimbing()/* || Timer.getMatchTime() < 5.0*/;
     }
 
     // Called once after isFinished returns true

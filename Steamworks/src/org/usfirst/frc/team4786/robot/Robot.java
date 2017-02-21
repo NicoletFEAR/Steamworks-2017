@@ -79,6 +79,8 @@ public class Robot extends IterativeRobot {
 		gearPlacementCamera.setResolution(RobotMap.cameraFOVWidth,RobotMap.cameraFOVHeight);
 		ballPlacementCamera.setResolution(RobotMap.cameraFOVWidth, RobotMap.cameraFOVHeight);
 		cvSink = CameraServer.getInstance().getVideo();
+		timer = new Timer();
+
 
 		oi = new OI();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
@@ -145,6 +147,8 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+
+		
 		gearPlacementCamera.setExposureAuto();
 		
 		// This makes sure that the autonomous stops running when
