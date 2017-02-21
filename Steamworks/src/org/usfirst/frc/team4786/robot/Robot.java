@@ -128,7 +128,6 @@ public class Robot extends IterativeRobot {
     
 	//autonomousCommand = new GearFromOffset();
 
-
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
