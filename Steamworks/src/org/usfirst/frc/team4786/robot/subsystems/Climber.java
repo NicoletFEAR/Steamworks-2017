@@ -36,7 +36,7 @@ public class Climber extends Subsystem {
     
     public boolean isFinishedClimbing(){
     	//The climbing limit switches are ported into DIO 3
-    	return (!Robot.oi.getLimit3Switch().get());
+    	return (!Robot.oi.getClimberLimitSwitch().get());
     }
     
     public void stopClimbing() {

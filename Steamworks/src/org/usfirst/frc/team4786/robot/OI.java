@@ -63,9 +63,9 @@ public class OI {
     		    	
     	limitSwitchGear = new DigitalInput(RobotMap.limitSwitchGearPort);
     	limitSwitchPeg = new DigitalInput(RobotMap.limitSwitchPegPort);
-    	limitSwitch1 = new DigitalInput(RobotMap.limitSwitch1Port);
+    	limitSwitch1 = new DigitalInput(RobotMap.limitSwitch3Port);
     	limitSwitch2 = new DigitalInput(RobotMap.limitSwitch2Port);
-    	limitSwitch3 = new DigitalInput(RobotMap.limitSwitch3Port);
+    	limitSwitch3 = new DigitalInput(RobotMap.climberLimitSwitchPort);
     	limitSwitch4 = new DigitalInput(RobotMap.limitSwitch4Port);
     
    	//We map a bunch of buttons to switch the front side for Andy's convenience ;)
@@ -112,13 +112,13 @@ public class OI {
 	public DigitalInput getPegLimitSwitch(){
 		return limitSwitchPeg;
 	}
-	public DigitalInput getLimit1Switch(){
-		return limitSwitch1;
-	}
-	public DigitalInput getLimit2Switch(){
+//	public DigitalInput getLimit1Switch(){
+//		return limitSwitch1;
+//	}
+	public DigitalInput getLimit3Switch(){
 		return limitSwitch2;
 	}
-	public DigitalInput getLimit3Switch(){
+	public DigitalInput getClimberLimitSwitch(){
 		return limitSwitch3;
 	}
 	public DigitalInput getLimit4Switch(){
