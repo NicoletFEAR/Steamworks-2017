@@ -145,7 +145,6 @@ public class Robot extends IterativeRobot {
     
 	//autonomousCommand = new GearFromOffset();
 
-    autonomousCommand = new TurnToAngle(60);
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
