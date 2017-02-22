@@ -49,16 +49,25 @@ public class SwitchState extends Subsystem {
 	public void switchChange() {
 		oldState = newState;
 		newState = setNewState(); 
+
 		if (oldState == newState) {
 			return;
 		}
-		if (newState == 14){
+		if (newState == 1 | newState == 3 | newState == 5 | newState == 7 | newState == 9 | newState == 11 | newState == 13 | newState == 15) {
+	    	Robot.arduino.writeStringData("playMario");
+	    	return;
+		}
+         if (newState == 2){
+	    	Robot.arduino.writeStringData("redblue");
+	    	return;
+		}
+		if (newState == 15){
 			Robot.arduino.writeStringData("whitelight");
 	    	Robot.arduino.writeStringData("playFifth");
 	    	return;	
 		}
 		if (newState == 0){
-			Robot.arduino.writeStringData("greenlight");
+			Robot.arduino.writeStringData(Robot.allianceColorVal);
 	    	return;	
 		}
 		
@@ -78,39 +87,28 @@ public class SwitchState extends Subsystem {
 			Robot.arduino.writeStringData("orangelight");
 	    	return;	
 		}
-		if (oldState == 2 && newState == 3){ // pressing just 2 then 2 + 1
-	    	Robot.arduino.writeStringData("heartbeat");
-	    	return;			
-		}
         if (newState == 15){
 	    	Robot.arduino.writeStringData("rainbowlight");
 	    	return;
 		}
-		if (newState == 1 | newState == 3 | newState == 5 | newState == 7 | newState == 9 | newState == 11 | newState == 13 | newState == 15) {
-	    	Robot.arduino.writeStringData("heartbeat");
-	    	return;
-		}
-        if (newState >= 7){
+       if (newState >= 7){
 	    	Robot.arduino.writeStringData("redlight");
 	    	return;
 		}
-        if (newState == 2 | newState == 6 | newState == 10){
-	    	Robot.arduino.writeStringData("purplelight");
-	    	return;
-		}
+
 
 	}
 
 	public int setNewState() {
 		int calcState = 0;
-		if (!Robot.oi.getLimit1Switch().get()) {
+		if (!Robot.oi.getClimberLimitSwitch().get()) {
 			calcState = calcState +1;
-		}
-		if (!Robot.oi.getLimit2Switch().get()) {
-			calcState = calcState +2;
 		}
 		if (!Robot.oi.getLimit3Switch().get()) {
 			calcState = calcState +4;
+		}
+		if (!Robot.oi.getPegLimitSwitch().get()) {
+			calcState = calcState +2;
 		}
 		if (!Robot.oi.getLimit4Switch().get()) {
 			calcState = calcState +8;

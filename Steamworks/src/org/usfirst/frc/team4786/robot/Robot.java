@@ -105,6 +105,20 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		/*alliance = DriverStation.getInstance().getAlliance();
+		//send correct alliance data to arduino
+		if(alliance.toString().equalsIgnoreCase("blue")){
+			allianceColorVal = "bluelight";
+			arduino.writeStringData(allianceColorVal);
+		}else if(alliance.toString().equalsIgnoreCase("red")){
+			allianceColorVal = "redlight";
+			arduino.writeStringData(allianceColorVal);
+		}else{
+			allianceColorVal = "purplelight";
+			arduino.writeStringData(allianceColorVal);
+		}
+		SmartDashboard.putString("Alliance", allianceColorVal);*/
+
 		Scheduler.getInstance().run();
 	}
 
