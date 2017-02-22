@@ -79,7 +79,7 @@ public class Robot extends IterativeRobot {
 
 		gearPlacementCamera.setResolution(RobotMap.cameraFOVWidth,RobotMap.cameraFOVHeight);
 		ballPlacementCamera.setResolution(RobotMap.cameraFOVWidth, RobotMap.cameraFOVHeight);
-		cvSink = CameraServer.getInstance().getVideo();
+		cvSink = CameraServer.getInstance().getVideo("Gear");
 		timer = new Timer();
 
 
