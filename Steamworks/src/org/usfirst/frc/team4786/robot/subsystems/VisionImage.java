@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4786.robot.subsystems;
 
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.opencv.core.*;
@@ -11,8 +13,9 @@ import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.RobotMap;
 import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
 
-public class VisionImage extends Subsystem{	
+public class VisionImage extends Subsystem implements PIDSource{	
 	
+	private PIDSourceType type;
 	boolean twoTargets = false;
 	int numOfTargets = 0;
 	double centerOfCamera = 0;//x coordinate of middle of camera
@@ -22,6 +25,7 @@ public class VisionImage extends Subsystem{
 	double distanceToLeft = 0;
 	double distanceToRight = 0;
 	double centerX = 0;
+	int cameraCenter = 0;
 	double matHeight = 0;//height of image from camera feed
 	double diffBetweenCenterXAndCamCenter = 0;
 	Rect leftRect = null;
@@ -201,8 +205,23 @@ public class VisionImage extends Subsystem{
 		SmartDashboard.putNumber("Area of smallest Rect", smallestRectArea);
 		SmartDashboard.putNumber("Difference between center x & center of camera", diffBetweenCenterXAndCamCenter);
 	}
+	
 	@Override
 	protected void initDefaultCommand() {
+	}
+	@Override
+	public void setPIDSourceType(PIDSourceType pidSource) {
 		// TODO Auto-generated method stub
+		type = pidSource;
+	}
+	@Override
+	public PIDSourceType getPIDSourceType() {
+		// TODO Auto-generated method stub
+		return type;
+	}
+	@Override
+	public double pidGet() {
+		// TODO Auto-generated method stub
+		return diffBetweenCenterXAndCamCenter;
 	}
 }

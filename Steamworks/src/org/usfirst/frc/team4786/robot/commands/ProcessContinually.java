@@ -27,7 +27,9 @@ public class ProcessContinually extends Command {
 			Robot.cvSink.grabFrame(mat.getMat());	//sets mat to an image from the camera
 			Robot.visionImage.processImage(mat);
 			Robot.visionImage.analysis();
-			Robot.visionImage.putValuesToSmartDashboard();
+			
+			//Run PID here
+			
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -45,10 +47,12 @@ public class ProcessContinually extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.gearPlacementCamera.setExposureAuto();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }
