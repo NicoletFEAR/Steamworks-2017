@@ -11,6 +11,8 @@ import static org.opencv.imgproc.Imgproc.*;
 import static org.opencv.core.Core.*;
 import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.RobotMap;
+import org.usfirst.frc.team4786.robot.commands.DrawPeg;
+import org.usfirst.frc.team4786.robot.commands.ProcessContinually;
 import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
 
 public class VisionImage extends Subsystem implements PIDSource{	
@@ -52,6 +54,22 @@ public class VisionImage extends Subsystem implements PIDSource{
 	}
 	public double getDiffBetweenCenterXAndCamCenter(){
 		return diffBetweenCenterXAndCamCenter;
+	}
+	public double getCenterX(){
+		return centerX;
+	}
+	private double getAverageHeight(){
+		double height = (leftRect.height + rightRect.height) * .5;
+		return height;
+	}
+	private double getAverageTopY(){
+		double y = (leftRect.y + rightRect.y) * .5;
+		return y;
+	}
+	
+	public double getCenterY(){
+		double y = getAverageTopY() + .5 * getAverageHeight();
+		return y;
 	}
 	public double getFirstAngleToBePerpendicular(){
 		double d3 = .7083;
@@ -197,6 +215,7 @@ public class VisionImage extends Subsystem implements PIDSource{
 			SmartDashboard.putNumber("Distance to right Rect", distanceToRight);
 			SmartDashboard.putNumber("Angle To Turn", Robot.visionImage.getFirstAngleToBePerpendicular());
 			SmartDashboard.putNumber("First Distance", Robot.visionImage.getFirstDistanceToBePerpendicular());
+			SmartDashboard.putNumber("Center Y", getCenterY());
 			
 		}
 		SmartDashboard.putBoolean("Rectangles detected?", twoTargets);
@@ -208,6 +227,7 @@ public class VisionImage extends Subsystem implements PIDSource{
 	
 	@Override
 	protected void initDefaultCommand() {
+		setDefaultCommand(new DrawPeg());
 	}
 	@Override
 	public void setPIDSourceType(PIDSourceType pidSource) {

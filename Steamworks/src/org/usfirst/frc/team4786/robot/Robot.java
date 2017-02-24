@@ -72,6 +72,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 
+		CvSource outputStream = CameraServer.getInstance().putVideo("Rectangle", RobotMap.cameraFOVWidth, RobotMap.cameraFOVHeight);
 		gearPlacementCamera = CameraServer.getInstance().startAutomaticCapture("Gear", 0);
 		ballPlacementCamera = CameraServer.getInstance().startAutomaticCapture("Ball Camera", 1);
 		gearPlacementCamera.setFPS(15);		
