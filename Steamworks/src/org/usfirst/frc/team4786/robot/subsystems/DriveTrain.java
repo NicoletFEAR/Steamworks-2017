@@ -1,4 +1,5 @@
 package org.usfirst.frc.team4786.robot.subsystems;
+import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.RobotMap;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
 
@@ -27,7 +28,9 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 	//NavX and PIDController objects
 	private AHRS navX;
 	private PIDController turnController;
-	private double turnToAngleRate;
+	private PIDController visionController;
+
+	private double pidOutput;
 	
 	//Robot will drive as if the front side is the back when reversed is true
 	private boolean reversed;
@@ -79,6 +82,13 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		   Flipping robot - CLOSED_LOOP_RAMP_RATE */
 		frontLeft.setPID(RobotMap.LeftP, RobotMap.LeftI, RobotMap.LeftD, RobotMap.LeftF, RobotMap.IZONE, RobotMap.CLOSED_LOOP_RAMP_RATE, RobotMap.DRIVEBASE_PROFILE);		
 		frontRight.setPID(RobotMap.RightP, RobotMap.RightI, RobotMap.RightD, RobotMap.RightF, RobotMap.IZONE, RobotMap.CLOSED_LOOP_RAMP_RATE, RobotMap.DRIVEBASE_PROFILE);
+		
+		//Set vision PID
+		visionController = new PIDController(RobotMap.VisionP, RobotMap.VisionI, RobotMap.VisionD, RobotMap.VisionF, Robot.visionImage, this);
+		visionController.setInputRange(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
+		visionController.setOutputRange(-1.0, 1.0);
+		visionController.setAbsoluteTolerance(RobotMap.ALLOWABLE_VISION_ERROR);
+		visionController.setContinuous(true);
 		
 		//Initialize NavX and turnController objects
 		navX = new AHRS(SPI.Port.kMXP);
@@ -233,8 +243,8 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 	
 	public void turnToAngleExecute(){
 		//Set the CANTalons to the speed calculated by PIDController
-		frontLeft.set(-turnToAngleRate);
-		frontRight.set(turnToAngleRate);
+		frontLeft.set(-pidOutput);
+		frontRight.set(pidOutput);
 		
 		SmartDashboard.putNumber("NavX Angle", navX.getAngle());
 		SmartDashboard.putNumber("NavX Turn Rate", navX.getRate());
@@ -247,6 +257,20 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 	
 	public void turnToAngleEnd(){
 		turnController.disable();
+	}
+	
+	public void processVisionContinuallyInit(){
+		visionController.enable();
+		visionController.setSetpoint(0);
+	}
+	
+	public void processVisionContinuallyExecute(){
+		frontLeft.set(-pidOutput);
+		frontRight.set(pidOutput);
+	}
+	
+	public void processVisionContinuallyEnd(){
+		visionController.disable();
 	}
 	
 	//Take a distance in feet and convert to
@@ -277,6 +301,6 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 	//Overrides PIDOutput
 	@Override
 	public void pidWrite(double output) {
-		turnToAngleRate = output;
+		pidOutput = output;
 	}
 }

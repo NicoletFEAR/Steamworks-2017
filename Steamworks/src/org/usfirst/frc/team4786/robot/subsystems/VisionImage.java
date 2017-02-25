@@ -227,12 +227,12 @@ public class VisionImage extends Subsystem implements PIDSource{
 	
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new DrawPeg());
+		//setDefaultCommand(new DrawPeg());
 	}
 	@Override
 	public void setPIDSourceType(PIDSourceType pidSource) {
 		// TODO Auto-generated method stub
-		type = pidSource;
+		type = PIDSourceType.kDisplacement;
 	}
 	@Override
 	public PIDSourceType getPIDSourceType() {

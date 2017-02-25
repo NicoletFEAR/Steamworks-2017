@@ -30,6 +30,7 @@ public class RobotMap {
 	public static final int ERROR_CONSTANT_LEFT = 40; //In native units
 	public static final int ERROR_CONSTANT_RIGHT = 40;
 	public static final int ALLOWABLE_TURN_ERROR = 1; //In degrees
+	public static final int ALLOWABLE_VISION_ERROR = 5; //In pixels
 	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT = 512;
 	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_RIGHT = 1024;
 	public static final double CLOSED_LOOP_RAMP_RATE = 0.015625;
@@ -75,6 +76,11 @@ public class RobotMap {
 	public static final double RightVelocityI = 0.0;
 	public static final double RightVelocityD = 0.0;
 	public static final double RightVelocityF = 0.1097;
+	//Vision PID Constants
+	public static final double VisionP = 0.1;
+	public static final double VisionI = 0;
+	public static final double VisionD = 0;
+	public static final double VisionF = 0;
 	//NavX turn PID Constants
 /*	public static final double TurnP = 0.025;
 	public static final double TurnI = 0.006;

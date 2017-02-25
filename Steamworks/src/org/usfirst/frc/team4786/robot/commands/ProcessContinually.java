@@ -25,6 +25,7 @@ public class ProcessContinually extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.gearPlacementCamera.setExposureManual(RobotMap.exposure);
+    	Robot.driveTrain.processVisionContinuallyInit();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -34,7 +35,7 @@ public class ProcessContinually extends Command {
 			Robot.visionImage.processImage(mat);
 			Robot.visionImage.analysis();
 			//Run PID here
-			
+			Robot.driveTrain.processVisionContinuallyExecute();
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -53,6 +54,7 @@ public class ProcessContinually extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.gearPlacementCamera.setExposureAuto();
+    	Robot.driveTrain.processVisionContinuallyEnd();
     }
 
     // Called when another command which requires one or more of the same
