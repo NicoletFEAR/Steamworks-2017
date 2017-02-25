@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4786.robot;
 
 import org.usfirst.frc.team4786.robot.commands.DoNothing;
+import org.usfirst.frc.team4786.robot.commands.DriveArcSpeed;
 import org.usfirst.frc.team4786.robot.commands.DriveToLeftGearPeg;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.DriveToRightGearPeg;
@@ -9,14 +10,13 @@ import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.Climber;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4786.robot.subsystems.Gear;
 //import org.usfirst.frc.team4786.robot.subsystems.FrameData;
 import org.usfirst.frc.team4786.robot.subsystems.Intake;
+import org.usfirst.frc.team4786.robot.subsystems.SwitchState;
 //import org.usfirst.frc.team4786.robot.subsystems.Test;
 //import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
 import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
-import org.usfirst.frc.team4786.robot.subsystems.SwitchState;
-
-import org.usfirst.frc.team4786.robot.subsystems.Gear;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -24,12 +24,12 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Timer;
 
 
 public class Robot extends IterativeRobot {
@@ -125,12 +125,16 @@ public class Robot extends IterativeRobot {
 
 	//camera.setExposureManual(RobotMap.exposure);
     autonomousCommand = (Command) sendableChooser.getSelected();
-    
-	//autonomousCommand = new GearFromOffset();
-
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
+    
+	//autonomousCommand = new GearFromOffset();
+
+    //autonomousCommand = new DriveToLeftGearPeg();
+	//	if (autonomousCommand != null)
+	//		autonomousCommand.start();
+	//}
 
 	/**
 	 * This function is called periodically during autonomous

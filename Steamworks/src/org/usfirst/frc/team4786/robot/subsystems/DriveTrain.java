@@ -172,23 +172,51 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		frontRight.setEncPosition(0);
 		
 		//Calculate arc lengths
+		theta = Math.toRadians(theta);
 		double radius = horizontalDist / (1 - Math.cos(theta));
-		double leftArcLength = theta * Math.PI * (radius + RobotMap.WHEEL_SEPARATION / 2) / 180;
-		double rightArcLength = theta * Math.PI * (radius - RobotMap.WHEEL_SEPARATION / 2) / 180;
+		double leftArcLength = theta * (radius + RobotMap.WHEEL_SEPARATION / 2);
+		double rightArcLength = theta * (radius - RobotMap.WHEEL_SEPARATION / 2);
 		if(horizontalDist < 0){
-			leftArcLength = -leftArcLength;
-			rightArcLength = -rightArcLength;
+			leftArcLength *= -1;
+			rightArcLength *= -1;
 		}
+		
 		//Run convertToRotations functions
 		double leftRot = convertToRotations(leftArcLength);
 		double rightRot = convertToRotations(rightArcLength);
 		
 		//Make motors drive number of rotations
 		//calculated before by convertToRotations()
-		frontLeft.set(leftRot);
+		frontLeft.set(leftRot/* * RobotMap.turnFudgeFactor*/);
 		//Make sure we inverse this right side,
 		//otherwise, you have a spinning robot on your hands
-		frontRight.set(-rightRot);
+		frontRight.set(-rightRot/* * RobotMap.turnFudgeFactor*/);
+	}
+	
+	public void driveArcSpeedInit(double leftSpeed, double rightSpeed){
+		//Change Talon modes to "position" just in case
+		//they were in another mode before
+		frontLeft.changeControlMode(TalonControlMode.PercentVbus);
+		frontRight.changeControlMode(TalonControlMode.PercentVbus);
+		//Set Encoder Position to 0
+		frontLeft.setEncPosition(0);
+		frontRight.setEncPosition(0);
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		frontLeft.setEncPosition(0);
+		frontRight.setEncPosition(0);
+		
+		frontLeft.set(-leftSpeed);
+		frontRight.set(-rightSpeed);
+	}
+	
+	public void driveArcSpeedEnd(){
+		frontLeft.set(0);
+		frontRight.set(0);
 	}
 	
 	//Some special isFinished() command stuff to not stop before the robot has even moved
