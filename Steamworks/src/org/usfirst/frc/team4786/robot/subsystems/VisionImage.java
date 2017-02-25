@@ -11,7 +11,6 @@ import static org.opencv.imgproc.Imgproc.*;
 import static org.opencv.core.Core.*;
 import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.RobotMap;
-import org.usfirst.frc.team4786.robot.commands.DrawPeg;
 import org.usfirst.frc.team4786.robot.commands.ProcessContinually;
 import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
 
