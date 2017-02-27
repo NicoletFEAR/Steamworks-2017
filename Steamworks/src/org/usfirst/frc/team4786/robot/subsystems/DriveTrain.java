@@ -122,6 +122,7 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		
 		//Smartdashboard values
 		SmartDashboard.putString("Front Side:", Robot.frontSide);
+
 	}
 	
 	//Begin PID Functions
