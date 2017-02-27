@@ -22,6 +22,12 @@ public class SwitchFrontSide extends Command {
     	Robot.driveTrain.switchFront();
     	//Flip left and right
     	Robot.oi.switchJoystickIDs();
+    	
+    	if(Robot.frontSide.equals("Gear")){
+    		Robot.frontSide = "Ball";
+    	}else{
+    		Robot.frontSide = "Gear";
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
