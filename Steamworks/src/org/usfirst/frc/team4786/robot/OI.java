@@ -74,6 +74,8 @@ public class OI {
     	limitSwitch4 = new DigitalInput(RobotMap.limitSwitch4Port);
     
    	//We map a bunch of buttons to switch the front side for Andy's convenience ;)
+    	rightJoystickTrigger.whenPressed(new SwitchFrontSide());
+    	leftJoystickTrigger.whenPressed(new SwitchFrontSide());
     	kLeftJoy6Button.whenPressed(new SwitchFrontSide());
     	kRightJoy6Button.whenPressed(new SwitchFrontSide());
     	kLeftJoy7Button.whenPressed(new SwitchFrontSide());
