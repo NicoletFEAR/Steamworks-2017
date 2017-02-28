@@ -37,6 +37,9 @@ public class OI {
 	private static Button kRightJoy10Button;
 	private static Button kLeftJoy11Button;
 	private static Button kRightJoy11Button;
+	private static Button leftJoystickTrigger;
+	private static Button rightJoystickTrigger;
+
 	
 	private static Button rightBumper;
 	private static Button leftBumper;
@@ -47,6 +50,8 @@ public class OI {
     	leftDriveJoy = new Joystick(0);
     	rightDriveJoy = new Joystick(1);
         xbox = new XboxController(2);
+        leftJoystickTrigger = new JoystickButton(leftDriveJoy, 1);
+    	rightJoystickTrigger = new JoystickButton(rightDriveJoy, 1);
      	kLeftJoy6Button = new JoystickButton(leftDriveJoy, 6);
     	kRightJoy6Button = new JoystickButton(rightDriveJoy, 6);
     	kLeftJoy7Button = new JoystickButton(leftDriveJoy, 7);
