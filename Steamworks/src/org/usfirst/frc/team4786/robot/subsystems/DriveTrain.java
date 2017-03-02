@@ -145,10 +145,10 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		
 		//Make motors drive number of rotations
 		//calculated before by convertToRotations()
-		frontLeft.set(rot);
+		frontLeft.set(-rot);
 		//Make sure we inverse this right side,
 		//otherwise, you have a spinning robot on your hands
-		frontRight.set(-rot);
+		frontRight.set(rot);
 		
 		SmartDashboard.putNumber("Rotations Calculated", rot);
 	}
