@@ -20,10 +20,10 @@ public class SwitchFrontSide extends Command {
     protected void initialize() {
     	if(Robot.oi == null){ end(); }
     	
-    	if(Robot.frontSide.equals("Ball")){
-    		Robot.frontSide = "Gear";
-    	}else{
+    	if(Robot.frontSide.equals("Gear")){
     		Robot.frontSide = "Ball";
+    	}else{
+    		Robot.frontSide = "Gear";
     	}
 		SmartDashboard.putString("Front Side:", Robot.frontSide);
 

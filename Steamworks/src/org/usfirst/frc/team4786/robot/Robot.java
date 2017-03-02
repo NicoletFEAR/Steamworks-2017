@@ -84,7 +84,7 @@ public class Robot extends IterativeRobot {
 		ballPlacementCamera.setResolution(RobotMap.cameraFOVWidth, RobotMap.cameraFOVHeight);
 		cvSink = CameraServer.getInstance().getVideo();
 		
-		frontSide = "Ball";
+		frontSide = "Gear";
 
 		oi = new OI();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
