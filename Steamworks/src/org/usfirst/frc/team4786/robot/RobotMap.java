@@ -42,7 +42,7 @@ public class RobotMap {
 	//Game Mech Costants, Not final
 	public static final double INTAKE_TALON_COLLECT_SPEED = 1;
 	public static final double INTAKE_TALON_SPIT_SPEED = 1;
-	public static final double INTAKE_COLLECT_SPEED_SCALING = 1;
+	public static final double INTAKE_COLLECT_SPEED_SCALING = -	1;
 	public static final double INTAKE_SPIT_SPEED_SCALING = 1;
 	//public static final double OPEN_LOOP_CLIMBING_SPEED = 0.5;
 	public static final double OPEN_LOOP_CLIMBING_SPEED_SCALING = -.5;
