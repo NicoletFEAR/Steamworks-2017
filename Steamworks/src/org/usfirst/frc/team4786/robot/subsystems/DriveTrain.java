@@ -1,4 +1,5 @@
 package org.usfirst.frc.team4786.robot.subsystems;
+import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.RobotMap;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
 
@@ -118,6 +119,10 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		double rightOutput = rightInput * RobotMap.openLoopSpeedScaling;
 		frontLeft.set(leftOutput);
 		frontRight.set(rightOutput);
+		
+		//Smartdashboard values
+		SmartDashboard.putString("Front Side:", Robot.frontSide);
+
 	}
 	
 	//Begin PID Functions

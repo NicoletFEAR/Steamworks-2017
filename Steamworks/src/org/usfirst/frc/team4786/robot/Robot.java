@@ -5,6 +5,7 @@ import org.usfirst.frc.team4786.robot.commands.DriveToLeftGearPeg;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.DriveToRightGearPeg;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
+import org.usfirst.frc.team4786.robot.commands.SwitchFrontSide;
 import org.usfirst.frc.team4786.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.Climber;
@@ -39,6 +40,8 @@ public class Robot extends IterativeRobot {
 	
 	//We setup our subsystem objects here
 
+	public static String frontSide;
+	
 	public static DriveTrain driveTrain = new DriveTrain();
 	public static Intake intake = new Intake();
 	public static DrawBridge drawBridge = new DrawBridge();
@@ -80,8 +83,8 @@ public class Robot extends IterativeRobot {
 		gearPlacementCamera.setResolution(RobotMap.cameraFOVWidth,RobotMap.cameraFOVHeight);
 		ballPlacementCamera.setResolution(RobotMap.cameraFOVWidth, RobotMap.cameraFOVHeight);
 		cvSink = CameraServer.getInstance().getVideo();
-		timer = new Timer();
-
+		
+		frontSide = "Gear";
 
 		oi = new OI();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
@@ -97,6 +100,8 @@ public class Robot extends IterativeRobot {
 		//sendableChooser.addObject("GetToGearTest", new GearFromOffset());
 		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 		
+		Command initial = new SwitchFrontSide();
+		initial.start();
 	}
 	@Override
 	public void disabledInit() {
@@ -118,6 +123,8 @@ public class Robot extends IterativeRobot {
 			arduino.writeStringData(allianceColorVal);
 		}
 		SmartDashboard.putString("Alliance", allianceColorVal);*/
+		
+		
 
 		Scheduler.getInstance().run();
 	}

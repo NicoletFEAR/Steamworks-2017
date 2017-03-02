@@ -37,6 +37,9 @@ public class OI {
 	private static Button kRightJoy10Button;
 	private static Button kLeftJoy11Button;
 	private static Button kRightJoy11Button;
+	private static Button leftJoystickTrigger;
+	private static Button rightJoystickTrigger;
+
 	
 	private static Button rightBumper;
 	private static Button leftBumper;
@@ -47,6 +50,8 @@ public class OI {
     	leftDriveJoy = new Joystick(0);
     	rightDriveJoy = new Joystick(1);
         xbox = new XboxController(2);
+        leftJoystickTrigger = new JoystickButton(leftDriveJoy, 1);
+    	rightJoystickTrigger = new JoystickButton(rightDriveJoy, 1);
      	kLeftJoy6Button = new JoystickButton(leftDriveJoy, 6);
     	kRightJoy6Button = new JoystickButton(rightDriveJoy, 6);
     	kLeftJoy7Button = new JoystickButton(leftDriveJoy, 7);
@@ -69,6 +74,8 @@ public class OI {
     	limitSwitch4 = new DigitalInput(RobotMap.limitSwitch4Port);
     
    	//We map a bunch of buttons to switch the front side for Andy's convenience ;)
+    	rightJoystickTrigger.whenPressed(new SwitchFrontSide());
+    	leftJoystickTrigger.whenPressed(new SwitchFrontSide());
     	kLeftJoy6Button.whenPressed(new SwitchFrontSide());
     	kRightJoy6Button.whenPressed(new SwitchFrontSide());
     	kLeftJoy7Button.whenPressed(new SwitchFrontSide());

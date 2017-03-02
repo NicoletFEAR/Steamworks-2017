@@ -3,6 +3,7 @@ package org.usfirst.frc.team4786.robot.commands;
 import org.usfirst.frc.team4786.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -18,10 +19,20 @@ public class SwitchFrontSide extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	if(Robot.oi == null){ end(); }
+    	
+    	if(Robot.frontSide.equals("Gear")){
+    		Robot.frontSide = "Ball";
+    	}else{
+    		Robot.frontSide = "Gear";
+    	}
+		SmartDashboard.putString("Front Side:", Robot.frontSide);
+
     	//Flip direction of travel
     	Robot.driveTrain.switchFront();
     	//Flip left and right
     	Robot.oi.switchJoystickIDs();
+    	
+
     }
 
     // Called repeatedly when this Command is scheduled to run
