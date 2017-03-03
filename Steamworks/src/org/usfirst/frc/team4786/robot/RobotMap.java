@@ -32,8 +32,8 @@ public class RobotMap {
 	public static final int ERROR_CONSTANT_LEFT = 40; //In native units
 	public static final int ERROR_CONSTANT_RIGHT = 20;
 	public static final int ALLOWABLE_TURN_ERROR = 1; //In degrees
-	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT = 1024;
-	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_RIGHT = 512;
+	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT = 512;
+	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_RIGHT = 1024;
 	/*public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT = 360;
 	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_RIGHT = 360;*/
 	public static final double CLOSED_LOOP_RAMP_RATE = 0.015625;
