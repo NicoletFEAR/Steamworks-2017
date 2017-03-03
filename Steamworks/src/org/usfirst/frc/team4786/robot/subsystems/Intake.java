@@ -16,7 +16,7 @@ public class Intake extends Subsystem {
     CANTalon intakeMotor = new CANTalon(RobotMap.intakePort);
 
     public void initDefaultCommand() {
-    	setDefaultCommand(new CollectBalls());
+    	//setDefaultCommand(new CollectBalls());
     }
     
     //Set the motor on the intake to take-in/collect balls

@@ -28,7 +28,7 @@ public class OpenBridge extends Command {
     // Make this return true when this Command no longer needs to run execute()
     //Make sure the servo has moved all the way to where it needs to go before finishing
     protected boolean isFinished() {
-        return (Robot.drawBridge.getServoAngle() == RobotMap.OPEN_BRIDGE_ANGLE) || this.timeSinceInitialized() >= 5;
+        return (Robot.drawBridge.getServoAngle() == RobotMap.OPEN_BRIDGE_ANGLE)/* || this.timeSinceInitialized() >= 5*/;
     }
 
     // Called once after isFinished returns true
