@@ -64,13 +64,13 @@ public class RobotMap {
 	 * If needed, add a D value to smooth it out
 	 */
 	//public static final double LeftP = 0.1;
-	public static final double LeftP = 0.04;
+	public static final double LeftP = 0.004;
 	public static final double LeftI = 0.00015;
 	public static final double LeftD = 0.0;
 	public static final double LeftF = 0.0;
 	//Right GearBox PID Constants
 	//public static final double RightP = 0.1;
-	public static final double RightP = 0.04;
+	public static final double RightP = 0.004;
 	public static final double RightI = 0.00015;
 	public static final double RightD = 0.0;
 	public static final double RightF = 0.0;
