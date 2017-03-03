@@ -213,7 +213,7 @@ public class Robot extends IterativeRobot {
 		//everything is awesome code
 		//runs motors and output
 		Robot.driveTrain.openLoopDrive(1, 1);
-		//Robot.intake.collectBalls(1);
+		Robot.intake.collectBalls(1);
 		Robot.climber.startOpenClimbing(1);
 		Robot.arduino.writeStringData("rainbowlight");
 	}

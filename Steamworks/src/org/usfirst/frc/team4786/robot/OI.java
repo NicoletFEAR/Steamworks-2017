@@ -86,8 +86,8 @@ public class OI {
     	kRightJoy11Button.whenPressed(new SwitchFrontSide());
     	
      
-    	rightBumper.whenPressed(new OpenBridge());
-    	leftBumper.whenPressed(new CloseBridge());
+    	//rightBumper.whenPressed(new OpenBridge());
+    	//leftBumper.whenPressed(new CloseBridge());
     }
     /*public void checkXboxButtonStates() {
     	if (xbox.getBButton() && Robot.climber.getCurrentCommand() == null) {
