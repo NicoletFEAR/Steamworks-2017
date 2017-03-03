@@ -222,6 +222,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
+		Robot.driveTrain.openLoopDrive(1, 1);
+		Robot.intake.collectBalls(1);
+		Robot.climber.startOpenClimbing(1);
 
 		
 		//shows smartdashboard values
