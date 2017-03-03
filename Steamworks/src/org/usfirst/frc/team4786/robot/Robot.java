@@ -100,8 +100,8 @@ public class Robot extends IterativeRobot {
 		//sendableChooser.addObject("GetToGearTest", new GearFromOffset());
 		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 		
-		Command initial = new SwitchFrontSide();
-		initial.start();
+		/*Command initial = new SwitchFrontSide();
+		initial.start();*/
 	}
 	@Override
 	public void disabledInit() {
