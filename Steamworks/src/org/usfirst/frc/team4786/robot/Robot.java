@@ -92,9 +92,9 @@ public class Robot extends IterativeRobot {
 
 
 		sendableChooser = new SendableChooser<Command>();
+		sendableChooser.addDefault("Drive to Center Gear Peg", new DriveToPosition(7));
 		sendableChooser.addObject("Do Nothing!", new DoNothing());
 		sendableChooser.addObject("Drive to Baseline", new DriveToPosition(10));
-		sendableChooser.addDefault("Drive to Center Gear Peg", new DriveToPosition(7));
 		sendableChooser.addObject("Drive to Left Gear Peg", new DriveToLeftGearPeg());
 		sendableChooser.addObject("Drive to Right Gear Peg", new DriveToRightGearPeg());
 		//sendableChooser.addObject("GetToGearTest", new GearFromOffset());
@@ -222,12 +222,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
-		Robot.driveTrain.openLoopDrive(1, 1);
+		/*Robot.driveTrain.openLoopDrive(1, 1);
 		Robot.intake.collectBalls(1);
-		Robot.climber.startOpenClimbing(1);
+		Robot.climber.startOpenClimbing(1);*/
 
 		
-		//shows smartdashboard values
 		/*Command visionTest = new VisionSetup();
 		visionTest.start();*/
 		
