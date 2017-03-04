@@ -63,6 +63,14 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		//Set Up the Encoder Revolutions!
 		frontLeft.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT);
 		frontRight.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV_RIGHT);
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		frontLeft.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT);
+		frontRight.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV_RIGHT);
 		
 		frontLeft.setPosition(0);
 		frontRight.setPosition(0);
