@@ -1,23 +1,24 @@
 package org.usfirst.frc.team4786.robot;
 
 import org.usfirst.frc.team4786.robot.commands.DoNothing;
+import org.usfirst.frc.team4786.robot.commands.DriveArcSpeed;
 import org.usfirst.frc.team4786.robot.commands.DriveToLeftGearPeg;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.DriveToRightGearPeg;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
+import org.usfirst.frc.team4786.robot.commands.SwitchFrontSide;
 import org.usfirst.frc.team4786.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.Climber;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4786.robot.subsystems.Gear;
 //import org.usfirst.frc.team4786.robot.subsystems.FrameData;
 import org.usfirst.frc.team4786.robot.subsystems.Intake;
+import org.usfirst.frc.team4786.robot.subsystems.SwitchState;
 //import org.usfirst.frc.team4786.robot.subsystems.Test;
 //import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
 import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
-import org.usfirst.frc.team4786.robot.subsystems.SwitchState;
-
-import org.usfirst.frc.team4786.robot.subsystems.Gear;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -25,12 +26,12 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Timer;
 
 
 public class Robot extends IterativeRobot {
@@ -39,6 +40,8 @@ public class Robot extends IterativeRobot {
 	
 	//We setup our subsystem objects here
 
+	public static String frontSide;
+	
 	public static DriveTrain driveTrain = new DriveTrain();
 	public static Intake intake = new Intake();
 	public static DrawBridge drawBridge = new DrawBridge();
@@ -80,8 +83,8 @@ public class Robot extends IterativeRobot {
 		gearPlacementCamera.setResolution(RobotMap.cameraFOVWidth,RobotMap.cameraFOVHeight);
 		ballPlacementCamera.setResolution(RobotMap.cameraFOVWidth, RobotMap.cameraFOVHeight);
 		cvSink = CameraServer.getInstance().getVideo();
-		timer = new Timer();
-
+		
+		frontSide = "Gear";
 
 		oi = new OI();
 		arduino = new Arduino(RobotMap.ledArduinoPort);
@@ -89,14 +92,16 @@ public class Robot extends IterativeRobot {
 
 
 		sendableChooser = new SendableChooser<Command>();
-		sendableChooser.addDefault("Do Nothing!", new DoNothing());
-		sendableChooser.addObject("Drive to Baseline", new DriveToPosition(6));
-		sendableChooser.addObject("Drive to Center Gear Peg", new DriveToPosition(4));
+		sendableChooser.addDefault("Drive to Center Gear Peg", new DriveToPosition(7));
+		sendableChooser.addObject("Do Nothing!", new DoNothing());
+		sendableChooser.addObject("Drive to Baseline", new DriveToPosition(10));
 		sendableChooser.addObject("Drive to Left Gear Peg", new DriveToLeftGearPeg());
 		sendableChooser.addObject("Drive to Right Gear Peg", new DriveToRightGearPeg());
 		//sendableChooser.addObject("GetToGearTest", new GearFromOffset());
 		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 		
+		/*Command initial = new SwitchFrontSide();
+		initial.start();*/
 	}
 	@Override
 	public void disabledInit() {
@@ -118,6 +123,8 @@ public class Robot extends IterativeRobot {
 			arduino.writeStringData(allianceColorVal);
 		}
 		SmartDashboard.putString("Alliance", allianceColorVal);*/
+		
+		
 
 		Scheduler.getInstance().run();
 	}
@@ -142,12 +149,16 @@ public class Robot extends IterativeRobot {
 
 	//camera.setExposureManual(RobotMap.exposure);
     autonomousCommand = (Command) sendableChooser.getSelected();
-    
-	//autonomousCommand = new GearFromOffset();
-
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
+    
+	//autonomousCommand = new GearFromOffset();
+
+    //autonomousCommand = new DriveToLeftGearPeg();
+	//	if (autonomousCommand != null)
+	//		autonomousCommand.start();
+	//}
 
 	/**
 	 * This function is called periodically during autonomous
@@ -211,10 +222,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
-		
+		/*Robot.driveTrain.openLoopDrive(1, 1);
+		Robot.intake.collectBalls(1);
+		Robot.climber.startOpenClimbing(1);*/
 
 		
-		//shows smartdashboard values
 		/*Command visionTest = new VisionSetup();
 		visionTest.start();*/
 		

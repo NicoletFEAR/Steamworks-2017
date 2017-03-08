@@ -1,4 +1,5 @@
 package org.usfirst.frc.team4786.robot.subsystems;
+import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.RobotMap;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
 
@@ -62,6 +63,14 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		//Set Up the Encoder Revolutions!
 		frontLeft.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT);
 		frontRight.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV_RIGHT);
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		frontLeft.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT);
+		frontRight.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV_RIGHT);
 		
 		frontLeft.setPosition(0);
 		frontRight.setPosition(0);
@@ -118,6 +127,10 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		double rightOutput = rightInput * RobotMap.openLoopSpeedScaling;
 		frontLeft.set(leftOutput);
 		frontRight.set(rightOutput);
+		
+		//Smartdashboard values
+		SmartDashboard.putString("Front Side:", Robot.frontSide);
+
 	}
 	
 	//Begin PID Functions
@@ -145,16 +158,90 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		
 		//Make motors drive number of rotations
 		//calculated before by convertToRotations()
-		frontLeft.set(rot);
+		frontLeft.set(-rot);
+		frontRight.set(rot);
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//Make sure we inverse this right side,
 		//otherwise, you have a spinning robot on your hands
-		frontRight.set(-rot);
+		frontLeft.set(-rot);
+		frontRight.set(rot);
+
 		
 		SmartDashboard.putNumber("Rotations Calculated", rot);
 	}
 	
+	public void driveArcInit(double horizontalDist, double theta){
+		//Change Talon modes to "position" just in case
+		//they were in another mode before
+		frontLeft.changeControlMode(TalonControlMode.Position);
+		frontRight.changeControlMode(TalonControlMode.Position);
+		
+		//Set Encoder Position to 0
+		frontLeft.setEncPosition(0);
+		frontRight.setEncPosition(0);
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		frontLeft.setEncPosition(0);
+		frontRight.setEncPosition(0);
+		
+		//Calculate arc lengths
+		theta = Math.toRadians(theta);
+		double radius = horizontalDist / (1 - Math.cos(theta));
+		double leftArcLength = theta * (radius + RobotMap.WHEEL_SEPARATION / 2);
+		double rightArcLength = theta * (radius - RobotMap.WHEEL_SEPARATION / 2);
+		if(horizontalDist < 0){
+			leftArcLength *= -1;
+			rightArcLength *= -1;
+		}
+		
+		//Run convertToRotations functions
+		double leftRot = convertToRotations(leftArcLength);
+		double rightRot = convertToRotations(rightArcLength);
+		
+		//Make motors drive number of rotations
+		//calculated before by convertToRotations()
+		frontLeft.set(leftRot/* * RobotMap.turnFudgeFactor*/);
+		//Make sure we inverse this right side,
+		//otherwise, you have a spinning robot on your hands
+		frontRight.set(-rightRot/* * RobotMap.turnFudgeFactor*/);
+	}
+	
+	public void driveArcSpeedInit(double leftSpeed, double rightSpeed){
+		//Change Talon modes to "position" just in case
+		//they were in another mode before
+		frontLeft.changeControlMode(TalonControlMode.PercentVbus);
+		frontRight.changeControlMode(TalonControlMode.PercentVbus);
+		//Set Encoder Position to 0
+		frontLeft.setEncPosition(0);
+		frontRight.setEncPosition(0);
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		frontLeft.setEncPosition(0);
+		frontRight.setEncPosition(0);
+		
+		frontLeft.set(-leftSpeed);
+		frontRight.set(-rightSpeed);
+	}
+	
+	public void driveArcSpeedEnd(){
+		frontLeft.set(0);
+		frontRight.set(0);
+	}
+	
 	//Some special isFinished() command stuff to not stop before the robot has even moved
-
 
 	public boolean driveToPositionIsFinished() {
 		return Math.abs(frontLeft.getError()) <= RobotMap.ERROR_CONSTANT_LEFT && Math.abs(frontRight.getError()) <= RobotMap.ERROR_CONSTANT_RIGHT;

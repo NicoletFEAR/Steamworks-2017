@@ -23,11 +23,11 @@ public class DrawBridge extends Subsystem {
     }
     
     public void openThyBridge() {
-    	gateServo.setAngle(180);
+    	gateServo.setAngle(90);
     }
     
     public void closeThyBridge() {
-    	gateServo.setAngle(-180);
+    	gateServo.setAngle(-90);
     }
     
     public double getServoAngle(){

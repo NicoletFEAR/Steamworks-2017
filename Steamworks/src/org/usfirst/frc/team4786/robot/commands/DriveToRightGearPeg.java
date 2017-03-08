@@ -8,10 +8,18 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveToRightGearPeg extends CommandGroup {
 
     public DriveToRightGearPeg() {
-    	addSequential(new DriveToPosition(3));
-    	addSequential(new TurnToAngle(-60));
-    	addSequential(new DriveToPosition(1));
+    	//addSequential(new DriveToPosition(3));
+    	//addSequential(new TurnToAngle(-60));
+    	//addSequential(new DriveToPosition(1));
+
     	
+    	//initial drive straight in feet
+    	addSequential(new DriveToPosition(2));
+    	//turning degrees via .22 power ratio on inside of turn for .75 seconds
+    	addSequential(new DriveArcSpeed(1 * 0.22, 1 , 0.75));
+    	//final drive straight to target
+    	addSequential(new DriveToPosition(3));
+
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
