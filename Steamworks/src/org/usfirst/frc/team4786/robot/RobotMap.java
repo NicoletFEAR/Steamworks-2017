@@ -131,6 +131,9 @@ public class RobotMap {
 	//for calculating angles
 	public static final double distanceBetweenCentersOfTargets = 8.25/12;
 	
+	//for PID
+	public static final double ALLOWABLE_CENTER_ERROR = 10; //In pixels
+	
     /* For example to map the left and right motors, you could define the
      following variables to use with your drivetrain subsystem.
      If you are using multiple modules, make sure to define both the port

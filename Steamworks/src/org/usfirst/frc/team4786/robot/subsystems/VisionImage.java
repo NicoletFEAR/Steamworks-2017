@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4786.robot.subsystems;
 
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.opencv.core.*;
@@ -11,7 +13,7 @@ import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.RobotMap;
 import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
 
-public class VisionImage extends Subsystem{	
+public class VisionImage extends Subsystem {	
 	
 	boolean twoTargets = false;
 	int numOfTargets = 0;
@@ -87,24 +89,26 @@ public class VisionImage extends Subsystem{
 			return location.TargetsNotVisible;
 		}
 	}
-	public location getWhereCameraIsPointing(){
+	public String getWhereCameraIsPointing(){
+		String location = "";
 		if (leftRect != null && rightRect != null && centerOfCamera != 0){
 			if (.95*(centerOfCamera-(leftRect.x+leftRect.width)) < (rightRect.x-centerOfCamera)
 					&& (rightRect.x-centerOfCamera) < 1.05*(centerOfCamera-(leftRect.x+leftRect.width)))
-				return location.Center;	//camera is pointing at peg
+				location = "Center";	//camera is pointing at peg
 			if (rightRect.x  < centerOfCamera){
-				return location.Left;	//camera is pointing left of peg
+				location = "Left";	//camera is pointing left of peg
 			} else if (leftRect.x > centerOfCamera) {
-				return location.Right;	//camera is pointing right of peg
+				location = "Right";	//camera is pointing right of peg
 			} else if ((centerOfCamera-(leftRect.x+leftRect.width))<(rightRect.x-centerOfCamera)) {
-				return location.Left;	//camera is pointing left of peg
+				location = "Left";	//camera is pointing left of peg
 			} else if ((rightRect.x-centerOfCamera)<(centerOfCamera-(leftRect.x+leftRect.width))) {
-				return location.Right;	//camera is pointing right of peg
+				location = "Right";	//camera is pointing right of peg
 			} else {	//this should never be returned
-				return location.Center;
+				location = "Center";
 		} } else {
-			return location.TargetsNotVisible;
+			location = "TargetsNotVisible";
 		}
+		return location;
 	}
 	public void processImage(MatRapper image){
 		mat = image.getMat();
@@ -205,4 +209,5 @@ public class VisionImage extends Subsystem{
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 	}
+	
 }

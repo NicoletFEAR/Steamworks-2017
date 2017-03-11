@@ -1,13 +1,12 @@
 package org.usfirst.frc.team4786.robot;
 
 import org.usfirst.frc.team4786.robot.commands.DoNothing;
-import org.usfirst.frc.team4786.robot.commands.DriveArcSpeed;
 import org.usfirst.frc.team4786.robot.commands.DriveToLeftGearPeg;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.DriveToRightGearPeg;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
-import org.usfirst.frc.team4786.robot.commands.SwitchFrontSide;
-import org.usfirst.frc.team4786.robot.commands.TurnToAngle;
+import org.usfirst.frc.team4786.robot.commands.ProcessVisionContinuously;
+import org.usfirst.frc.team4786.robot.commands.VisionAlignWithPeg;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.Climber;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
@@ -19,10 +18,12 @@ import org.usfirst.frc.team4786.robot.subsystems.SwitchState;
 //import org.usfirst.frc.team4786.robot.subsystems.Test;
 //import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
 import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
+import org.usfirst.frc.team4786.robot.subsystems.VisionPIDSource;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -52,6 +53,7 @@ public class Robot extends IterativeRobot {
 	public static CvSink cvSink;
 	public static CvSource outputStream;
 	public static CvSource regStream;
+	public static CvSource visionStream;
 	public static UsbCamera gearPlacementCamera;
 	public static UsbCamera ballPlacementCamera;
 
@@ -74,7 +76,6 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void robotInit() {
-
 		gearPlacementCamera = CameraServer.getInstance().startAutomaticCapture("Gear", 0);
 		ballPlacementCamera = CameraServer.getInstance().startAutomaticCapture("Ball Camera", 1);
 		gearPlacementCamera.setFPS(15);		
@@ -82,7 +83,12 @@ public class Robot extends IterativeRobot {
 
 		gearPlacementCamera.setResolution(RobotMap.cameraFOVWidth,RobotMap.cameraFOVHeight);
 		ballPlacementCamera.setResolution(RobotMap.cameraFOVWidth, RobotMap.cameraFOVHeight);
-		cvSink = CameraServer.getInstance().getVideo();
+		gearPlacementCamera.setExposureManual(1);
+		
+		cvSink = CameraServer.getInstance().getVideo("Gear");
+		//outputStream = CameraServer.getInstance().putVideo("Gear Camera", RobotMap.cameraFOVWidth, RobotMap.cameraFOVHeight);
+		//= new CvSource("GearCamera", VideoMode.PixelFormat.kRGB565, RobotMap.cameraFOVWidth, RobotMap.cameraFOVHeight, 15);
+		
 		
 		frontSide = "Gear";
 
@@ -97,11 +103,9 @@ public class Robot extends IterativeRobot {
 		sendableChooser.addObject("Drive to Baseline", new DriveToPosition(10));
 		sendableChooser.addObject("Drive to Left Gear Peg", new DriveToLeftGearPeg());
 		sendableChooser.addObject("Drive to Right Gear Peg", new DriveToRightGearPeg());
-		//sendableChooser.addObject("GetToGearTest", new GearFromOffset());
+		sendableChooser.addObject("Vision align with peg", new VisionAlignWithPeg());
 		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 		
-		/*Command initial = new SwitchFrontSide();
-		initial.start();*/
 	}
 	@Override
 	public void disabledInit() {
@@ -149,6 +153,8 @@ public class Robot extends IterativeRobot {
 
 	//camera.setExposureManual(RobotMap.exposure);
     autonomousCommand = (Command) sendableChooser.getSelected();
+    Command visionProcess = new ProcessVisionContinuously();
+    //visionProcess.start();
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
@@ -166,16 +172,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
-		SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
-		SmartDashboard.putNumber("Servo Angle", drawBridge.getServoAngle());
+		
 	}
 
 	@Override
 	public void teleopInit() {
 
 		
-		//gearPlacementCamera.setExposureAuto();
+		gearPlacementCamera.setExposureAuto();
 		
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
