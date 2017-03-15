@@ -362,11 +362,13 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		SmartDashboard.putBoolean("Rectangles detected?", Robot.visionImage.twoTargets);
 		//No idea if turnToAngleRate will actually be calculated by pidWrite()
 		if (Robot.visionImage.getWhereCameraIsPointing().equalsIgnoreCase("Left")) {
-			frontLeft.set(-turnToAngleRate);
-			frontRight.set(turnToAngleRate);
+			frontLeft.set(0.4);
+			frontRight.set(-0.1);
+
+			
 		} else if (Robot.visionImage.getWhereCameraIsPointing().equalsIgnoreCase("Right")) {
-			frontLeft.set(turnToAngleRate);
-			frontRight.set(-turnToAngleRate);
+			frontLeft.set(-0.1); //Add 0.1 so it goes forward while aligning
+			frontRight.set(0.4);
 		} 
 	}
 	
