@@ -99,9 +99,9 @@ public class VisionImage extends Subsystem {
 		String location = "";
 		if (leftRect != null && rightRect != null && centerOfCamera != 0){
 			if (.95*(centerOfCamera-(leftRect.x+leftRect.width)) < (rightRect.x-centerOfCamera)
-					&& (rightRect.x-centerOfCamera) < 1.05*(centerOfCamera-(leftRect.x+leftRect.width)))
+					&& (rightRect.x-centerOfCamera) < 1.05*(centerOfCamera-(leftRect.x+leftRect.width))) {
 				location = "Center";	//camera is pointing at peg
-			if (rightRect.x  < centerOfCamera){
+			} else if (rightRect.x  < centerOfCamera) {
 				location = "Left";	//camera is pointing left of peg
 			} else if (leftRect.x > centerOfCamera) {
 				location = "Right";	//camera is pointing right of peg

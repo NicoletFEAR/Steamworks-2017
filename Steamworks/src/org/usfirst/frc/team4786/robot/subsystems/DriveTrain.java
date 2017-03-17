@@ -365,12 +365,13 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		if (Robot.visionImage.getWhereCameraIsPointing().equalsIgnoreCase("Left")) {
 			frontLeft.set(0.4);
 			frontRight.set(-0.1);
-
-			
 		} else if (Robot.visionImage.getWhereCameraIsPointing().equalsIgnoreCase("Right")) {
 			frontLeft.set(-0.1); //Add 0.1 so it goes forward while aligning
 			frontRight.set(0.4);
-		} 
+		} else if (Robot.visionImage.getWhereCameraIsPointing().equalsIgnoreCase("Center")) {
+			frontLeft.set(0.2);
+			frontRight.set(0.2);
+		}
 	}
 	
 	public void processContinuouslyEnd(){
