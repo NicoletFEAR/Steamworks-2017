@@ -19,7 +19,7 @@ public class ProcessVisionContinuously extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//Robot.gearPlacementCamera.setExposureManual(1);
+    	Robot.gearPlacementCamera.setExposureManual(1);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -33,6 +33,8 @@ public class ProcessVisionContinuously extends Command {
     	Robot.visionImage.processImage(rapperNamedMat);
     	Robot.visionImage.analysis();
     	SmartDashboard.putBoolean("Rectangles detected?", Robot.visionImage.getTwoTargets());
+    	SmartDashboard.putNumber("Right", Robot.visionImage.getDistanceRight());
+    	SmartDashboard.putNumber("Left", Robot.visionImage.getDistanceLeft());
     }
 
     // Make this return true when this Command no longer needs to run execute()

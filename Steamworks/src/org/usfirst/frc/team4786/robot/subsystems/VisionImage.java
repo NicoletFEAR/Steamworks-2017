@@ -1,7 +1,5 @@
 package org.usfirst.frc.team4786.robot.subsystems;
 
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.opencv.core.*;
@@ -51,6 +49,14 @@ public class VisionImage extends Subsystem {
 	public double getDiffBetweenCenterXAndCamCenter(){
 		return diffBetweenCenterXAndCamCenter;
 	}
+	
+	public boolean isCloseEnoughToPeg(){
+		if(getDistanceLeft() < RobotMap.finalDistanceFromPeg && getDistanceRight() < RobotMap.finalDistanceFromPeg)
+			return true;
+		else
+			return false;
+	}
+	
 	public double getFirstAngleToBePerpendicular(){
 		double d3 = .7083;
 		double x;
@@ -195,8 +201,8 @@ public class VisionImage extends Subsystem {
 			SmartDashboard.putNumber("Right Width", rightRect.width);
 			SmartDashboard.putNumber("Distance to left Rect", distanceToLeft);
 			SmartDashboard.putNumber("Distance to right Rect", distanceToRight);
-			SmartDashboard.putNumber("Angle To Turn", Robot.visionImage.getFirstAngleToBePerpendicular());
-			SmartDashboard.putNumber("First Distance", Robot.visionImage.getFirstDistanceToBePerpendicular());
+			//SmartDashboard.putNumber("Angle To Turn", Robot.visionImage.getFirstAngleToBePerpendicular());
+			//SmartDashboard.putNumber("First Distance", Robot.visionImage.getFirstDistanceToBePerpendicular());
 			
 		}
 		SmartDashboard.putBoolean("Rectangles detected?", twoTargets);

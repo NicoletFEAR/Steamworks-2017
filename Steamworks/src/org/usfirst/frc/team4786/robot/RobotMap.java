@@ -107,6 +107,7 @@ public class RobotMap {
 	public static final int ledArduinoPort = 8;
 	
 	//Vision constants
+	public static final double finalDistanceFromPeg = .1;
 	//for filtering
 	//new values: R:0, G: 196. B: 120
 	public static final int highRedValue = 50;

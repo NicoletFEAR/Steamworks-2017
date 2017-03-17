@@ -76,6 +76,7 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void robotInit() {
+    	System.out.println("ERROR: RUSSIAN HACKING ATTEMPT DETECTED");
 		gearPlacementCamera = CameraServer.getInstance().startAutomaticCapture("Gear", 0);
 		ballPlacementCamera = CameraServer.getInstance().startAutomaticCapture("Ball Camera", 1);
 		gearPlacementCamera.setFPS(15);		
@@ -177,6 +178,8 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+
+    	System.out.println("ERROR: RUSSIAN HACKING ATTEMPT DETECTED");
 
 		
 		gearPlacementCamera.setExposureAuto();
