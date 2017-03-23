@@ -94,7 +94,7 @@ public class Robot extends IterativeRobot {
 		sendableChooser = new SendableChooser<Command>();
 		sendableChooser.addDefault("Drive to Center Gear Peg", new DriveToPosition(7));
 		sendableChooser.addObject("Do Nothing!", new DoNothing());
-		sendableChooser.addObject("Drive to Baseline", new DriveToPosition(10));
+		sendableChooser.addObject("Drive to Baseline", new DriveToPosition(9.198-RobotMap.professorElementalRobotLength));
 		sendableChooser.addObject("Drive to Left Gear Peg", new DriveToLeftGearPeg());
 		sendableChooser.addObject("Drive to Right Gear Peg", new DriveToRightGearPeg());
 		//sendableChooser.addObject("GetToGearTest", new GearFromOffset());

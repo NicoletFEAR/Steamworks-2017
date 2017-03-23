@@ -9,7 +9,7 @@ package org.usfirst.frc.team4786.robot;
  */
 public class RobotMap {
 	
-	public static final double professorElementalRobotLength = 3;
+	public static final double professorElementalRobotLength = 2.708;
 	
 	//CANTalon ports, use instead of random numbers
 
