@@ -2,6 +2,7 @@ package org.usfirst.frc.team4786.robot.subsystems;
 import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.RobotMap;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
+import org.usfirst.frc.team4786.robot.subsystems.VisionImage.location;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -29,6 +30,10 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 	private AHRS navX;
 	private PIDController turnController;
 	private double turnToAngleRate;
+	
+	private PIDController visionController;
+	private VisionPIDSource visionPIDSource;
+
 	
 	//Robot will drive as if the front side is the back when reversed is true
 	private boolean reversed;
@@ -96,6 +101,15 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		turnController.setOutputRange(-1.0, 1.0);
 		turnController.setAbsoluteTolerance(RobotMap.ALLOWABLE_TURN_ERROR);
 		turnController.setContinuous(true);
+		
+		//initialize visionController object
+		visionPIDSource = new VisionPIDSource();
+		visionController = new PIDController(RobotMap.TurnP,RobotMap.TurnI,RobotMap.TurnD,RobotMap.TurnF, visionPIDSource, this);
+		visionController.setInputRange(0, 720);
+		visionController.setOutputRange(-0.5, 0.5);
+		visionController.setAbsoluteTolerance(RobotMap.ALLOWABLE_CENTER_ERROR);
+		visionController.setContinuous(true);
+		
 		/* Add the PID Controller to the Test-mode dashboard, allowing manual
 		 * tuning of the Turn Controller's P, I and D coefficients.
 		 * Typically, only the P value needs to be modified. */
@@ -158,8 +172,8 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		
 		//Make motors drive number of rotations
 		//calculated before by convertToRotations()
-		frontLeft.set(-rot);
-		frontRight.set(rot);
+		frontLeft.set(rot);
+		frontRight.set(-rot);
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {
@@ -168,8 +182,8 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		}
 		//Make sure we inverse this right side,
 		//otherwise, you have a spinning robot on your hands
-		frontLeft.set(-rot);
-		frontRight.set(rot);
+		frontLeft.set(rot);
+		frontRight.set(-rot);
 
 		
 		SmartDashboard.putNumber("Rotations Calculated", rot);
@@ -244,7 +258,8 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 	//Some special isFinished() command stuff to not stop before the robot has even moved
 
 	public boolean driveToPositionIsFinished() {
-		return Math.abs(frontLeft.getError()) <= RobotMap.ERROR_CONSTANT_LEFT && Math.abs(frontRight.getError()) <= RobotMap.ERROR_CONSTANT_RIGHT;
+		//return Math.abs(frontLeft.getError()) <= RobotMap.ERROR_CONSTANT_LEFT && Math.abs(frontRight.getError()) <= RobotMap.ERROR_CONSTANT_RIGHT;
+		return Math.abs(frontRight.getError()) <= RobotMap.ERROR_CONSTANT_RIGHT;
 	}
 	
 	public void driveToPositionEnd(){
@@ -334,6 +349,34 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 	
 	public void turnToAngleEnd(){
 		turnController.disable();
+	}
+	
+	public void processContinuouslyInit(){
+		frontLeft.changeControlMode(TalonControlMode.PercentVbus);
+		frontRight.changeControlMode(TalonControlMode.PercentVbus);
+		
+		visionController.enable();
+		visionController.setSetpoint(RobotMap.cameraFOVWidth * .5);
+	}
+	
+	public void processContinuouslyExecute(){
+		SmartDashboard.putBoolean("Rectangles detected?", Robot.visionImage.twoTargets);
+		Robot.visionImage.putValuesToSmartDashboard();
+		//No idea if turnToAngleRate will actually be calculated by pidWrite()
+		if (Robot.visionImage.getWhereCameraIsPointing().equalsIgnoreCase("Left")) {
+			frontLeft.set(0.4);
+			frontRight.set(-0.1);
+		} else if (Robot.visionImage.getWhereCameraIsPointing().equalsIgnoreCase("Right")) {
+			frontLeft.set(-0.1); //Add 0.1 so it goes forward while aligning
+			frontRight.set(0.4);
+		} else if (Robot.visionImage.getWhereCameraIsPointing().equalsIgnoreCase("Center")) {
+			frontLeft.set(0.2);
+			frontRight.set(0.2);
+		}
+	}
+	
+	public void processContinuouslyEnd(){
+		visionController.disable();
 	}
 	
 	//Take a distance in feet and convert to

@@ -14,11 +14,11 @@ public class DriveToRightGearPeg extends CommandGroup {
 
     	
     	//initial drive straight in feet
-    	addSequential(new DriveToPosition(2));
+    	addSequential(new DriveToPosition(1));
     	//turning degrees via .22 power ratio on inside of turn for .75 seconds
     	addSequential(new DriveArcSpeed(1 * 0.22, 1 , 0.75));
     	//final drive straight to target
-    	addSequential(new DriveToPosition(3));
+    	addSequential(new DriveToPosition(1));
 
         // Add Commands here:
         // e.g. addSequential(new Command1());

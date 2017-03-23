@@ -29,13 +29,13 @@ public class RobotMap {
 	public static final double MESHBOT_ROBOT_LENGTH = 2.34375; //In feet
 	
 	//General PID Constants
-	public static final int ERROR_CONSTANT_LEFT = 40; //In native units
+	public static final int ERROR_CONSTANT_LEFT = 20; //In native units
 	public static final int ERROR_CONSTANT_RIGHT = 20;
 	public static final int ALLOWABLE_TURN_ERROR = 1; //In degrees
-	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT = 1024;
-	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_RIGHT = 1024;
-	/*public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT = 360;
-	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_RIGHT = 360;*/
+	/*public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT = 1024; //Professor Elemental
+	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_RIGHT = 1024;*/
+	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT = 360; //Meshbot
+	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_RIGHT = 360;
 	public static final double CLOSED_LOOP_RAMP_RATE = 0.015625;
 	public static final int IZONE = 0;
 	public static final int DRIVEBASE_PROFILE = 0;
@@ -107,6 +107,7 @@ public class RobotMap {
 	public static final int ledArduinoPort = 8;
 	
 	//Vision constants
+	public static final double finalDistanceFromPeg = .1;
 	//for filtering
 	//new values: R:0, G: 196. B: 120
 	public static final int highRedValue = 50;
@@ -130,6 +131,9 @@ public class RobotMap {
 	
 	//for calculating angles
 	public static final double distanceBetweenCentersOfTargets = 8.25/12;
+	
+	//for PID
+	public static final double ALLOWABLE_CENTER_ERROR = 10; //In pixels
 	
     /* For example to map the left and right motors, you could define the
      following variables to use with your drivetrain subsystem.

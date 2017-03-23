@@ -1,13 +1,12 @@
 package org.usfirst.frc.team4786.robot;
 
 import org.usfirst.frc.team4786.robot.commands.DoNothing;
-import org.usfirst.frc.team4786.robot.commands.DriveArcSpeed;
 import org.usfirst.frc.team4786.robot.commands.DriveToLeftGearPeg;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.DriveToRightGearPeg;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
-import org.usfirst.frc.team4786.robot.commands.SwitchFrontSide;
-import org.usfirst.frc.team4786.robot.commands.TurnToAngle;
+import org.usfirst.frc.team4786.robot.commands.ProcessVisionContinuously;
+import org.usfirst.frc.team4786.robot.commands.VisionAlignWithPeg;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.Climber;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
@@ -52,6 +51,7 @@ public class Robot extends IterativeRobot {
 	public static CvSink cvSink;
 	public static CvSource outputStream;
 	public static CvSource regStream;
+	public static CvSource visionStream;
 	public static UsbCamera gearPlacementCamera;
 	public static UsbCamera ballPlacementCamera;
 
@@ -74,7 +74,7 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void robotInit() {
-
+    	System.out.println("ERROR: RUSSIAN HACKING ATTEMPT DETECTED");
 		gearPlacementCamera = CameraServer.getInstance().startAutomaticCapture("Gear", 0);
 		ballPlacementCamera = CameraServer.getInstance().startAutomaticCapture("Ball Camera", 1);
 		gearPlacementCamera.setFPS(15);		
@@ -82,7 +82,12 @@ public class Robot extends IterativeRobot {
 
 		gearPlacementCamera.setResolution(RobotMap.cameraFOVWidth,RobotMap.cameraFOVHeight);
 		ballPlacementCamera.setResolution(RobotMap.cameraFOVWidth, RobotMap.cameraFOVHeight);
-		cvSink = CameraServer.getInstance().getVideo();
+		gearPlacementCamera.setExposureManual(1);
+		
+		cvSink = CameraServer.getInstance().getVideo("Gear");
+		//outputStream = CameraServer.getInstance().putVideo("Gear Camera", RobotMap.cameraFOVWidth, RobotMap.cameraFOVHeight);
+		//= new CvSource("GearCamera", VideoMode.PixelFormat.kRGB565, RobotMap.cameraFOVWidth, RobotMap.cameraFOVHeight, 15);
+		
 		
 		frontSide = "Gear";
 
@@ -92,16 +97,14 @@ public class Robot extends IterativeRobot {
 
 
 		sendableChooser = new SendableChooser<Command>();
-		sendableChooser.addDefault("Drive to Center Gear Peg", new DriveToPosition(7));
+		sendableChooser.addDefault("Drive to Center Gear Peg", new DriveToPosition(4.83));
 		sendableChooser.addObject("Do Nothing!", new DoNothing());
 		sendableChooser.addObject("Drive to Baseline", new DriveToPosition(10));
 		sendableChooser.addObject("Drive to Left Gear Peg", new DriveToLeftGearPeg());
 		sendableChooser.addObject("Drive to Right Gear Peg", new DriveToRightGearPeg());
-		//sendableChooser.addObject("GetToGearTest", new GearFromOffset());
+		//sendableChooser.addObject("Vision align with peg", new VisionAlignWithPeg());
 		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 		
-		/*Command initial = new SwitchFrontSide();
-		initial.start();*/
 	}
 	@Override
 	public void disabledInit() {
@@ -131,6 +134,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
+		
 		alliance = DriverStation.getInstance().getAlliance();
 
 		//send correct alliance data to arduino
@@ -147,8 +151,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putString("Alliance", allianceColorVal);
 
 
-	//camera.setExposureManual(RobotMap.exposure);
-    autonomousCommand = (Command) sendableChooser.getSelected();
+		//camera.setExposureManual(RobotMap.exposure);
+	    autonomousCommand = (Command) sendableChooser.getSelected();
+	    //Command visionProcess = new ProcessVisionContinuously();
+	    //visionProcess.start();
+	    
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
@@ -166,16 +173,17 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		
 		SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
 		SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
-		SmartDashboard.putNumber("Servo Angle", drawBridge.getServoAngle());
 	}
 
 	@Override
 	public void teleopInit() {
 
-		
-		//gearPlacementCamera.setExposureAuto();
+    	System.out.println("ERROR: RUSSIAN HACKING ATTEMPT DETECTED");
+    	
+		gearPlacementCamera.setExposureAuto();
 		
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
@@ -184,6 +192,9 @@ public class Robot extends IterativeRobot {
 		//visionThread.yield();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		
+		Robot.driveTrain.switchFront();
+    	Robot.oi.switchJoystickIDs();
 		
 		teleopCommand = new OpenLoopDrive();
 		
@@ -205,7 +216,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Peg Present", gear.pegLimitSwitchPressed());
 		SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
 		SmartDashboard.putNumber("Old State", SwitchState.oldState);  // get rid of them if we don't have this method
-
+		SmartDashboard.putBoolean("Reversed", driveTrain.isReversed());
 	}
 
 	@Override

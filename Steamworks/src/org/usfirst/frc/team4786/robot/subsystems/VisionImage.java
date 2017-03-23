@@ -11,7 +11,7 @@ import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.RobotMap;
 import org.usfirst.frc.team4786.robot.subsystems.MatRapper;
 
-public class VisionImage extends Subsystem{	
+public class VisionImage extends Subsystem {	
 	
 	boolean twoTargets = false;
 	int numOfTargets = 0;
@@ -49,6 +49,14 @@ public class VisionImage extends Subsystem{
 	public double getDiffBetweenCenterXAndCamCenter(){
 		return diffBetweenCenterXAndCamCenter;
 	}
+	
+	public boolean isCloseEnoughToPeg(){
+		if(getDistanceLeft() < RobotMap.finalDistanceFromPeg && getDistanceRight() < RobotMap.finalDistanceFromPeg)
+			return true;
+		else
+			return false;
+	}
+	
 	public double getFirstAngleToBePerpendicular(){
 		double d3 = .7083;
 		double x;
@@ -87,24 +95,26 @@ public class VisionImage extends Subsystem{
 			return location.TargetsNotVisible;
 		}
 	}
-	public location getWhereCameraIsPointing(){
+	public String getWhereCameraIsPointing(){
+		String location = "";
 		if (leftRect != null && rightRect != null && centerOfCamera != 0){
 			if (.95*(centerOfCamera-(leftRect.x+leftRect.width)) < (rightRect.x-centerOfCamera)
-					&& (rightRect.x-centerOfCamera) < 1.05*(centerOfCamera-(leftRect.x+leftRect.width)))
-				return location.Center;	//camera is pointing at peg
-			if (rightRect.x  < centerOfCamera){
-				return location.Left;	//camera is pointing left of peg
+					&& (rightRect.x-centerOfCamera) < 1.05*(centerOfCamera-(leftRect.x+leftRect.width))) {
+				location = "Center";	//camera is pointing at peg
+			} else if (rightRect.x  < centerOfCamera) {
+				location = "Left";	//camera is pointing left of peg
 			} else if (leftRect.x > centerOfCamera) {
-				return location.Right;	//camera is pointing right of peg
+				location = "Right";	//camera is pointing right of peg
 			} else if ((centerOfCamera-(leftRect.x+leftRect.width))<(rightRect.x-centerOfCamera)) {
-				return location.Left;	//camera is pointing left of peg
+				location = "Left";	//camera is pointing left of peg
 			} else if ((rightRect.x-centerOfCamera)<(centerOfCamera-(leftRect.x+leftRect.width))) {
-				return location.Right;	//camera is pointing right of peg
+				location = "Right";	//camera is pointing right of peg
 			} else {	//this should never be returned
-				return location.Center;
+				location = "Center";
 		} } else {
-			return location.TargetsNotVisible;
+			location = "TargetsNotVisible";
 		}
+		return location;
 	}
 	public void processImage(MatRapper image){
 		mat = image.getMat();
@@ -191,8 +201,8 @@ public class VisionImage extends Subsystem{
 			SmartDashboard.putNumber("Right Width", rightRect.width);
 			SmartDashboard.putNumber("Distance to left Rect", distanceToLeft);
 			SmartDashboard.putNumber("Distance to right Rect", distanceToRight);
-			SmartDashboard.putNumber("Angle To Turn", Robot.visionImage.getFirstAngleToBePerpendicular());
-			SmartDashboard.putNumber("First Distance", Robot.visionImage.getFirstDistanceToBePerpendicular());
+			//SmartDashboard.putNumber("Angle To Turn", Robot.visionImage.getFirstAngleToBePerpendicular());
+			//SmartDashboard.putNumber("First Distance", Robot.visionImage.getFirstDistanceToBePerpendicular());
 			
 		}
 		SmartDashboard.putBoolean("Rectangles detected?", twoTargets);
@@ -205,4 +215,5 @@ public class VisionImage extends Subsystem{
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 	}
+	
 }
