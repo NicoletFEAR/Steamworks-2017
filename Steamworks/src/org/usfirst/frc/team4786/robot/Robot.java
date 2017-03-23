@@ -6,6 +6,7 @@ import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.DriveToRightGearPeg;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
 import org.usfirst.frc.team4786.robot.commands.ProcessVisionContinuously;
+import org.usfirst.frc.team4786.robot.commands.SwitchFrontSide;
 import org.usfirst.frc.team4786.robot.commands.VisionAlignWithPeg;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.Climber;
@@ -193,8 +194,8 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		
-		Robot.driveTrain.switchFront();
-    	Robot.oi.switchJoystickIDs();
+		Command switchFront = new SwitchFrontSide();
+		switchFront.start();
 		
 		teleopCommand = new OpenLoopDrive();
 		
