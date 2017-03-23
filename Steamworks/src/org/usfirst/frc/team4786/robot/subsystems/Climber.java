@@ -1,6 +1,5 @@
 package org.usfirst.frc.team4786.robot.subsystems;
 
-import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.RobotMap;
 import org.usfirst.frc.team4786.robot.commands.OpenClimb;
 import com.ctre.CANTalon;
