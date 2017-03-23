@@ -10,11 +10,8 @@ import org.usfirst.frc.team4786.robot.subsystems.Climber;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4786.robot.subsystems.Gear;
-//import org.usfirst.frc.team4786.robot.subsystems.FrameData;
 import org.usfirst.frc.team4786.robot.subsystems.Intake;
 import org.usfirst.frc.team4786.robot.subsystems.SwitchState;
-//import org.usfirst.frc.team4786.robot.subsystems.Test;
-//import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
 import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
 
 import edu.wpi.cscore.CvSink;
@@ -102,7 +99,7 @@ public class Robot extends IterativeRobot {
 	}
 	@Override
 	public void disabledInit() {
-
+		
 	}
 
 	@Override
