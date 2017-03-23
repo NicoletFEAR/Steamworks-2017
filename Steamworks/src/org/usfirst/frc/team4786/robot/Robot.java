@@ -166,9 +166,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
+		/*SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
 		SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
-		SmartDashboard.putNumber("Servo Angle", drawBridge.getServoAngle());
+		SmartDashboard.putNumber("Servo Angle", drawBridge.getServoAngle());*/
 	}
 
 	@Override
@@ -198,13 +198,13 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		timer = new Timer();
 
-		SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
+		/*SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
 		SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
 		SmartDashboard.putNumber("Left Motor Output", driveTrain.motorOutputLeft);
 		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
 		SmartDashboard.putBoolean("Peg Present", gear.pegLimitSwitchPressed());
 		SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
-		SmartDashboard.putNumber("Old State", SwitchState.oldState);  // get rid of them if we don't have this method
+		SmartDashboard.putNumber("Old State", SwitchState.oldState);  // get rid of them if we don't have this method*/
 
 	}
 

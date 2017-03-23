@@ -9,6 +9,8 @@ package org.usfirst.frc.team4786.robot;
  */
 public class RobotMap {
 	
+	public static final double professorElementalRobotLength = 3;
+	
 	//CANTalon ports, use instead of random numbers
 
 	
@@ -29,7 +31,7 @@ public class RobotMap {
 	public static final double MESHBOT_ROBOT_LENGTH = 2.34375; //In feet
 	
 	//General PID Constants
-	public static final int ERROR_CONSTANT_LEFT = 40; //In native units
+	public static final int ERROR_CONSTANT_LEFT = 20; //In native units
 	public static final int ERROR_CONSTANT_RIGHT = 20;
 	public static final int ALLOWABLE_TURN_ERROR = 1; //In degrees
 	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT = 1024;
