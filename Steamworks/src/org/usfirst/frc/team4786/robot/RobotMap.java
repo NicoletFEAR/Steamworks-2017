@@ -54,7 +54,7 @@ public class RobotMap {
 	public static final double INTAKE_COLLECT_SPEED_SCALING = -	1;
 	public static final double INTAKE_SPIT_SPEED_SCALING = 1;
 	//public static final double OPEN_LOOP_CLIMBING_SPEED = 0.5;
-	public static final double OPEN_LOOP_CLIMBING_SPEED_SCALING = -1;
+	public static final double OPEN_LOOP_CLIMBING_SPEED_SCALING = 1;
 	public static final double OPEN_BRIDGE_ANGLE = 90;
 	public static final double CLOSED_BRIDGE_ANGLE = -90;
 	//Left GearBox PID Constants
