@@ -102,7 +102,7 @@ public class Robot extends IterativeRobot {
 		sendableChooser.addObject("Drive to Baseline", new DriveToPosition(10));
 		sendableChooser.addObject("Drive to Left Gear Peg", new DriveToLeftGearPeg());
 		sendableChooser.addObject("Drive to Right Gear Peg", new DriveToRightGearPeg());
-		sendableChooser.addObject("Vision align with peg", new VisionAlignWithPeg());
+		//sendableChooser.addObject("Vision align with peg", new VisionAlignWithPeg());
 		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 		
 	}
@@ -153,7 +153,7 @@ public class Robot extends IterativeRobot {
 
 		//camera.setExposureManual(RobotMap.exposure);
 	    autonomousCommand = (Command) sendableChooser.getSelected();
-	    Command visionProcess = new ProcessVisionContinuously();
+	    //Command visionProcess = new ProcessVisionContinuously();
 	    //visionProcess.start();
 	    
 		if (autonomousCommand != null)
