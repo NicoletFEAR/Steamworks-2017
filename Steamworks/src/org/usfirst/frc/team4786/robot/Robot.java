@@ -5,6 +5,7 @@ import org.usfirst.frc.team4786.robot.commands.DriveToLeftGearPeg;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.DriveToRightGearPeg;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
+import org.usfirst.frc.team4786.robot.commands.SwitchFrontSide;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.Climber;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
@@ -94,8 +95,6 @@ public class Robot extends IterativeRobot {
 		//sendableChooser.addObject("GetToGearTest", new GearFromOffset());
 		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 		
-		/*Command initial = new SwitchFrontSide();
-		initial.start();*/
 	}
 	@Override
 	public void disabledInit() {
@@ -178,6 +177,10 @@ public class Robot extends IterativeRobot {
 		//visionThread.yield();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		
+		//TODO Test this
+		/*Command switchFront = new SwitchFrontSide();
+		switchFront.start();*/
 		
 		teleopCommand = new OpenLoopDrive();
 		
