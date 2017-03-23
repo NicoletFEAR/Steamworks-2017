@@ -140,7 +140,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putString("Alliance", allianceColorVal);
 
 
-	gearPlacementCamera.setExposureManual(RobotMap.exposure);
+	//gearPlacementCamera.setExposureManual(RobotMap.exposure);
     autonomousCommand = (Command) sendableChooser.getSelected();
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -168,7 +168,7 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 
 		
-		gearPlacementCamera.setExposureAuto();
+		//gearPlacementCamera.setExposureAuto();
 		
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to

@@ -45,7 +45,8 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		frontLeft.enable();
 		frontRight.enable();
 		
-		frontLeft.setInverted(true);
+		frontLeft.setInverted(false);
+		frontRight.setInverted(true);
 
 
 		//Beginning of the world of PID!!!!!!!!
