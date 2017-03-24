@@ -18,7 +18,7 @@ public class DriveToLeftGearPeg extends CommandGroup {
     	//initial drive straight in feet
     	addSequential(new DriveToPosition(9.417- RobotMap.professorElementalRobotLength));
     	//turning degrees via .22 power ratio on inside of turn for .75 seconds
-    	addSequential(new TurnToAngle(60));
+    	addSequential(new TurnToAngle(-60));
     	//final drive straight to target
     	addSequential(new DriveToPosition(1.5));
     	

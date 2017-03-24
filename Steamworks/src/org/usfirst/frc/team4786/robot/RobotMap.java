@@ -31,8 +31,8 @@ public class RobotMap {
 	public static final double MESHBOT_ROBOT_LENGTH = 2.34375; //In feet
 	
 	//General PID Constants
-	public static final int ERROR_CONSTANT_LEFT = 20; //In native units
-	public static final int ERROR_CONSTANT_RIGHT = 20;
+	public static final int ERROR_CONSTANT_LEFT = 100; //In native units
+	public static final int ERROR_CONSTANT_RIGHT = 100;
 	public static final int ALLOWABLE_TURN_ERROR = 1; //In degrees
 	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT = 1024;
 	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_RIGHT = 1024;
@@ -66,14 +66,14 @@ public class RobotMap {
 	 * If needed, add a D value to smooth it out
 	 */
 	//public static final double LeftP = 0.1;
-	public static final double LeftP = 0.002;
-	public static final double LeftI = 0.00010;
+	public static final double LeftP = 0.0001;
+	public static final double LeftI = 0.000010;
 	public static final double LeftD = 0.0;
 	public static final double LeftF = 0.0;
 	//Right GearBox PID Constants
 	//public static final double RightP = 0.1;
-	public static final double RightP = 0.002;
-	public static final double RightI = 0.00010;
+	public static final double RightP = 0.0001;
+	public static final double RightI = 0.000010;
 	public static final double RightD = 0.0;
 	public static final double RightF = 0.0;
 	//Left GearBox Velocity PID Constants

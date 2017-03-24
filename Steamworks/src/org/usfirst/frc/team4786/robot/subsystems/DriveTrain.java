@@ -45,8 +45,8 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		frontLeft.enable();
 		frontRight.enable();
 		
-		frontLeft.setInverted(false);
-		frontRight.setInverted(true);
+		frontLeft.setInverted(true);
+		frontRight.setInverted(false);
 
 
 		//Beginning of the world of PID!!!!!!!!
@@ -157,8 +157,8 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		
 		//Make motors drive number of rotations
 		//calculated before by convertToRotations()
-		frontLeft.set(rot);
-		frontRight.set(-rot);
+		frontLeft.set(-rot);
+		frontRight.set(rot);
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {
@@ -166,8 +166,8 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		}
 		//Make sure we inverse this right side,
 		//otherwise, you have a spinning robot on your hands
-		frontLeft.set(rot);
-		frontRight.set(-rot);
+		frontLeft.set(-rot);
+		frontRight.set(rot);
 
 		
 		SmartDashboard.putNumber("Rotations Calculated", rot);
