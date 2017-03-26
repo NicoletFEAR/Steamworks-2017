@@ -9,12 +9,14 @@ package org.usfirst.frc.team4786.robot;
  */
 public class RobotMap {
 	
+	public static final double professorElementalRobotLength = 2.708;
+	
 	//CANTalon ports, use instead of random numbers
 
-	/*public static final int frontLeftPort = 14;
-	public static final int frontRightPort = 13;*/
+	
 	public static final int frontLeftPort = 13;
 	public static final int frontRightPort = 14;
+
 	
 	//Our CANTalon game mech ports
 	//Change these mech Talon IDs, do not know final CANTalon ids yet
@@ -29,8 +31,8 @@ public class RobotMap {
 	public static final double MESHBOT_ROBOT_LENGTH = 2.34375; //In feet
 	
 	//General PID Constants
-	public static final int ERROR_CONSTANT_LEFT = 40; //In native units
-	public static final int ERROR_CONSTANT_RIGHT = 20;
+	public static final int ERROR_CONSTANT_LEFT = 100; //In native units
+	public static final int ERROR_CONSTANT_RIGHT = 100;
 	public static final int ALLOWABLE_TURN_ERROR = 1; //In degrees
 	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT = 1024;
 	public static final int DRIVETRAIN_ENCODER_CODES_PER_REV_RIGHT = 1024;
@@ -52,7 +54,7 @@ public class RobotMap {
 	public static final double INTAKE_COLLECT_SPEED_SCALING = -	1;
 	public static final double INTAKE_SPIT_SPEED_SCALING = 1;
 	//public static final double OPEN_LOOP_CLIMBING_SPEED = 0.5;
-	public static final double OPEN_LOOP_CLIMBING_SPEED_SCALING = -1;
+	public static final double OPEN_LOOP_CLIMBING_SPEED_SCALING = 1;
 	public static final double OPEN_BRIDGE_ANGLE = 90;
 	public static final double CLOSED_BRIDGE_ANGLE = -90;
 	//Left GearBox PID Constants
@@ -64,14 +66,14 @@ public class RobotMap {
 	 * If needed, add a D value to smooth it out
 	 */
 	//public static final double LeftP = 0.1;
-	public static final double LeftP = 0.004;
-	public static final double LeftI = 0.00015;
+	public static final double LeftP = 0.0001;
+	public static final double LeftI = 0.000010;
 	public static final double LeftD = 0.0;
 	public static final double LeftF = 0.0;
 	//Right GearBox PID Constants
 	//public static final double RightP = 0.1;
-	public static final double RightP = 0.004;
-	public static final double RightI = 0.00015;
+	public static final double RightP = 0.0001;
+	public static final double RightI = 0.000010;
 	public static final double RightD = 0.0;
 	public static final double RightF = 0.0;
 	//Left GearBox Velocity PID Constants

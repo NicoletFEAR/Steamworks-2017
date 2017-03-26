@@ -46,6 +46,7 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		frontRight.enable();
 		
 		frontLeft.setInverted(true);
+		frontRight.setInverted(false);
 
 
 		//Beginning of the world of PID!!!!!!!!
@@ -66,7 +67,6 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		frontLeft.configEncoderCodesPerRev(RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT);
@@ -147,7 +147,6 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		frontLeft.setEncPosition(0);
@@ -163,7 +162,6 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//Make sure we inverse this right side,
@@ -187,7 +185,6 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		frontLeft.setEncPosition(0);
@@ -226,7 +223,6 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		frontLeft.setEncPosition(0);
@@ -345,6 +341,7 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 	//Take a speed in feet per second, converts to
 	//native units per 100 milliseconds
 	//Possibly a non-needed method
+	@SuppressWarnings("unused")
 	private double convertToVelocity(double feetPerSecond){
 		double rotationsPerSecond = convertToRotations(feetPerSecond);
 		double temp = rotationsPerSecond / (RobotMap.DRIVETRAIN_ENCODER_CODES_PER_REV_LEFT * 4);

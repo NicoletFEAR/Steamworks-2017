@@ -1,6 +1,5 @@
 package org.usfirst.frc.team4786.robot.subsystems;
 
-import org.usfirst.frc.team4786.robot.Robot;
 import org.usfirst.frc.team4786.robot.RobotMap;
 import org.usfirst.frc.team4786.robot.commands.OpenClimb;
 import com.ctre.CANTalon;
@@ -36,7 +35,8 @@ public class Climber extends Subsystem {
     
     public boolean isFinishedClimbing(){
     	//The climbing limit switches are ported into DIO 3
-    	return (!Robot.oi.getClimberLimitSwitch().get());
+    	//return (!Robot.oi.getClimberLimitSwitch().get());
+    	return false;
     }
     
     public void stopClimbing() {

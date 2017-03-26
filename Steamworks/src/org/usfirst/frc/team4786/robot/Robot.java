@@ -1,23 +1,18 @@
 package org.usfirst.frc.team4786.robot;
 
 import org.usfirst.frc.team4786.robot.commands.DoNothing;
-import org.usfirst.frc.team4786.robot.commands.DriveArcSpeed;
 import org.usfirst.frc.team4786.robot.commands.DriveToLeftGearPeg;
 import org.usfirst.frc.team4786.robot.commands.DriveToPosition;
 import org.usfirst.frc.team4786.robot.commands.DriveToRightGearPeg;
 import org.usfirst.frc.team4786.robot.commands.OpenLoopDrive;
 import org.usfirst.frc.team4786.robot.commands.SwitchFrontSide;
-import org.usfirst.frc.team4786.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4786.robot.subsystems.Arduino;
 import org.usfirst.frc.team4786.robot.subsystems.Climber;
 import org.usfirst.frc.team4786.robot.subsystems.DrawBridge;
 import org.usfirst.frc.team4786.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4786.robot.subsystems.Gear;
-//import org.usfirst.frc.team4786.robot.subsystems.FrameData;
 import org.usfirst.frc.team4786.robot.subsystems.Intake;
 import org.usfirst.frc.team4786.robot.subsystems.SwitchState;
-//import org.usfirst.frc.team4786.robot.subsystems.Test;
-//import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
 import org.usfirst.frc.team4786.robot.subsystems.VisionImage;
 
 import edu.wpi.cscore.CvSink;
@@ -82,7 +77,7 @@ public class Robot extends IterativeRobot {
 
 		gearPlacementCamera.setResolution(RobotMap.cameraFOVWidth,RobotMap.cameraFOVHeight);
 		ballPlacementCamera.setResolution(RobotMap.cameraFOVWidth, RobotMap.cameraFOVHeight);
-		cvSink = CameraServer.getInstance().getVideo();
+		//cvSink = CameraServer.getInstance().getVideo();
 		
 		frontSide = "Gear";
 
@@ -92,7 +87,7 @@ public class Robot extends IterativeRobot {
 
 
 		sendableChooser = new SendableChooser<Command>();
-		sendableChooser.addDefault("Drive to Center Gear Peg", new DriveToPosition(7));
+		sendableChooser.addDefault("Drive to Center Gear Peg", new DriveToPosition(9.198-RobotMap.professorElementalRobotLength));
 		sendableChooser.addObject("Do Nothing!", new DoNothing());
 		sendableChooser.addObject("Drive to Baseline", new DriveToPosition(10));
 		sendableChooser.addObject("Drive to Left Gear Peg", new DriveToLeftGearPeg());
@@ -100,12 +95,10 @@ public class Robot extends IterativeRobot {
 		//sendableChooser.addObject("GetToGearTest", new GearFromOffset());
 		SmartDashboard.putData("Autonomous Selector", sendableChooser);
 		
-		/*Command initial = new SwitchFrontSide();
-		initial.start();*/
 	}
 	@Override
 	public void disabledInit() {
-
+		
 	}
 
 	@Override
@@ -147,7 +140,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putString("Alliance", allianceColorVal);
 
 
-	//camera.setExposureManual(RobotMap.exposure);
+	//gearPlacementCamera.setExposureManual(RobotMap.exposure);
     autonomousCommand = (Command) sendableChooser.getSelected();
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -166,9 +159,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
+		/*SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
 		SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
-		SmartDashboard.putNumber("Servo Angle", drawBridge.getServoAngle());
+		SmartDashboard.putNumber("Servo Angle", drawBridge.getServoAngle());*/
 	}
 
 	@Override
@@ -185,10 +178,9 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		
-		teleopCommand = new OpenLoopDrive();
-		
-		if(teleopCommand != null)
-			teleopCommand.start();
+		//TODO Test this
+		Command switchFront = new SwitchFrontSide();
+		switchFront.start();
 	}
 
 
@@ -196,15 +188,15 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
     switchState.switchChange();
 		Scheduler.getInstance().run();
-		timer = new Timer();
+		//timer = new Timer();
 
-		SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
+		/*SmartDashboard.putNumber("Left Encoder Positon", driveTrain.getLeftEncoderPosition());
 		SmartDashboard.putNumber("Right Encoder Positon", driveTrain.getRightEncoderPosition());
 		SmartDashboard.putNumber("Left Motor Output", driveTrain.motorOutputLeft);
 		SmartDashboard.putNumber("Right Motor Output", driveTrain.motorOutputRight);
 		SmartDashboard.putBoolean("Peg Present", gear.pegLimitSwitchPressed());
 		SmartDashboard.putNumber("New State", SwitchState.newState);  //These two lines are dependent of the SwitchState method
-		SmartDashboard.putNumber("Old State", SwitchState.oldState);  // get rid of them if we don't have this method
+		SmartDashboard.putNumber("Old State", SwitchState.oldState);  // get rid of them if we don't have this method*/
 
 	}
 

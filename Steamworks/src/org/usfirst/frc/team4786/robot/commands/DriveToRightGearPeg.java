@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4786.robot.commands;
 
+import org.usfirst.frc.team4786.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -14,12 +16,11 @@ public class DriveToRightGearPeg extends CommandGroup {
 
     	
     	//initial drive straight in feet
-    	addSequential(new DriveToPosition(2));
+    	addSequential(new DriveToPosition(9.417- RobotMap.professorElementalRobotLength));
     	//turning degrees via .22 power ratio on inside of turn for .75 seconds
-    	addSequential(new DriveArcSpeed(1 * 0.22, 1 , 0.75));
+    	addSequential(new TurnToAngle(60));
     	//final drive straight to target
-    	addSequential(new DriveToPosition(3));
-
+    	addSequential(new DriveToPosition(1.5));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
