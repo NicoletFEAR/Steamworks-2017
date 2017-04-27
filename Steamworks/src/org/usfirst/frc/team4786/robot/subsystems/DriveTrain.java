@@ -100,6 +100,8 @@ public class DriveTrain extends Subsystem implements PIDOutput {
 		 * tuning of the Turn Controller's P, I and D coefficients.
 		 * Typically, only the P value needs to be modified. */
 		LiveWindow.addActuator("DriveTrain", "TurnController", turnController);
+		
+		reversed = false;
 	}
 	
 	// Put methods for controlling this subsystem

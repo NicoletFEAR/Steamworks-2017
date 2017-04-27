@@ -2,6 +2,7 @@ package org.usfirst.frc.team4786.robot.commands;
 
 import org.usfirst.frc.team4786.robot.Robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -23,8 +24,14 @@ public class OpenLoopDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//gets input from controller and drives bot
-    	double rightInput = Robot.oi.getRightDriveJoy().getY();
-    	double leftInput = Robot.oi.getLeftDriveJoy().getY();
+    	double rightInput, leftInput;
+    	if(!Robot.driveTrain.isReversed()){
+    		rightInput = Robot.oi.getXbox().getY(GenericHID.Hand.kRight);
+    		leftInput = Robot.oi.getXbox().getY(GenericHID.Hand.kLeft);
+    	}else{
+    		leftInput = Robot.oi.getXbox().getY(GenericHID.Hand.kRight);
+    		rightInput = Robot.oi.getXbox().getY(GenericHID.Hand.kLeft);
+    	}
     	Robot.driveTrain.openLoopDrive(leftInput, rightInput);
     }
 

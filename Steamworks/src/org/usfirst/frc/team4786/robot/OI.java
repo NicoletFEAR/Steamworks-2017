@@ -39,6 +39,7 @@ public class OI {
 	private static Button kRightJoy11Button;
 	private static Button leftJoystickTrigger;
 	private static Button rightJoystickTrigger;
+	private static Button aButton;
 
 	
 	private static Button rightBumper;
@@ -63,6 +64,8 @@ public class OI {
     	  
     	rightBumper = new JoystickButton(xbox, Buttons.RightBump);
     	leftBumper = new JoystickButton(xbox, Buttons.LeftBump);
+    	
+    	aButton = new JoystickButton(xbox, Buttons.A);
 
       //Tie our many buttons, sensors, joysticks, and Xbox controllers to robot commands
     		    	
@@ -85,6 +88,7 @@ public class OI {
     	kLeftJoy11Button.whenPressed(new SwitchFrontSide());
     	kRightJoy11Button.whenPressed(new SwitchFrontSide());
     	
+    	aButton.whenPressed(new SwitchFrontSide());
      
     	//rightBumper.whenPressed(new OpenBridge());
     	//leftBumper.whenPressed(new CloseBridge());
