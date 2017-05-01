@@ -1,13 +1,8 @@
 package org.usfirst.frc.team4786.robot;
 
-import org.usfirst.frc.team4786.robot.commands.CloseBridge;
-import org.usfirst.frc.team4786.robot.commands.CollectBalls;
-import org.usfirst.frc.team4786.robot.commands.OpenBridge;
-import org.usfirst.frc.team4786.robot.commands.OpenClimb;
 import org.usfirst.frc.team4786.robot.commands.SwitchFrontSide;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
